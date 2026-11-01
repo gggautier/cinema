@@ -72,26 +72,9 @@
     { "allocine_id": "W7504", "name": "Epée de bois", "full_name": "Epée de bois", "brand": "independant", "address": "100 Rue Mouffetard 75005 Paris", "lat": 48.8413, "lng": 2.3496, "logo": null },
     { "allocine_id": "W7516", "name": "Le Ranelagh", "full_name": "Le Ranelagh", "brand": "independant", "address": "5, rue des Vignes 75016 Paris", "lat": 48.8546, "lng": 2.2777, "logo": null },
     { "allocine_id": "W7512", "name": "Le Miramar", "full_name": "Le Miramar", "brand": "independant", "address": "3 Rue du Départ 75014 Paris", "lat": 48.8432, "lng": 2.3245, "logo": null },
-    { "allocine_id": "C0014", "name": "Institut finlandais", "full_name": "Institut finlandais", "brand": "independant", "address": "60, rue des Ecoles 75005 Paris", "lat": 48.8502, "lng": 2.3433, "logo": null },
-    { "allocine_id": "W7500", "name": "Théâtre du Marais", "full_name": "Théâtre du Marais", "brand": "independant", "address": "37 rue Volta 75003 Paris", "lat": 48.8663, "lng": 2.3578, "logo": null },
-    { "allocine_id": "C0178", "name": "Maison de la Culture du Japon - MCJP", "full_name": "Maison de la Culture du Japon - MCJP", "brand": "independant", "address": "101 bis Quai Jacques Chirac 75015 Paris", "lat": 48.8548, "lng": 2.2893, "logo": null },
     { "allocine_id": "C0059", "name": "Centre Wallonie-Bruxelles", "full_name": "Centre Wallonie-Bruxelles", "brand": "independant", "address": "46 rue Quincampoix 75004 Paris", "lat": 48.861, "lng": 2.3506, "logo": null },
-    { "allocine_id": "C0056", "name": "Cité des Sciences", "full_name": "Cité des Sciences", "brand": "independant", "address": "30, av. Corentin-Cariou 75019 Paris", "lat": 48.8972, "lng": 2.3856, "logo": null },
-    { "allocine_id": "C2756", "name": "Centre culturel irlandais", "full_name": "Centre culturel irlandais", "brand": "independant", "address": "5 rue des Irlandais 75005 Paris", "lat": 48.8442, "lng": 2.346, "logo": null },
     { "allocine_id": "W7501", "name": "Cinéma en plein air de la Villette", "full_name": "Cinéma en plein air de la Villette", "brand": "independant", "address": "211 avenue Jean Jaurès 75019 Paris", "lat": 48.889, "lng": 2.3925, "logo": null },
     { "allocine_id": "W7588", "name": "Jeu de Paume", "full_name": "Jeu de Paume", "brand": "independant", "address": "1 Place de la Concorde 75001 Paris", "lat": 48.866, "lng": 2.3232, "logo": null },
-    { "allocine_id": "W7523", "name": "Institut du monde arabe", "full_name": "Institut du monde arabe", "brand": "independant", "address": "1 Rue des Fossés Saint-Bernard 75005 Paris", "lat": 48.8492, "lng": 2.3562, "logo": null },
-    { "allocine_id": "W7503", "name": "La Gaîté lyrique", "full_name": "La Gaîté lyrique", "brand": "independant", "address": "3bis Rue Papin 75003 Paris", "lat": 48.8668, "lng": 2.3536, "logo": null },
-    { "allocine_id": "C0030", "name": "Musée d'Orsay, Auditorium", "full_name": "Musée d'Orsay, Auditorium", "brand": "independant", "address": "1, rue de la Légion-d'Honneur 75007 Paris", "lat": 48.8604, "lng": 2.3251, "logo": null },
-    { "allocine_id": "W7616", "name": "Cité de l'architecture et du patrimoine", "full_name": "Cité de l'architecture et du patrimoine", "brand": "independant", "address": "7, avenue Albert de Mun 75016 Paris", "lat": 48.8632, "lng": 2.2912, "logo": null },
-    { "allocine_id": "C0169", "name": "Auditorium du Louvre", "full_name": "Auditorium du Louvre", "brand": "independant", "address": "Rue de Rivoli 75001 Paris", "lat": 48.8624, "lng": 2.3362, "logo": null },
-    { "allocine_id": "P5012", "name": "Palais de la Porte Dorée", "full_name": "Palais de la Porte Dorée", "brand": "independant", "address": "293 avenue Daumesnil 75012 Paris", "lat": 48.8346, "lng": 2.4096, "logo": null },
-    { "allocine_id": "C0403", "name": "Cité de la Musique, Amphithéâtre", "full_name": "Cité de la Musique, Amphithéâtre", "brand": "independant", "address": "221, av. Jean-Jaurès 75019 Paris", "lat": 48.8893, "lng": 2.3938, "logo": null },
-    { "allocine_id": "W7506", "name": "Institut Hongrois de Paris", "full_name": "Institut Hongrois de Paris", "brand": "independant", "address": "92, rue Bonaparte 75006 Paris", "lat": 48.8491, "lng": 2.3326, "logo": null },
-    { "allocine_id": "P0007", "name": "Cinéma du musée du quai Branly", "full_name": "Cinéma du musée du quai Branly", "brand": "independant", "address": "37 quai Branly 75007 Paris", "lat": 48.8615, "lng": 2.2977, "logo": null },
-    { "allocine_id": "G0G46", "name": "Le CiNey", "full_name": "Le CiNey", "brand": "independant", "address": "126 Boulevard Ney 75018 Paris", "lat": 48.8981, "lng": 2.3406, "logo": null },
-    { "allocine_id": "P5016", "name": "Musée Guimet", "full_name": "Musée Guimet", "brand": "independant", "address": "6 Place d'Iéna 75016 Paris", "lat": 48.865, "lng": 2.2937, "logo": null },
-    { "allocine_id": "W1675", "name": "Goethe Institut Paris", "full_name": "Goethe Institut Paris", "brand": "independant", "address": "17 Avenue d'Iéna 75016 Paris", "lat": 48.8661, "lng": 2.2945, "logo": null },
-    { "allocine_id": "G0FQ4", "name": "Royal Monceau - Raffles Paris", "full_name": "Royal Monceau - Raffles Paris", "brand": "independant", "address": "37 Avenue Hoche 75008 Paris", "lat": 48.8758, "lng": 2.3003, "logo": null }
+    { "allocine_id": "G0G46", "name": "Le CiNey", "full_name": "Le CiNey", "brand": "independant", "address": "126 Boulevard Ney 75018 Paris", "lat": 48.8981, "lng": 2.3406, "logo": null }
   ]
 }
