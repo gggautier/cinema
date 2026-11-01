@@ -8,6 +8,7 @@
     { "allocine_id": "C2954", "name": "Bibliothèque", "full_name": "MK2 Bibliothèque", "brand": "mk2", "lat": 48.8322, "lng": 2.377, "logo": "assets/logos/mk2.svg" },
     { "allocine_id": "C0003", "name": "Quai de Seine", "full_name": "MK2 Quai de Seine", "brand": "mk2", "lat": 48.885, "lng": 2.3707, "logo": "assets/logos/mk2.svg" },
     { "allocine_id": "C0097", "name": "Odéon", "full_name": "MK2 Odéon (Côté St Germain)", "brand": "mk2", "lat": 48.852, "lng": 2.3392, "logo": "assets/logos/mk2.svg" },
+    { "allocine_id": "C0050", "name": "Beaubourg", "full_name": "MK2 Beaubourg", "brand": "mk2", "lat": 48.8612, "lng": 2.3522, "logo": "assets/logos/mk2.svg" },
     { "allocine_id": "C0013", "name": "Luminor Hôtel de Ville", "full_name": "Luminor Hôtel de Ville", "brand": "independant", "lat": 48.8578, "lng": 2.354, "logo": null },
     { "allocine_id": "C0065", "name": "Le Grand Rex", "full_name": "Le Grand Rex", "brand": "independant", "lat": 48.8706, "lng": 2.3478, "logo": null },
     { "allocine_id": "W7510", "name": "Le Louxor", "full_name": "Le Louxor - Palais du cinéma", "brand": "independant", "lat": 48.8835, "lng": 2.3497, "logo": null },
