@@ -1,0 +1,21 @@
+/* Two families only. Space Grotesk = display + numerals. Inter = UI + body. */
+:root{
+  --dv-font-display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --dv-font-ui:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+
+  /* Exact sizes used in the file — no intermediate steps exist. */
+  --dv-size-display-xl:50px;  /* "128 films" — Space Grotesk Medium, lh 100% */
+  --dv-size-display-lg:32px;  /* film title — Space Grotesk Medium, lh 110% */
+  --dv-size-body:14px;        /* Inter Medium, lh 140% — credits, dropdown */
+  --dv-size-label:12px;       /* Inter Medium/SemiBold, lh 100% — tab + tag labels */
+  --dv-size-numeral:13px;     /* Space Grotesk Regular, lh 100% — counters */
+  --dv-size-micro:8px;        /* Space Grotesk Regular — the 16-ALL glyph */
+
+  --dv-weight-regular:400;
+  --dv-weight-medium:500;
+  --dv-weight-semibold:600;
+
+  --dv-leading-tight:100%;
+  --dv-leading-display:1.1;
+  --dv-leading-body:1.4;
+}

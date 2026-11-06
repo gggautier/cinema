@@ -1,0 +1,7 @@
+/* Déjà-vu is a flat system: the only elevation in the file is a 1px inset
+   outline. The Tailwind Shadow collection (15 levels) ships in fig-tokens.css
+   for consumers, but nothing in the product uses a drop shadow. */
+:root{
+  --dv-outline:inset 0 0 0 1px rgb(10,10,10); /* @kind shadow */
+  --dv-shadow-none:none;
+}

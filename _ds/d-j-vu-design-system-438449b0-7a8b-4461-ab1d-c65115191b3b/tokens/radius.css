@@ -1,0 +1,11 @@
+/* Tailwind radius primitives + the exact radii the file uses. */
+:root{
+  --dv-radius-sm:5px;     /* component-set frames */
+  --dv-radius-md:6px;     /* segment chips, genre tags */
+  --dv-radius-lg:8px;     /* switch track */
+  --dv-radius-tile:10px;  /* poster tile */
+  --dv-radius-card:12px;  /* switch-cta card */
+  --dv-radius-hero:20px;  /* film-detail hero image */
+  --dv-radius-pill:999px; /* tab bar, tab item, dropdown */
+  --dv-radius-pill-alt:360px; /* resting tab item (source value) */
+}

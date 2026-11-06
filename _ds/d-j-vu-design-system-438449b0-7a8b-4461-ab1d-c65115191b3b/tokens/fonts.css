@@ -1,0 +1,4 @@
+/* Déjà-vu ships no font binaries — the Figma file references Inter and Space
+   Grotesk by family name only. Both are loaded from Google Fonts (the two
+   families ARE the real faces used in the source, not substitutes). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');

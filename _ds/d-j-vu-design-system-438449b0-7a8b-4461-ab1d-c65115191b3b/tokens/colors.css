@@ -1,0 +1,30 @@
+/* Déjà-vu semantic colors. Values transcribed verbatim from the Figma file;
+   each maps onto a Tailwind-primitive or custom ramp entry in fig-tokens.css. */
+:root{
+  /* Surfaces */
+  --dv-bg-canvas:rgb(251,250,249);        /* taupe-50  — library / list screens */
+  --dv-bg-warm:rgb(244,239,233);          /* teracotta-10 — film detail screen */
+  --dv-bg-white:rgb(255,255,255);         /* grey-white — icon sheets, modals */
+
+  /* Interactive fills */
+  --dv-fill-track:rgb(232,228,227);       /* taupe-200 — tab-bar + switch track */
+  --dv-fill-default:rgb(229,222,214);     /* teracotta-20 — resting tab item, tags */
+  --dv-fill-pressed:rgb(216,210,208);     /* taupe-300 — pressed state */
+  --dv-fill-hover:rgb(200,191,182);       /* teracotta-30 — hover */
+  --dv-fill-selected:rgb(12,10,9);        /* taupe-950 / stone-950 — selected */
+
+  /* Ink */
+  --dv-text:rgb(0,0,0);                   /* grey-black — all body + display copy */
+  --dv-text-inverse:rgb(250,250,250);     /* neutral-50 — on selected fills */
+  --dv-text-on-white:rgb(255,255,255);    /* grey-white — on pure-black fills */
+  --dv-icon:rgb(10,10,10);                /* neutral-950 — icon default */
+  --dv-icon-inverse:rgb(250,250,250);
+  --dv-icon-selected:rgb(229,222,214);    /* teracotta-20 on black tab item */
+
+  /* Borders */
+  --dv-border:rgb(10,10,10);              /* neutral-950 — 1px inset outline */
+
+  /* Accents (poster-derived tints used for empty/placeholder artwork) */
+  --dv-accent-apricot:rgb(236,163,126);
+  --dv-accent-sage:rgb(163,193,193);
+}

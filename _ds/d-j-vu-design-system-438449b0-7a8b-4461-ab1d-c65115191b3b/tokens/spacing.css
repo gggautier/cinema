@@ -1,0 +1,20 @@
+/* Tailwind spacing scale (4px base) — the values actually consumed by the file.
+   fig-tokens.css carries all 34 unitless Spacing variables. */
+:root{
+  --dv-space-1:4px;
+  --dv-space-1_5:6px;
+  --dv-space-2:8px;
+  --dv-space-2_5:10px;
+  --dv-space-3:12px;
+  --dv-space-3_5:14px;
+  --dv-space-4:16px;
+  --dv-space-4_5:18px;
+  --dv-space-5:20px;
+  --dv-space-6:24px;
+
+  /* Layout constants */
+  --dv-gutter:20px;         /* every screen edge */
+  --dv-header-height:64px;
+  --dv-tabbar-height:54px;
+  --dv-grid-gap:2px;        /* poster grid */
+}

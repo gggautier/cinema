@@ -1,0 +1,2888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Déjà-vu</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Déjà-vu">
+<meta name="theme-color" content="#F3F1F1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>@keyframes dv-pulse{0%{opacity:1}100%{opacity:.45}}@keyframes dv-fade{from{opacity:0}to{opacity:1}}@keyframes dv-scrim-in{from{opacity:0}to{opacity:.45}}@keyframes dv-scrim-out{from{opacity:.45}to{opacity:0}}@keyframes dv-sheet-in{from{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes dv-sheet-out{from{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes dv-up-in{from{transform:translateY(100%)}to{transform:translateY(0)}}@keyframes dv-up-out{from{transform:translateY(0)}to{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms !important;transition-duration:0.01ms !important}}html,body{height:100%;overflow:hidden}*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{width:0;height:0;display:none}html{background:#F3F1F1}body{margin:0;background:#F3F1F1;display:flex;justify-content:center;padding:0}a{color:#0C0A09}a:hover{color:#C8BFB6}input{font-family:Inter,sans-serif}</style></helmet>
+<div style="position:relative;width:min(100vw, 402px);height:100dvh;max-height:980px;overflow:hidden;font-family:Inter,-apple-system,sans-serif;color:#000">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div onScroll="{{ onGridScroll }}" style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A;cursor:pointer">
+<span style="display:inline-flex" onClick="{{ goSearch }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="PlusSquare32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ openMenu }}" role="button" aria-label="Menu"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Burger32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;padding:20px;box-sizing:border-box">
+<div style="height:42px;display:flex;justify-content:space-between;align-items:center">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:{{ countFont }};line-height:100%;white-space:nowrap;color:#000;min-width:0">{{ countLabel }}</span>
+<button type="button" onClick="{{ openYears }}" aria-haspopup="dialog" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:none;border-radius:999px;background:#E8E4E3;color:#0A0A0A;cursor:pointer;flex:0 0 auto">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:100%;white-space:nowrap">{{ yearLabel }}</span>
+<span style="display:inline-flex"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 12 }}" hint-size="12px,12px"></x-import></span>
+</button>
+</div>
+<x-import component-from-global-scope="DJVuDesignSystem_438449.SegmentedSwitch" items="{{ segments }}" value="{{ seg }}" onChange="{{ setSeg }}" style="align-self:stretch" hint-size="100%,41px"></x-import>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);align-items:start;grid-auto-rows:min-content;grid-auto-flow:row dense;gap:2px;padding:10px 20px 120px;box-sizing:border-box">
+<sc-for list="{{ tiles }}" as="tile" hint-placeholder-count="24">
+<div style="{{ tile.cellStyle }}">
+<div role="button" aria-label="{{ tile.title }}" onClick="{{ tile.open }}" style="{{ tile.tileStyle }}">
+<div style="{{ tile.labelStyle }}">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:110%;text-wrap:pretty">{{ tile.title }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:8px;line-height:100%;opacity:0.75">{{ tile.year }}</span>
+</div>
+</div>
+</div>
+</sc-for>
+<sc-for list="{{ skeletons }}" as="k" hint-placeholder-count="8">
+<div style="aspect-ratio:89 / 122.25;border-radius:10px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFilm }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ filmScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A">
+<span style="display:inline-flex;cursor:pointer" onClick="{{ goHome }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Dots3" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+</div>
+<div style="padding:0 20px 60px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box">
+<div style="position:relative">
+<div style="{{ heroStyle }}"><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;padding:20px;text-wrap:pretty">{{ film.title }}</span></div>
+<button type="button" onClick="{{ openPosters }}" aria-label="Changer l'affiche" style="position:absolute;right:16px;bottom:16px;width:52px;height:52px;border:none;border-radius:999px;background:#F3F1F1;color:#0A0A0A;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background 160ms ease-out" style-hover="background:#E8E4E3">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4.5 19.5h3.6L18.6 9a2.1 2.1 0 0 0 -3 -3L5 16.6v2.9z"></path>
+<path d="M13.6 6.6l3.8 3.8"></path>
+</svg>
+</button>
+</div>
+<div style="display:flex;flex-direction:row;gap:10px">
+<div role="button" onClick="{{ actSeen.onClick }}" style="{{ actSeen.style }}">
+<span style="{{ actSeen.iconStyle }}">
+<sc-if value="{{ actSeen.cinema }}" hint-placeholder-val="{{ true }}">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6.6 10.5l1.2 10h8.4l1.2 -10z"></path>
+<path d="M10.6 10.5l.5 10"></path>
+<path d="M13.4 10.5l-.5 10"></path>
+<path d="M8.6 10.5a2.4 2.4 0 1 1 .6 -4.4a2.6 2.6 0 0 1 4.6 -1.4a2.3 2.3 0 0 1 3 2.1a2.4 2.4 0 0 1 .6 3.7z"></path>
+</svg>
+</sc-if>
+<sc-if value="{{ actSeen.screen }}" hint-placeholder-val="{{ false }}">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M5.5 6.5h13v9h-13z"></path>
+<path d="M3.5 18.5h17l-2 -3h-13z"></path>
+</svg>
+</sc-if>
+<sc-if value="{{ actSeen.off }}" hint-placeholder-val="{{ false }}">
+<x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Sunglasses24" size="{{ 24 }}" hint-size="24px,24px"></x-import>
+</sc-if>
+</span>
+<span style="{{ actSeen.labelStyle }}">{{ actSeen.label }}</span>
+</div>
+<button type="button" aria-pressed="{{ actWish.on }}" onClick="{{ actWish.onClick }}" style="{{ actWish.style }}">
+<span style="{{ actWish.iconStyle }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ClockCountdown24" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+<span style="{{ actWish.labelStyle }}">Envie</span>
+</button>
+<button type="button" aria-pressed="{{ actLike.on }}" onClick="{{ actLike.onClick }}" style="{{ actLike.style }}">
+<span style="{{ actLike.iconStyle }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Heart24" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+<span style="{{ actLike.labelStyle }}">{{ actLike.label }}</span>
+</button>
+</div>
+<sc-if value="{{ writeError }}" hint-placeholder-val="{{ false }}">
+<span style="font-size:12px;line-height:140%;color:#57534E;margin-top:-10px">{{ writeError }}</span>
+</sc-if>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:baseline;gap:12px">
+<span style="flex:1;min-width:0;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;text-wrap:pretty">{{ film.title }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%;white-space:nowrap">{{ film.runtime }}</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;font-size:14px;line-height:140%;font-weight:500">
+<sc-if value="{{ film.hasDirectors }}" hint-placeholder-val="{{ true }}">
+<span>De</span>
+</sc-if>
+<sc-for list="{{ film.directorLinks }}" as="dir" hint-placeholder-count="1">
+<span role="button" onClick="{{ dir.open }}" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px">{{ dir.label }}</span>
+</sc-for>
+</div>
+<span style="font-size:14px;line-height:140%;font-weight:500">{{ film.release }}</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{ film.tags }}" as="tag" hint-placeholder-count="3">
+<span style="{{ tag.style }}">{{ tag.label }}</span>
+</sc-for>
+</div>
+<span style="font-size:14px;line-height:140%;color:#44403C;text-wrap:pretty">{{ film.synopsis }}</span>
+<sc-if value="{{ se.show }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:20px;padding-top:20px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:20px;line-height:110%">Séances aujourd'hui</span>
+<sc-if value="{{ se.hasMore }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ se.toggle }}" style="border:none;background:none;padding:0;font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#57534E;cursor:pointer" style-hover="color:#0C0A09">{{ se.headLabel }}</button>
+</sc-if>
+</div>
+<sc-if value="{{ se.geoNote }}" hint-placeholder-val="{{ false }}">
+<div style="position:relative;display:flex;flex-direction:column;gap:6px;margin-top:4px">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 12px;box-sizing:border-box;border-radius:8px;background:#E8E4E3;color:#0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+<input type="text" value="{{ se.addrQuery }}" onChange="{{ se.onAddr }}" placeholder="Adresse de départ" autocomplete="off" enterkeyhint="search" aria-label="Adresse de départ" style="flex:1;min-width:0;height:100%;border:none;outline:none;background:transparent;font-family:Inter,sans-serif;font-size:16px;line-height:140%;font-weight:500;color:#0C0A09">
+<sc-if value="{{ se.addrQuery }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ se.clearAddr }}" aria-label="Effacer l'adresse" style="flex:0 0 auto;width:36px;height:36px;border:none;background:none;padding:0;display:inline-flex;align-items:center;justify-content:center;color:#0A0A0A;cursor:pointer"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Cross" size="{{ 24 }}" hint-size="24px,24px"></x-import></button></sc-if>
+</div>
+<sc-if value="{{ se.hasSugg }}" hint-placeholder-val="{{ false }}">
+<div role="listbox" style="position:absolute;left:0;right:0;top:50px;z-index:3;display:flex;flex-direction:column;padding:4px;border-radius:12px;background:#FBFAF9;box-shadow:inset 0 0 0 1px #0A0A0A">
+<sc-for list="{{ se.addrSugg }}" as="s" hint-placeholder-count="3">
+<button type="button" role="option" onClick="{{ s.pick }}" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:44px;padding:6px 10px;border:none;border-radius:8px;background:transparent;text-align:left;cursor:pointer;transition:background 140ms ease-out" style-hover="background:#E5DED6" style-active="background:#D8D2D0">
+<span style="font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#0C0A09">{{ s.label }}</span>
+<span style="font-family:Inter,sans-serif;font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ s.ctx }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ se.addrNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ se.addrNote }}</span></sc-if>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{ se.loading }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:24px">
+<sc-for list="{{ se.skel }}" as="k" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:36px;height:36px;border-radius:999px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+<div style="width:132px;height:14px;border-radius:6px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</div>
+<div style="display:flex;gap:8px;overflow:hidden">
+<sc-for list="{{ se.skelPills }}" as="p" hint-placeholder-count="5">
+<div style="flex:0 0 68px;height:44px;border-radius:6px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ se.message }}" hint-placeholder-val="{{ false }}">
+<span style="font-size:14px;line-height:140%;font-weight:500;color:#44403C">{{ se.message }}</span>
+</sc-if>
+<sc-if value="{{ se.ready }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:column;gap:24px">
+<sc-for list="{{ se.top }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}"><img src="{{ c.logo }}" alt="{{ c.brandLabel }}" width="36" height="36" style="flex:0 0 36px;display:block"></sc-if>
+<sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:0 0 36px;height:36px;border-radius:999px;background:#E5DED6;display:inline-flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#0C0A09">{{ c.ini }}</span></sc-if>
+<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:140%;font-weight:500">{{ c.name }}</span>
+<sc-if value="{{ c.v }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;padding:2px 6px;border-radius:6px;background:#E5DED6;font-size:12px;line-height:140%;font-weight:600">{{ c.v }}</span></sc-if>
+<span style="flex:0 0 auto;margin-left:auto;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#57534E;white-space:nowrap">{{ c.dist }}</span>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+<sc-for list="{{ c.times }}" as="t" hint-placeholder-count="5">
+<sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}"><a href="{{ t.url }}" target="_blank" rel="noopener" aria-label="{{ t.aria }}" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #0A0A0A;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#0C0A09;text-decoration:none;transition:background 140ms ease-out" style-hover="background:#C8BFB6;color:#0C0A09" style-active="background:#D8D2D0">{{ t.h }}</a></sc-if>
+<sc-if value="{{ t.past }}" hint-placeholder-val="{{ false }}"><span aria-disabled="true" title="Séance passée" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #D8D2D0;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#A8A29E;text-decoration:line-through;text-decoration-thickness:1px">{{ t.h }}</span></sc-if>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-rows:{{ se.moreRows }};transition:grid-template-rows 320ms ease-out">
+<div style="min-height:0;overflow:hidden">
+<div style="display:flex;flex-direction:column;gap:24px;padding-top:24px">
+<sc-for list="{{ se.more }}" as="c" hint-placeholder-count="0">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}"><img src="{{ c.logo }}" alt="{{ c.brandLabel }}" width="36" height="36" style="flex:0 0 36px;display:block"></sc-if>
+<sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:0 0 36px;height:36px;border-radius:999px;background:#E5DED6;display:inline-flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#0C0A09">{{ c.ini }}</span></sc-if>
+<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:140%;font-weight:500">{{ c.name }}</span>
+<sc-if value="{{ c.v }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;padding:2px 6px;border-radius:6px;background:#E5DED6;font-size:12px;line-height:140%;font-weight:600">{{ c.v }}</span></sc-if>
+<span style="flex:0 0 auto;margin-left:auto;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#57534E;white-space:nowrap">{{ c.dist }}</span>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+<sc-for list="{{ c.times }}" as="t" hint-placeholder-count="5">
+<sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}"><a href="{{ t.url }}" target="_blank" rel="noopener" aria-label="{{ t.aria }}" tabindex="{{ se.moreTab }}" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #0A0A0A;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#0C0A09;text-decoration:none;transition:background 140ms ease-out" style-hover="background:#C8BFB6;color:#0C0A09" style-active="background:#D8D2D0">{{ t.h }}</a></sc-if>
+<sc-if value="{{ t.past }}" hint-placeholder-val="{{ false }}"><span aria-disabled="true" title="Séance passée" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #D8D2D0;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#A8A29E;text-decoration:line-through;text-decoration-thickness:1px">{{ t.h }}</span></sc-if>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+<sc-if value="{{ se.hasMore }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ se.toggle }}" style="align-self:flex-start;margin-top:12px;min-height:44px;border:none;background:none;padding:0;font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#0C0A09;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer">{{ se.footLabel }}</button>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ hasSugg }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:20px;padding-top:20px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:20px;line-height:110%">Suggestions</span>
+<div onScroll="{{ onSuggScroll }}" style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scroll-padding:0 20px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+<sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
+<div style="position:relative;flex:0 0 136px;scroll-snap-align:start">
+<div role="button" aria-label="{{ sg.title }}" onClick="{{ sg.open }}" style="{{ sg.style }}"></div>
+<sc-if value="{{ sg.canWish }}" hint-placeholder-val="{{ true }}">
+<button type="button" aria-label="Ajouter à la watchlist" aria-pressed="{{ sg.wishOn }}" onClick="{{ sg.toggleWish }}" style="{{ sg.wishStyle }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ClockCountdown24" size="{{ 24 }}" hint-size="24px,24px"></x-import></button>
+</sc-if>
+</div>
+</sc-for>
+<sc-for list="{{ suggSkeletons }}" as="k" hint-placeholder-count="0">
+<div style="flex:0 0 136px;aspect-ratio:2 / 3;border-radius:10px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWishlist }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;align-items:center;box-sizing:border-box;color:#0A0A0A;cursor:pointer">
+<span style="display:inline-flex" onClick="{{ goSearch }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="PlusSquare32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="padding:20px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:50px;line-height:100%;white-space:nowrap">{{ wishLabel }}</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);align-items:start;gap:2px;padding:10px 20px 120px;box-sizing:border-box">
+<sc-for list="{{ wishTiles }}" as="tile" hint-placeholder-count="8">
+<div style="animation:dv-fade 260ms ease-out both">
+<div role="button" aria-label="{{ tile.title }}" onClick="{{ tile.open }}" style="{{ tile.tileStyle }}">
+<div style="{{ tile.labelStyle }}">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:110%;text-wrap:pretty">{{ tile.title }}</span>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCinemas }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A">
+<span style="display:inline-flex;cursor:pointer" onClick="{{ goSearch }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="PlusSquare32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ openMenu }}" role="button" aria-label="Menu"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Burger32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;padding:20px 20px 120px;box-sizing:border-box">
+<div style="height:42px;display:flex;align-items:center"><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:50px;line-height:100%;white-space:nowrap;color:#000">{{ cin.countLabel }}</span></div>
+<div style="position:relative;display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 12px;box-sizing:border-box;border-radius:8px;background:#E8E4E3;color:#0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+<input type="text" value="{{ cin.addrQuery }}" onChange="{{ cin.onAddr }}" placeholder="Rue Guillaume Bertrand, 75011 Paris" autocomplete="off" enterkeyhint="search" aria-label="Adresse de départ" style="flex:1;min-width:0;height:100%;border:none;outline:none;background:transparent;font-family:Inter,sans-serif;font-size:16px;line-height:140%;font-weight:500;color:#0C0A09">
+<sc-if value="{{ cin.addrQuery }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ cin.clearAddr }}" aria-label="Effacer l'adresse" style="flex:0 0 auto;width:36px;height:36px;border:none;background:none;padding:0;display:inline-flex;align-items:center;justify-content:center;color:#0A0A0A;cursor:pointer"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Cross" size="{{ 24 }}" hint-size="24px,24px"></x-import></button></sc-if>
+</div>
+<sc-if value="{{ cin.hasSugg }}" hint-placeholder-val="{{ false }}">
+<div role="listbox" style="position:absolute;left:0;right:0;top:50px;z-index:3;display:flex;flex-direction:column;padding:4px;border-radius:12px;background:#FBFAF9;box-shadow:inset 0 0 0 1px #0A0A0A">
+<sc-for list="{{ cin.addrSugg }}" as="s" hint-placeholder-count="3">
+<button type="button" role="option" onClick="{{ s.pick }}" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:44px;padding:6px 10px;border:none;border-radius:8px;background:transparent;text-align:left;cursor:pointer;transition:background 140ms ease-out" style-hover="background:#E5DED6" style-active="background:#D8D2D0">
+<span style="font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#0C0A09">{{ s.label }}</span>
+<span style="font-family:Inter,sans-serif;font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ s.ctx }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ cin.addrNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ cin.addrNote }}</span></sc-if>
+</div>
+<sc-if value="{{ cin.loading }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:20px">
+<sc-for list="{{ cin.skel }}" as="k" hint-placeholder-count="3">
+<div style="display:flex;gap:16px">
+<span style="flex:0 0 74px;height:111px;border-radius:6px;background:#E8E4E3"></span>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;padding-top:4px"><span style="width:60%;height:14px;border-radius:6px;background:#E8E4E3"></span><span style="width:45%;height:10px;border-radius:6px;background:#E8E4E3"></span></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ cin.message }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;line-height:140%;font-weight:500;color:#57534E">{{ cin.message }}</span></sc-if>
+<div style="display:flex;flex-direction:column;gap:20px">
+<sc-for list="{{ cin.rows }}" as="r" hint-placeholder-count="0">
+<div style="display:flex;gap:16px;align-items:stretch">
+<button type="button" onClick="{{ r.open }}" aria-label="{{ r.title }}" disabled="{{ r.noOpen }}" style="flex:0 0 74px;height:111px;padding:0;border:none;border-radius:6px;overflow:hidden;background:#E8E4E3;cursor:pointer">
+<sc-if value="{{ r.poster }}" hint-placeholder-val="{{ false }}"><img src="{{ r.poster }}" alt="" style="{{ r.posterStyle }}"></sc-if>
+</button>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px">
+<div style="display:flex;align-items:flex-start;gap:10px">
+<div role="button" onClick="{{ r.open }}" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;cursor:pointer">
+<span style="font-size:16px;line-height:140%;font-weight:600;color:#0C0A09;text-wrap:pretty">{{ r.title }}</span>
+<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:140%;font-weight:500;color:#44403C">{{ r.cinema }}</span>
+</div>
+<sc-if value="{{ r.logo }}" hint-placeholder-val="{{ false }}"><img src="{{ r.logo }}" alt="{{ r.brand }}" width="36" height="36" style="flex:0 0 36px;display:block"></sc-if>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+<a href="{{ r.booking }}" target="_blank" rel="noopener" aria-label="{{ r.bookAria }}" style="height:44px;display:inline-flex;align-items:center;text-decoration:none;color:#0C0A09">
+<span style="height:32px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border-radius:6px;box-shadow:inset 0 0 0 1px #0A0A0A;transition:background 140ms ease-out" style-hover="background:#E5DED6">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%">{{ r.time }}</span>
+<sc-if value="{{ r.v }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;line-height:100%;font-weight:600;color:#44403C">{{ r.v }}</span></sc-if>
+</span>
+</a>
+<a href="{{ r.maps }}" target="_blank" rel="noopener" aria-label="{{ r.mapsAria }}" style="height:44px;display:inline-flex;align-items:center;text-decoration:none;color:#0C0A09">
+<span style="height:32px;display:inline-flex;align-items:center;padding:0 10px;border-radius:6px;background:#E8E4E3;font-size:14px;line-height:100%;font-weight:600;transition:background 140ms ease-out" style-hover="background:#C8BFB6">{{ r.trip }}</span>
+</a>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStats }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;align-items:center;box-sizing:border-box;color:#0A0A0A">
+<span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-left:-6px;cursor:pointer" onClick="{{ statsBack }}" role="button" aria-label="Retour"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:44px;padding:20px 20px 120px;box-sizing:border-box">
+<div style="height:42px;display:flex;justify-content:space-between;align-items:center">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:{{ statsCountFont }};line-height:100%;white-space:nowrap;color:#000;min-width:0">{{ statsCountLabel }}</span>
+<button type="button" onClick="{{ openYears }}" aria-haspopup="dialog" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:none;border-radius:999px;background:#E8E4E3;color:#0A0A0A;cursor:pointer;flex:0 0 auto">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:100%;white-space:nowrap">{{ yearLabel }}</span>
+<span style="display:inline-flex"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 12 }}" hint-size="12px,12px"></x-import></span>
+</button>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%">Directors</span>
+<span onClick="{{ toggleDirectors }}" role="button" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:140%;color:#57534E;cursor:pointer">{{ directorsMore }}<x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 16 }}" hint-size="16px,16px"></x-import></span>
+</div>
+<div style="display:flex;align-items:flex-start;gap:8px">
+<sc-for list="{{ directors }}" as="d" hint-placeholder-count="5">
+<div onClick="{{ d.open }}" role="button" style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%">{{ d.pct }}</span>
+<div style="position:relative;width:56px;max-width:100%;height:220px;border-radius:999px;background:#E8E4E3;overflow:hidden">
+<div style="{{ d.fillStyle }}"></div>
+</div>
+<div style="{{ d.avatarStyle }}"></div>
+<span style="font-size:12px;line-height:120%;min-height:29px;text-align:center;text-wrap:pretty">{{ d.name }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:100%;color:#57534E">{{ d.counts }}</span>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ directorsEmpty }}" hint-placeholder-val="{{ false }}">
+<span style="font-size:14px;line-height:140%;color:#57534E">{{ directorsEmpty }}</span>
+</sc-if>
+<div style="display:flex;justify-content:center">
+<div style="display:flex;width:220px;height:41px;padding:4px;gap:4px;border-radius:8px;background:#E8E4E3;box-sizing:border-box">
+<sc-for list="{{ genders }}" as="g" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{ g.on }}" onClick="{{ g.onClick }}" style="{{ g.style }}">{{ g.label }}</button>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%">Countries</span>
+<span onClick="{{ toggleCountries }}" role="button" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:140%;color:#57534E;cursor:pointer">{{ countriesMore }}<x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 16 }}" hint-size="16px,16px"></x-import></span>
+</div>
+<div style="position:relative;width:100%;height:300px">
+<sc-for list="{{ countryTiles }}" as="ct" hint-placeholder-count="5">
+<div role="button" aria-label="{{ ct.name }}" onClick="{{ ct.open }}" style="{{ ct.style }}"><span style="{{ ct.labelStyle }}">{{ ct.label }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ countries }}" as="c" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:14px;padding:10px 0">
+<div style="{{ c.flagStyle }}"></div>
+<span style="flex:1;min-width:0;font-size:16px;line-height:130%;font-weight:600">{{ c.name }}</span>
+<span style="font-size:16px;line-height:130%;color:#57534E">{{ c.pct }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDirector }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A">
+<span style="display:inline-flex;cursor:pointer" onClick="{{ backToStats }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ openMenu }}" role="button" aria-label="Menu"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Burger32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:36px;padding:20px 20px 120px;box-sizing:border-box">
+<div style="display:flex;gap:20px;align-items:flex-start">
+<div style="{{ person.avatarStyle }}"></div>
+<div style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;text-wrap:pretty">{{ person.name }}</span>
+<span style="font-size:16px;line-height:130%;color:#57534E">{{ person.life }}</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%">Filmographie</span>
+<div style="display:flex;align-items:center;gap:16px">
+<div style="flex:1;min-width:0;height:14px;border-radius:999px;background:#E8E4E3;overflow:hidden">
+<div style="{{ person.barStyle }}"></div>
+</div>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:100%;white-space:nowrap">{{ person.ratio }}</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+<sc-for list="{{ filmography }}" as="m" hint-placeholder-count="12">
+<div role="button" aria-label="{{ m.title }}" onClick="{{ m.open }}" style="{{ m.style }}"></div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCountry }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A">
+<span style="display:inline-flex;cursor:pointer" onClick="{{ backFromCountry }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ openMenu }}" role="button" aria-label="Menu"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Burger32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;padding:20px 20px 0;box-sizing:border-box">
+<div style="height:42px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:100%;white-space:nowrap;color:#000;min-width:0">{{ countryCountLabel }}</span>
+<div style="display:flex;gap:8px;flex:0 0 auto">
+<button type="button" onClick="{{ openCountries }}" aria-haspopup="dialog" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:none;border-radius:999px;background:#E8E4E3;color:#0C0A09;cursor:pointer">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:100%;white-space:nowrap">{{ countryCode }}</span>
+<span style="display:inline-flex"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 12 }}" hint-size="12px,12px"></x-import></span>
+</button>
+<button type="button" onClick="{{ openYears }}" aria-haspopup="dialog" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:none;border-radius:999px;background:#E8E4E3;color:#0C0A09;cursor:pointer">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:100%;white-space:nowrap">{{ yearLabel }}</span>
+<span style="display:inline-flex"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="SmallArrow" size="{{ 12 }}" hint-size="12px,12px"></x-import></span>
+</button>
+</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:2px;padding:20px 20px 120px;box-sizing:border-box">
+<sc-for list="{{ countryTilesGrid }}" as="tile" hint-placeholder-count="12">
+<div style="{{ tile.cellStyle }}">
+<div role="button" aria-label="{{ tile.title }}" onClick="{{ tile.open }}" style="{{ tile.tileStyle }}">
+<div style="{{ tile.labelStyle }}">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:110%;text-wrap:pretty">{{ tile.title }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:8px;line-height:100%;opacity:0.75">{{ tile.year }}</span>
+</div>
+</div>
+</div>
+</sc-for>
+<sc-for list="{{ countrySkeletons }}" as="k" hint-placeholder-count="0">
+<div style="aspect-ratio:2 / 3;border-radius:10px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</sc-for>
+</div>
+<sc-if value="{{ countryEmpty }}" hint-placeholder-val="{{ false }}">
+<span style="display:block;padding:0 20px;font-size:14px;line-height:140%;color:#57534E">Aucun film sur cette période</span>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#F3F1F1">
+<sc-if value="{{ draftHeader }}" hint-placeholder-val="{{ false }}">
+<div style="height:calc(64px + env(safe-area-inset-top));display:flex;padding:calc(16px + env(safe-area-inset-top)) 20px 16px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A;flex:0 0 auto">
+<span style="display:inline-flex;cursor:pointer" onClick="{{ closeSearch }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ openMenu }}" role="button" aria-label="Menu"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Burger32" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+</div>
+</sc-if>
+<div style="{{ searchField.style }}">
+<span style="{{ searchField.iconStyle }}" onClick="{{ searchBack }}" role="button" aria-label="Retour"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ArrowLeft32" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+<input value="{{ query }}" onChange="{{ onQuery }}" ref="{{ searchRef }}" onFocus="{{ onSearchFocus }}" onBlur="{{ onSearchBlur }}" placeholder="Rechercher un film" style="{{ searchField.inputStyle }}">
+<span style="{{ searchField.closeStyle }}" onClick="{{ clearQuery }}" role="button" aria-label="Effacer"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Cross" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto">
+<sc-if value="{{ isDraftPage }}" hint-placeholder-val="{{ false }}">
+<div style="padding:20px 20px 120px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;animation:dv-fade 220ms ease-out both">
+<div style="position:relative">
+<div style="{{ draft.heroStyle }}"><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;padding:20px;text-wrap:pretty">{{ draft.title }}</span></div>
+<button type="button" onClick="{{ openDraftPosters }}" aria-label="Choisir l'affiche" style="position:absolute;right:16px;bottom:16px;width:52px;height:52px;border:none;border-radius:999px;background:#F3F1F1;color:#0A0A0A;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background 160ms ease-out" style-hover="background:#E8E4E3">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4.5 19.5h3.6L18.6 9a2.1 2.1 0 0 0 -3 -3L5 16.6v2.9z"></path>
+<path d="M13.6 6.6l3.8 3.8"></path>
+</svg>
+</button>
+</div>
+<div style="display:flex;flex-direction:row;gap:10px">
+<sc-for list="{{ pageToggles }}" as="t" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{ t.on }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+<span style="{{ t.iconStyle }}">
+<sc-if value="{{ t.popcorn }}" hint-placeholder-val="{{ false }}">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6.6 10.5l1.2 10h8.4l1.2 -10z"></path>
+<path d="M10.6 10.5l.5 10"></path>
+<path d="M13.4 10.5l-.5 10"></path>
+<path d="M8.6 10.5a2.4 2.4 0 1 1 .6 -4.4a2.6 2.6 0 0 1 4.6 -1.4a2.3 2.3 0 0 1 3 2.1a2.4 2.4 0 0 1 .6 3.7z"></path>
+</svg>
+</sc-if>
+<sc-if value="{{ t.glyph }}" hint-placeholder-val="{{ true }}">
+<x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="{{ t.icon }}" size="{{ 24 }}" hint-size="24px,24px"></x-import>
+</sc-if>
+</span>
+<span style="{{ t.labelStyle }}">{{ t.label }}</span>
+</button>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:baseline;gap:12px">
+<span style="flex:1;min-width:0;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;text-wrap:pretty">{{ draft.title }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%;white-space:nowrap">{{ draft.runtime }}</span>
+</div>
+<span style="font-size:14px;line-height:140%;font-weight:500">{{ draft.credit }}</span>
+<span style="font-size:14px;line-height:140%;font-weight:500">{{ draft.release }}</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{ draftTags }}" as="tag" hint-placeholder-count="3">
+<span style="{{ tag.style }}">{{ tag.label }}</span>
+</sc-for>
+</div>
+<span style="font-size:14px;line-height:140%;color:#44403C;text-wrap:pretty">{{ draft.synopsis }}</span>
+<sc-if value="{{ se.show }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:20px;padding-top:20px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:20px;line-height:110%">Séances aujourd'hui</span>
+<sc-if value="{{ se.hasMore }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ se.toggle }}" style="border:none;background:none;padding:0;font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#57534E;cursor:pointer" style-hover="color:#0C0A09">{{ se.headLabel }}</button>
+</sc-if>
+</div>
+<sc-if value="{{ se.geoNote }}" hint-placeholder-val="{{ false }}">
+<div style="position:relative;display:flex;flex-direction:column;gap:6px;margin-top:4px">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 12px;box-sizing:border-box;border-radius:8px;background:#E8E4E3;color:#0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+<input type="text" value="{{ se.addrQuery }}" onChange="{{ se.onAddr }}" placeholder="Adresse de départ" autocomplete="off" enterkeyhint="search" aria-label="Adresse de départ" style="flex:1;min-width:0;height:100%;border:none;outline:none;background:transparent;font-family:Inter,sans-serif;font-size:16px;line-height:140%;font-weight:500;color:#0C0A09">
+<sc-if value="{{ se.addrQuery }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ se.clearAddr }}" aria-label="Effacer l'adresse" style="flex:0 0 auto;width:36px;height:36px;border:none;background:none;padding:0;display:inline-flex;align-items:center;justify-content:center;color:#0A0A0A;cursor:pointer"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Cross" size="{{ 24 }}" hint-size="24px,24px"></x-import></button></sc-if>
+</div>
+<sc-if value="{{ se.hasSugg }}" hint-placeholder-val="{{ false }}">
+<div role="listbox" style="position:absolute;left:0;right:0;top:50px;z-index:3;display:flex;flex-direction:column;padding:4px;border-radius:12px;background:#FBFAF9;box-shadow:inset 0 0 0 1px #0A0A0A">
+<sc-for list="{{ se.addrSugg }}" as="s" hint-placeholder-count="3">
+<button type="button" role="option" onClick="{{ s.pick }}" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:44px;padding:6px 10px;border:none;border-radius:8px;background:transparent;text-align:left;cursor:pointer;transition:background 140ms ease-out" style-hover="background:#E5DED6" style-active="background:#D8D2D0">
+<span style="font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#0C0A09">{{ s.label }}</span>
+<span style="font-family:Inter,sans-serif;font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ s.ctx }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ se.addrNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;line-height:140%;font-weight:500;color:#57534E">{{ se.addrNote }}</span></sc-if>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{ se.loading }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:24px">
+<sc-for list="{{ se.skel }}" as="k" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:36px;height:36px;border-radius:999px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+<div style="width:132px;height:14px;border-radius:6px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</div>
+<div style="display:flex;gap:8px;overflow:hidden">
+<sc-for list="{{ se.skelPills }}" as="p" hint-placeholder-count="5">
+<div style="flex:0 0 68px;height:44px;border-radius:6px;background:#E8E4E3;animation:dv-pulse 900ms ease-out infinite alternate"></div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ se.message }}" hint-placeholder-val="{{ false }}">
+<span style="font-size:14px;line-height:140%;font-weight:500;color:#44403C">{{ se.message }}</span>
+</sc-if>
+<sc-if value="{{ se.ready }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:column;gap:24px">
+<sc-for list="{{ se.top }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}"><img src="{{ c.logo }}" alt="{{ c.brandLabel }}" width="36" height="36" style="flex:0 0 36px;display:block"></sc-if>
+<sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:0 0 36px;height:36px;border-radius:999px;background:#E5DED6;display:inline-flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#0C0A09">{{ c.ini }}</span></sc-if>
+<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:140%;font-weight:500">{{ c.name }}</span>
+<sc-if value="{{ c.v }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;padding:2px 6px;border-radius:6px;background:#E5DED6;font-size:12px;line-height:140%;font-weight:600">{{ c.v }}</span></sc-if>
+<span style="flex:0 0 auto;margin-left:auto;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#57534E;white-space:nowrap">{{ c.dist }}</span>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+<sc-for list="{{ c.times }}" as="t" hint-placeholder-count="5">
+<sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}"><a href="{{ t.url }}" target="_blank" rel="noopener" aria-label="{{ t.aria }}" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #0A0A0A;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#0C0A09;text-decoration:none;transition:background 140ms ease-out" style-hover="background:#C8BFB6;color:#0C0A09" style-active="background:#D8D2D0">{{ t.h }}</a></sc-if>
+<sc-if value="{{ t.past }}" hint-placeholder-val="{{ false }}"><span aria-disabled="true" title="Séance passée" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #D8D2D0;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#A8A29E;text-decoration:line-through;text-decoration-thickness:1px">{{ t.h }}</span></sc-if>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-rows:{{ se.moreRows }};transition:grid-template-rows 320ms ease-out">
+<div style="min-height:0;overflow:hidden">
+<div style="display:flex;flex-direction:column;gap:24px;padding-top:24px">
+<sc-for list="{{ se.more }}" as="c" hint-placeholder-count="0">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}"><img src="{{ c.logo }}" alt="{{ c.brandLabel }}" width="36" height="36" style="flex:0 0 36px;display:block"></sc-if>
+<sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:0 0 36px;height:36px;border-radius:999px;background:#E5DED6;display:inline-flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#0C0A09">{{ c.ini }}</span></sc-if>
+<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:140%;font-weight:500">{{ c.name }}</span>
+<sc-if value="{{ c.v }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;padding:2px 6px;border-radius:6px;background:#E5DED6;font-size:12px;line-height:140%;font-weight:600">{{ c.v }}</span></sc-if>
+<span style="flex:0 0 auto;margin-left:auto;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;line-height:100%;color:#57534E;white-space:nowrap">{{ c.dist }}</span>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+<sc-for list="{{ c.times }}" as="t" hint-placeholder-count="5">
+<sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}"><a href="{{ t.url }}" target="_blank" rel="noopener" aria-label="{{ t.aria }}" tabindex="{{ se.moreTab }}" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #0A0A0A;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#0C0A09;text-decoration:none;transition:background 140ms ease-out" style-hover="background:#C8BFB6;color:#0C0A09" style-active="background:#D8D2D0">{{ t.h }}</a></sc-if>
+<sc-if value="{{ t.past }}" hint-placeholder-val="{{ false }}"><span aria-disabled="true" title="Séance passée" style="flex:0 0 auto;min-width:68px;height:44px;box-sizing:border-box;padding:0 14px;border-radius:6px;box-shadow:inset 0 0 0 1px #D8D2D0;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:100%;font-weight:500;color:#A8A29E;text-decoration:line-through;text-decoration-thickness:1px">{{ t.h }}</span></sc-if>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+<sc-if value="{{ se.hasMore }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ se.toggle }}" style="align-self:flex-start;margin-top:12px;min-height:44px;border:none;background:none;padding:0;font-family:Inter,sans-serif;font-size:14px;line-height:140%;font-weight:500;color:#0C0A09;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer">{{ se.footLabel }}</button>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ writeError }}" hint-placeholder-val="{{ false }}">
+<span style="display:block;font-size:12px;line-height:140%;color:#57534E;padding:12px 20px 0">{{ writeError }}</span>
+</sc-if>
+<div style="{{ resultsStyle }}">
+<sc-for list="{{ results }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:20px;align-items:center;animation:dv-fade 200ms ease-out both">
+<div onClick="{{ r.openPage }}" role="button" style="{{ r.thumbStyle }}"></div>
+<div onClick="{{ r.openPage }}" role="button" style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;cursor:pointer">
+<span style="font-size:16px;line-height:130%;font-weight:600;text-wrap:pretty">{{ r.title }}</span>
+<span style="font-size:14px;line-height:140%;font-weight:400;color:#78716C">{{ r.sub }}</span>
+</div>
+<div style="display:flex;gap:10px;flex:0 0 auto">
+<button type="button" aria-label="Ajouter à la watchlist" aria-pressed="{{ r.wishOn }}" onClick="{{ r.toggleWish }}" style="{{ r.wishStyle }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="ClockCountdown24" size="{{ 24 }}" hint-size="24px,24px"></x-import></button>
+<button type="button" aria-label="Déjà vu" onClick="{{ r.openSheet }}" style="{{ r.seenStyle }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Sunglasses24" size="{{ 24 }}" hint-size="24px,24px"></x-import></button>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:7">
+<div onClick="{{ closeDraft }}" style="{{ draftOverlayStyle }}"></div>
+<div role="dialog" aria-label="{{ draft.title }}" style="{{ draftSheetStyle }}">
+<div style="display:flex;justify-content:center;padding:10px 0 24px;flex:0 0 auto"><span style="width:100px;height:6px;border-radius:999px;background:#E8E4E3"></span></div>
+<div style="display:flex;flex-direction:column;gap:14px;padding:0 20px calc(28px + env(safe-area-inset-bottom));box-sizing:border-box">
+<div style="display:flex;gap:12px;align-items:baseline">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:110%;flex:1;min-width:0;text-wrap:pretty">{{ draft.title }}</span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%;flex:0 0 auto">{{ draft.runtime }}</span>
+</div>
+<span style="font-size:14px;line-height:140%;font-weight:500">{{ draft.credit }}</span>
+<span style="font-size:14px;line-height:140%;font-weight:500">{{ draft.release }}</span>
+<div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:6px">
+<sc-for list="{{ draftTags }}" as="tag" hint-placeholder-count="3">
+<span style="{{ tag.style }}">{{ tag.label }}</span>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;padding-top:6px">
+<sc-for list="{{ draftToggles }}" as="t" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{ t.on }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+<span style="{{ t.iconStyle }}">
+<sc-if value="{{ t.popcorn }}" hint-placeholder-val="{{ false }}">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6.6 10.5l1.2 10h8.4l1.2 -10z"></path>
+<path d="M10.6 10.5l.5 10"></path>
+<path d="M13.4 10.5l-.5 10"></path>
+<path d="M8.6 10.5a2.4 2.4 0 1 1 .6 -4.4a2.6 2.6 0 0 1 4.6 -1.4a2.3 2.3 0 0 1 3 2.1a2.4 2.4 0 0 1 .6 3.7z"></path>
+</svg>
+</sc-if>
+<sc-if value="{{ t.glyph }}" hint-placeholder-val="{{ true }}">
+<x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="{{ t.icon }}" size="{{ 24 }}" hint-size="24px,24px"></x-import>
+</sc-if>
+</span>
+<span style="{{ t.labelStyle }}">{{ t.label }}</span>
+</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{ commitDraft }}" style="{{ draft.ctaStyle }}">
+<span style="display:inline-flex;flex:0 0 auto"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Plus24" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%">{{ draft.ctaLabel }}</span>
+</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ yearsOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:9">
+<div onClick="{{ cancelYears }}" style="{{ yearsScrimStyle }}"></div>
+<div role="dialog" aria-label="Filtrer par année" style="{{ yearsSheetStyle }}">
+<div ref="{{ yearsListRef }}" onPointerDown="{{ onYearDown }}" onPointerMove="{{ onYearMove }}" onPointerUp="{{ onYearUp }}" onPointerCancel="{{ onYearUp }}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;height:100%;padding:20px 0;box-sizing:border-box;overflow-y:auto;touch-action:none;user-select:none;cursor:pointer">
+<sc-for list="{{ yearRows }}" as="row" hint-placeholder-count="15">
+<div style="{{ row.slotStyle }}">
+<div style="{{ row.pillStyle }}"><span style="{{ row.labelStyle }}">{{ row.label }}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ countriesOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:9">
+<div onClick="{{ cancelCountries }}" style="{{ countriesScrimStyle }}"></div>
+<div role="dialog" aria-label="Choisir un pays" style="{{ countriesSheetStyle }}">
+<div ref="{{ countriesListRef }}" style="display:flex;flex-direction:column;height:100%;padding:20px 0;box-sizing:border-box;overflow-y:auto">
+<sc-for list="{{ countryRows }}" as="row" hint-placeholder-count="12">
+<div role="button" onClick="{{ row.pick }}" style="{{ row.style }}">
+<span style="{{ row.flagStyle }}"></span>
+<span style="font-family:Inter,sans-serif;font-weight:500;font-size:16px;line-height:130%;color:#0C0A09;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">{{ row.name }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:9">
+<div onClick="{{ closeMenu }}" style="{{ menuScrimStyle }}"></div>
+<div role="dialog" aria-label="Menu" style="{{ menuSheetStyle }}">
+<div style="display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top)) 0 20px;box-sizing:border-box">
+<div role="button" onClick="{{ goStats }}" style="{{ menuStatsStyle }}" style-hover="background:#E8E4E3"><span style="font-family:Inter,sans-serif;font-weight:500;font-size:16px;line-height:130%;color:#0C0A09">Statistiques</span></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPosters }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:5">
+<div onClick="{{ closePosters }}" style="{{ overlayStyle }}"></div>
+<div role="dialog" aria-label="Choisir l'affiche" style="{{ sheetStyle }}">
+<div style="height:64px;display:flex;padding:16px 20px;justify-content:space-between;align-items:center;box-sizing:border-box;color:#0A0A0A;flex:0 0 auto">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;line-height:100%">Choisir l'affiche</span>
+<span style="display:inline-flex;cursor:pointer" onClick="{{ closePosters }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="Cross" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:0 20px 24px">
+<sc-if value="{{ postersNote }}" hint-placeholder-val="{{ false }}">
+<span style="display:block;font-size:12px;line-height:140%;color:#57534E;padding-bottom:12px">{{ postersNote }}</span>
+</sc-if>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+<sc-for list="{{ posterChoices }}" as="p" hint-placeholder-count="8">
+<button type="button" onClick="{{ p.pick }}" style="{{ p.style }}"></button>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabBar }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;bottom:0;height:82px;display:flex;padding:14px 16px calc(14px + env(safe-area-inset-bottom));justify-content:center;align-items:center;box-sizing:border-box">
+<div role="tablist" style="position:relative;flex:1;height:54px;background:#E8E4E3;border-radius:999px">
+<div style="{{ pillStyle }}"></div>
+<div style="position:absolute;inset:0;display:flex;align-items:stretch">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+<button type="button" role="tab" onClick="{{ t.onClick }}" style="{{ t.style }}">
+<span style="{{ t.iconStyle }}"><sc-if value="{{ t.glyph }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="DJVuDesignSystem_438449.Icon" name="{{ t.icon }}" size="{{ 24 }}" hint-size="24px,24px"></x-import></sc-if><sc-if value="{{ t.pin }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l0 2"></path><path d="M15 11l0 2"></path><path d="M15 17l0 2"></path><path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"></path></svg></sc-if></span>
+<span style="{{ t.labelStyle }}">{{ t.label }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:980},&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://kabclxkxgrjdxdhbnhrd.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Données&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_FmdCOs8e2v1YemONtAURig__gD1hc5f&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Données&quot;},&quot;tmdbApiKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;c7bc6795c12754f98ab671408d20d189&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Données&quot;},&quot;seancesState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;domicile&quot;,&quot;loading&quot;,&quot;denied&quot;,&quot;none&quot;,&quot;over&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Séances&quot;},&quot;seancesAllFilms&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Séances&quot;},&quot;showtimesBase&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://raw.githubusercontent.com/gggautier/cinema/main/data/&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Séances&quot;}}">
+const TINTS = [
+  { bg: '#0C0A09', ink: '#FAFAFA' },
+  { bg: '#ECA37E', ink: '#0C0A09' },
+  { bg: '#A3C1C1', ink: '#0C0A09' },
+  { bg: '#E5DED6', ink: '#0C0A09' },
+  { bg: '#C8BFB6', ink: '#0C0A09' },
+];
+
+const FILMS = [
+  { t: 'Petit Paysan', y: 2017, d: 'Hubert Charuel', c: 'Swann Arlaud, Sara Giraudeau', g: ['Drame'], p: 'France', l: '🇫🇷 FR', dt: '8 octobre 2025', v: 0, liked: true, s: "Un éleveur laitier découvre que l'une de ses vaches est malade et refuse de la déclarer." },
+  { t: 'Portrait de la jeune fille en feu', y: 2019, d: 'Céline Sciamma', c: 'Noémie Merlant, Adèle Haenel', g: ['Drame', 'Romance'], p: 'France', l: '🇫🇷 FR', dt: '2 octobre 2025', v: 1, liked: true, s: "Une peintre doit faire le portrait d'une jeune femme promise au mariage, sans qu'elle le sache." },
+  { t: 'Parasite', y: 2019, d: 'Bong Joon-ho', c: 'Song Kang-ho, Cho Yeo-jeong', g: ['Thriller', 'Drame'], p: 'Corée du Sud', l: 'KO', dt: '24 septembre 2025', v: 0, liked: true, s: "Une famille sans emploi s'infiltre un à un chez les Park." },
+  { t: 'Anatomie d’une chute', y: 2023, d: 'Justine Triet', c: 'Sandra Hüller, Swann Arlaud', g: ['Drame', 'Procès'], p: 'France', l: '🇫🇷 FR', dt: '19 septembre 2025', v: 0, liked: false, s: "Un homme meurt au pied de son chalet. Sa femme est jugée." },
+  { t: 'Drive My Car', y: 2021, d: 'Ryusuke Hamaguchi', c: 'Hidetoshi Nishijima, Tôko Miura', g: ['Drame'], p: 'Japon', l: 'JA', dt: '11 septembre 2025', v: 1, liked: true, s: "Un metteur en scène veuf et sa chauffeure traversent le deuil en voiture." },
+  { t: 'In the Mood for Love', y: 2000, d: 'Wong Kar-wai', c: 'Tony Leung, Maggie Cheung', g: ['Romance', 'Drame'], p: 'Hong Kong', l: 'ZH', dt: '5 septembre 2025', v: 1, liked: true, s: "Deux voisins découvrent que leurs conjoints les trompent ensemble." },
+  { t: 'La Haine', y: 1995, d: 'Mathieu Kassovitz', c: 'Vincent Cassel, Hubert Koundé', g: ['Drame'], p: 'France', l: '🇫🇷 FR', dt: '29 août 2025', v: 1, liked: false, s: "Vingt-quatre heures dans une cité après une bavure policière." },
+  { t: 'Perfect Days', y: 2023, d: 'Wim Wenders', c: 'Kôji Yakusho', g: ['Drame'], p: 'Japon', l: 'JA', dt: '21 août 2025', v: 0, liked: true, s: "Un homme nettoie les toilettes publiques de Tokyo et écoute des cassettes." },
+  { t: 'Aftersun', y: 2022, d: 'Charlotte Wells', c: 'Paul Mescal, Frankie Corio', g: ['Drame'], p: 'Royaume-Uni', l: 'EN', dt: '14 août 2025', v: 1, liked: true, s: "Vingt ans plus tard, une femme revoit les vidéos de vacances avec son père." },
+  { t: 'Mulholland Drive', y: 2001, d: 'David Lynch', c: 'Naomi Watts, Laura Harring', g: ['Mystère'], p: 'États-Unis', l: 'EN', dt: '7 août 2025', v: 1, liked: false, s: "Une amnésique et une actrice débutante cherchent une identité à Los Angeles." },
+  { t: 'Past Lives', y: 2023, d: 'Celine Song', c: 'Greta Lee, Teo Yoo', g: ['Romance', 'Drame'], p: 'États-Unis', l: 'EN', dt: '30 juillet 2025', v: 0, liked: true, s: "Deux amis d'enfance coréens se retrouvent à New York, vingt-quatre ans après." },
+  { t: 'Titane', y: 2021, d: 'Julia Ducournau', c: 'Agathe Rousselle, Vincent Lindon', g: ['Horreur', 'Drame'], p: 'France', l: '🇫🇷 FR', dt: '22 juillet 2025', v: 0, liked: false, s: "Après un accident, une femme vit avec une plaque de titane dans le crâne." },
+  { t: 'Roma', y: 2018, d: 'Alfonso Cuarón', c: 'Yalitza Aparicio, Marina de Tavira', g: ['Drame'], p: 'Mexique', l: 'ES', dt: '15 juillet 2025', v: 1, liked: true, s: "Une employée de maison dans le Mexico des années 1970." },
+  { t: 'Burning', y: 2018, d: 'Lee Chang-dong', c: 'Yoo Ah-in, Steven Yeun', g: ['Mystère', 'Drame'], p: 'Corée du Sud', l: 'KO', dt: '8 juillet 2025', v: 1, liked: false, s: "Un jeune homme soupçonne un rival d'avoir fait disparaître son amie." },
+  { t: 'Les Olympiades', y: 2021, d: 'Jacques Audiard', c: 'Lucie Zhang, Makita Samba', g: ['Romance'], p: 'France', l: '🇫🇷 FR', dt: '1 juillet 2025', v: 0, liked: false, s: "Quatre trentenaires s'aiment et se quittent dans le 13e arrondissement." },
+  { t: 'Holy Motors', y: 2012, d: 'Leos Carax', c: 'Denis Lavant, Édith Scob', g: ['Fantastique'], p: 'France', l: '🇫🇷 FR', dt: '24 juin 2025', v: 1, liked: false, s: "Monsieur Oscar traverse Paris en limousine et change de vie à chaque rendez-vous." },
+  { t: 'Amour', y: 2012, d: 'Michael Haneke', c: 'Jean-Louis Trintignant, Emmanuelle Riva', g: ['Drame'], p: 'Autriche', l: '🇫🇷 FR', dt: '17 juin 2025', v: 1, liked: true, s: "Un couple de musiciens octogénaires, l'un veillant l'autre." },
+  { t: 'Une séparation', y: 2011, d: 'Asghar Farhadi', c: 'Peyman Moaadi, Leila Hatami', g: ['Drame'], p: 'Iran', l: 'FA', dt: '10 juin 2025', v: 1, liked: false, s: "Un couple iranien se déchire entre le départ et un père malade." },
+  { t: 'Le Règne animal', y: 2023, d: 'Thomas Cailley', c: 'Romain Duris, Paul Kircher', g: ['Fantastique'], p: 'France', l: '🇫🇷 FR', dt: '3 juin 2025', v: 0, liked: false, s: "Des humains mutent en animaux ; un père cherche sa femme, son fils se transforme." },
+  { t: 'Stalker', y: 1979, d: 'Andreï Tarkovski', c: 'Alexandre Kaïdanovski', g: ['Science-fiction'], p: 'URSS', l: 'RU', dt: '27 mai 2025', v: 1, liked: true, s: "Un passeur mène deux hommes au cœur de la Zone." },
+  { t: 'Moonlight', y: 2016, d: 'Barry Jenkins', c: 'Trevante Rhodes, Mahershala Ali', g: ['Drame'], p: 'États-Unis', l: 'EN', dt: '20 mai 2025', v: 1, liked: false, s: "Trois âges de la vie d'un jeune homme noir à Miami." },
+  { t: 'Lost in Translation', y: 2003, d: 'Sofia Coppola', c: 'Bill Murray, Scarlett Johansson', g: ['Comédie', 'Drame'], p: 'États-Unis', l: 'EN', dt: '13 mai 2025', v: 1, liked: true, s: "Deux insomniaques américains se croisent dans un hôtel de Tokyo." },
+  { t: 'Les 400 coups', y: 1959, d: 'François Truffaut', c: 'Jean-Pierre Léaud', g: ['Drame'], p: 'France', l: '🇫🇷 FR', dt: '6 mai 2025', v: 0, liked: true, s: "Antoine Doinel fugue entre l'école, ses parents et la mer." },
+  { t: 'Conte d’été', y: 1996, d: 'Éric Rohmer', c: 'Melvil Poupaud, Amanda Langlet', g: ['Comédie', 'Romance'], p: 'France', l: '🇫🇷 FR', dt: '29 avril 2025', v: 1, liked: false, s: "Un garçon indécis hésite entre trois filles à Dinard." },
+];
+
+const WISH = [
+  { t: 'Le Deuxième Acte', y: 2024, d: 'Quentin Dupieux' },
+  { t: 'La Chimère', y: 2023, d: 'Alice Rohrwacher' },
+  { t: 'Les Herbes sèches', y: 2023, d: 'Nuri Bilge Ceylan' },
+  { t: 'Vers un avenir radieux', y: 2023, d: 'Nanni Moretti' },
+  { t: 'Close', y: 2022, d: 'Lukas Dhont' },
+  { t: 'Memoria', y: 2021, d: 'Apichatpong Weerasethakul' },
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const seen = FILMS.map((f, i) => ({ ...f, id: 'v' + i, seen: true, wish: false }));
+    const wish = WISH.map((f, i) => ({ ...f, id: 'w' + i, g: [], c: '', p: '', l: '', dt: '', v: 0, liked: false, s: '', seen: false, wish: true }));
+    const sb = !!this.sb();
+    this.state = {
+      screen: 'home', tab: 0, seg: 0, year: String(new Date().getFullYear()), filmId: null, query: '',
+      films: sb ? [] : seen, wish, posters: {}, results: [], visible: 160,
+      yearsOpen: false, yearsClosing: false, yearHover: 0, director: null, statsYear: null, statsDirCounts: [], statsCountries: [], statsTotal: 0, people: {}, gender: 2,
+      moreDirectors: false, moreCountries: false,
+      counts: sb ? [0, 0, 0, 0] : null, years: [], loading: sb, done: !sb, sbError: null,
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.onKey);
+    if (this.sb()) this.probeRevus().then(() => { this.loadYears(); this.refresh(); });    else if (this.key()) this.loadPosters();
+  }
+
+  sb() {
+    const url = (this.props.supabaseUrl || '').trim().replace(/\/$/, '');
+    const key = (this.props.supabaseKey || '').trim();
+    return url && key ? { url, key } : null;
+  }
+
+  headers(extra) {
+    const c = this.sb();
+    return { apikey: c.key, Authorization: 'Bearer ' + c.key, ...extra };
+  }
+
+  // Revisionnages : la ligne porte le dernier visionnage (movie_view, is_cinema,
+  // is_liked) ; les années précédentes vivent dans revus_cinema / revus_ordi /
+  // revus_coeur. Un film compte dans chaque année où il a été vu.
+  async probeRevus() {
+    const c = this.sb();
+    try { const r = await fetch(c.url + '/rest/v1/movies?select=revus_ordi&limit=1', { headers: this.headers() }); this._revus = r.ok; }
+    catch (e) { this._revus = false; }
+  }
+
+  revCols() { return this._revus ? ',revus_cinema,revus_ordi,revus_coeur' : ''; }
+
+  revusOf(m) {
+    const coeur = Array.isArray(m.revus_coeur) ? m.revus_coeur : [];
+    const revus = [...(m.revus_cinema || []), ...(m.revus_ordi || [])];
+    const coeurYears = [...new Set([...coeur, ...(m.is_liked && m.movie_view ? [Number(m.movie_view)] : [])])].sort((a, b) => a - b);
+    return { liked: coeurYears.length > 0 || !!m.is_liked, likedNow: !!m.is_liked, coeurYears, revus };
+  }
+
+  // Un coup de cœur appartient à son année : on ne le pose ou ne l'enlève que
+  // pendant l'année en cours, sur un film vu cette année.
+  canCoeur(film) { return !!(film && film.seen && Number(film.dt) === new Date().getFullYear()); }
+
+  toggleCoeur(film) {
+    if (!this.canCoeur(film)) return;
+    const now = !film.likedNow;
+    const y = new Date().getFullYear();
+    const past = (film.coeurYears || []).filter(x => x !== y);
+    const coeurYears = now ? [...past, y] : past;
+    const m = (arr) => arr.map(f => f.id === film.id ? { ...f, likedNow: now, liked: coeurYears.length > 0, coeurYears } : f);
+    this.setState(s => ({ films: m(s.films), wish: m(s.wish) }));
+    this.persist(film.id, { is_liked: now }, null);
+  }
+
+  viewConds(year, seg) {
+    const y = year === 'Tout' ? null : year;
+    const cur = y ? ['movie_view.eq.' + y] : [];
+    const col = ['', 'is_cinema.is.true', 'is_cinema.is.false', 'is_liked.is.true'][seg] || '';
+    if (col) cur.push(col);
+    if (!this._revus) return cur;
+    const has = (c) => y ? c + '.cs.{' + y + '}' : c + '.neq.{}';
+    const now = cur.length > 1 ? 'and(' + cur.join(',') + ')' : cur[0];
+    if (!seg) return y ? ['or(' + now + ',' + has('revus_cinema') + ',' + has('revus_ordi') + ')'] : [];
+    return ['or(' + now + ',' + has(['', 'revus_cinema', 'revus_ordi', 'revus_coeur'][seg]) + ')'];
+  }
+
+  condQS(year, seg) {
+    const conds = [];
+    if (this._noWish !== true) conds.push('or(is_wish.is.false,is_wish.is.null)');
+    conds.push(...this.viewConds(year, seg || 0));
+    return conds.length ? '&and=' + encodeURIComponent('(' + conds.join(',') + ')') : '';
+  }
+
+  filterQS(seg) { return this.condQS(this.state.year, seg); }
+
+  async countFor(seg) {
+    const c = this.sb();
+    const r = await fetch(c.url + '/rest/v1/movies?select=id' + this.filterQS(seg), {
+      method: 'HEAD', headers: this.headers({ Prefer: 'count=exact', Range: '0-0', 'Range-Unit': 'items' }),
+    });
+    const cr = r.headers.get('content-range') || '';
+    return parseInt(cr.split('/')[1], 10) || 0;
+  }
+
+  async loadYears() {
+    const c = this.sb();
+    try {
+      const seen = new Set();
+      for (let from = 0; from < 4000; from += 1000) {
+        const r = await fetch(c.url + '/rest/v1/movies?select=movie_view' + this.revCols() + '&movie_view=not.is.null&order=movie_view.desc', {
+          headers: this.headers({ Range: from + '-' + (from + 999), 'Range-Unit': 'items' }),
+        });
+        const rows = await r.json();
+        if (!Array.isArray(rows) || !rows.length) break;
+        rows.forEach(x => [x.movie_view, ...(x.revus_cinema || []), ...(x.revus_ordi || [])].forEach(v => seen.add(Number(v))));
+        if (rows.length < 1000) break;
+      }
+      const years = [...seen].filter(Boolean).sort((a, b) => b - a).map(String);
+      if (years.length) this.setState({ years });
+    } catch (e) { console.warn('Supabase: années —', e.message); }
+  }
+
+  // Data s'ouvre sur « All time » ; Déjà-vu retrouve l'année qu'il avait.
+  goTab(i) {
+    if (i === 3 && this.state.screen !== 'search') this._searchBack = { screen: this.state.screen, tab: this.state.tab };
+    const patch = { tab: i, addFlow: false, screen: ['home', 'wishlist', 'cinemas', 'search'][i] };
+    // En quittant les statistiques, Déjà-vu retrouve l'année qu'il avait.
+    if (this._homeYear !== undefined) { patch.year = this._homeYear; this._homeYear = undefined; }
+    const changed = 'year' in patch && patch.year !== this.state.year;
+    this.setState(changed ? { ...patch, visible: 160 } : patch, () => {
+      if (changed && this.sb()) this.refresh();
+    });
+    if (i === 2) this.ensureCinemas();
+  }
+
+  // Statistiques : depuis le volet du menu. S'ouvre sur « All time ».
+  goStats() {
+    this.closeMenu();
+    if (this.state.screen !== 'stats') this._statsBack = { screen: this.state.screen, tab: this.state.tab, filmId: this.state.filmId };
+    const patch = { screen: 'stats', addFlow: false };
+    if (this._homeYear === undefined) { this._homeYear = this.state.year; patch.year = 'Tout'; }
+    const changed = 'year' in patch && patch.year !== this.state.year;
+    this.setState(changed ? { ...patch, visible: 160 } : patch, () => {
+      if (changed && this.sb()) this.refresh();
+      this.loadStats();
+    });
+  }
+
+  closeMenu() {
+    if (!this.state.menuOpen || this.state.menuClosing) return;
+    this.setState({ menuClosing: true });
+    clearTimeout(this._menuTimer);
+    this._menuTimer = setTimeout(() => this.setState({ menuOpen: false, menuClosing: false }), 200);
+  }
+
+  addrVals() {
+    const st = this.state;
+    return {
+      addrQuery: st.addrQuery ?? (st.addrPos ? st.addrPos.label : ''),
+      onAddr: (e) => this.onAddrInput(e.target.value),
+      clearAddr: () => this.pickAddr(null),
+      hasSugg: (st.addrSugg || []).length > 0,
+      addrSugg: (st.addrSugg || []).map(s => ({ ...s, pick: () => this.pickAddr(s) })),
+      addrNote: st.addrNote || '',
+    };
+  }
+
+  loadAddr() {
+    if (this._addrLoaded) return;
+    this._addrLoaded = true;
+    try { const a = JSON.parse(localStorage.getItem('dv-seances-addr') || 'null'); if (a && a.lat) this.setState({ addrPos: a }); } catch (e) {}
+  }
+
+  ensureCinemas() {
+    this.loadAddr();
+    this.loadSeData();
+    if (!this._cinTick) this._cinTick = setInterval(() => { if (this.state.screen === 'cinemas') this.forceUpdate(); }, 30000);
+    return;
+    if (this._geoAsked) return;
+    this._geoAsked = true;
+    if (!navigator.geolocation) { this.setState({ geo: 'denied' }); return; }
+    navigator.geolocation.getCurrentPosition(
+      p => this.setState({ geo: { lat: p.coords.latitude, lng: p.coords.longitude } }),
+      () => this.setState({ geo: 'denied' }),
+      { timeout: 8000, maximumAge: 600000 });
+  }
+
+  // Séances des cinémas à moins de 2 km (au moins les 3 plus proches) qui
+  // commencent dans l'heure et restent atteignables vu le trajet estimé.
+  cinemasVals() {
+    const st = this.state;
+    const HOME = { lat: 48.8636, lng: 2.3796, label: 'Rue Guillaume Bertrand, 75011 Paris' };
+    const data = st.seData;
+    const pos = st.addrPos || HOME;
+    const loading = !data;
+    const km = (a) => {
+      const r = Math.PI / 180, dLat = (a.lat - pos.lat) * r, dLng = (a.lng - pos.lng) * r;
+      const x = Math.sin(dLat / 2) ** 2 + Math.cos(pos.lat * r) * Math.cos(a.lat * r) * Math.sin(dLng / 2) ** 2;
+      return 12742 * Math.asin(Math.sqrt(x));
+    };
+    // À pied jusqu'à 1 km (4,5 km/h), sinon 10 min d'accès + 3 min/km.
+    const trip = (d) => d <= 1 ? Math.max(1, Math.round(d / 4.5 * 60)) : Math.round(10 + d * 3);
+    const tz = { timeZone: 'Europe/Paris' };
+    const now = new Date();
+    const today = now.toLocaleDateString('sv-SE', tz);
+    const [hh, mm] = now.toLocaleTimeString('fr-FR', { ...tz, hour: '2-digit', minute: '2-digit', hour12: false }).split(':').map(Number);
+    const nowMin = hh * 60 + mm;
+    const shows = data && data.shows;
+    const fresh = !!shows && shows.date === today;
+    const okIds = new Set((shows && shows.cinemas_ok) || []);
+    const cins = (data && data.cinemas || []).filter(c => c.lat != null && c.lng != null && okIds.has(c.allocine_id))
+      .map(c => ({ ...c, d: km(c) })).sort((a, b) => a.d - b.d);
+    const near = cins.filter(c => c.d <= 2);
+    const pool = near.length >= 3 ? near : cins.slice(0, 3);
+    const byId = new Map(pool.map(c => [c.allocine_id, c]));
+    const best = new Map();
+    if (fresh) (shows.films || []).forEach(f => (f.cinemas || []).forEach(cc => {
+      const c = byId.get(cc.cinema_id);
+      if (!c) return;
+      const t = trip(c.d);
+      (cc.showtimes || []).forEach(s => {
+        const m = Number(s.time.slice(0, 2)) * 60 + Number(s.time.slice(3, 5));
+        if (m < nowMin + t || m > nowMin + 60) return;
+        const k = f.tmdb_id || f.allocine_id;
+        const prev = best.get(k);
+        if (!prev || m < prev.m || (m === prev.m && c.d < prev.c.d)) best.set(k, { f, c, s, m, t });
+      });
+    }));
+    const list = [...best.values()].sort((a, b) => a.m - b.m || a.c.d - b.c.d);
+    const ids = list.map(x => x.f.tmdb_id).filter(Boolean);
+    if (ids.length) setTimeout(() => this.ensureCinePosters(ids), 0);
+    const posters = st.cinePosters || {};
+    const known = st.known || {};
+    const seenIds = new Set((st.films || []).filter(x => x.seen !== false && !x.wish).map(x => Number(x.tmdb)));
+    const origin = (st.addrPos && st.addrPos.label) || HOME.label;
+    const rows = list.map(({ f, c, s, t }) => {
+      const tid = f.tmdb_id;
+      const seen = !!tid && ((known['tmdb' + tid] || {}).seen || seenIds.has(tid));
+      const name = c.full_name || c.name;
+      const v = s.version === 'VOST' ? 'VO' : s.version || '';
+      return {
+        title: f.title, cinema: name, time: s.time, v,
+        trip: t + ' min',
+        poster: tid ? posters[tid] || '' : '',
+        posterStyle: { width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: seen ? 'grayscale(1)' : 'none', opacity: seen ? 0.45 : 1, transition: 'opacity 140ms ease-out' },
+        logo: c.logo || '', brand: c.brand === 'ugc' ? 'UGC' : c.brand === 'mk2' ? 'MK2' : name,
+        booking: s.booking_url || 'https://www.allocine.fr/seance/salle_gen_csalle=' + c.allocine_id + '.html',
+        bookAria: 'Réserver ' + f.title + ' à ' + s.time + ', ' + name,
+        maps: 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(origin) + '&destination=' + encodeURIComponent(name + ', ' + (c.address || 'Paris')) + '&travelmode=transit',
+        mapsAria: 'Itinéraire vers ' + name + ', ' + t + ' min',
+        noOpen: !tid,
+        open: () => { if (tid) this.openFilmByTmdb({ id: tid, title: f.title, poster: posters[tid] || null, y: f.year ? String(f.year) : '' }, 'cinemas'); },
+      };
+    });
+    const n = rows.length;
+    const av = this.addrVals();
+    return { cin: {
+      loading, rows, skel: [0, 1, 2],
+      countLabel: loading ? '' : n + (n > 1 ? ' séances' : ' séance'),
+      message: !loading && data.error ? 'Séances indisponibles' : (!loading && shows && !fresh ? 'Séances du jour pas encore publiées' : ''),
+      ...av,
+      addrQuery: st.addrQuery ?? (st.addrPos ? st.addrPos.label : HOME.label),
+    } };
+  }
+
+  // Affiches TMDB des films à l'affiche, gardées en localStorage.
+  async ensureCinePosters(ids) {
+    this._cinePost = this._cinePost || new Set();
+    const todo = ids.filter(id => !this._cinePost.has(id));
+    if (!todo.length) return;
+    todo.forEach(id => this._cinePost.add(id));
+    this._cineKnown = this._cineKnown || new Set();
+    const unk = todo.filter(id => !this._cineKnown.has(id));
+    unk.forEach(id => this._cineKnown.add(id));
+    if (unk.length) this.markKnown(unk);
+    const k = this.key();
+    const add = {};
+    await Promise.all(todo.map(async id => {
+      let p = null;
+      try { p = localStorage.getItem('dv-poster:' + id); } catch (e) {}
+      if (!p && k) {
+        try {
+          const j = await (await fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + encodeURIComponent(k) + '&language=fr-FR')).json();
+          if (j && j.poster_path) { p = 'https://image.tmdb.org/t/p/w185' + j.poster_path; try { localStorage.setItem('dv-poster:' + id, p); } catch (e) {} }
+        } catch (e) { /* vignette grise */ }
+      }
+      if (p) add[id] = p;
+    }));
+    if (Object.keys(add).length) this.setState(s => ({ cinePosters: { ...(s.cinePosters || {}), ...add } }));
+  }
+
+  // Une seule requête d'agrégat par année : deux colonnes sur toute la table.
+  async loadStats() {
+    const c = this.sb();
+    const year = this.state.year;
+    if (!c || this.state.statsYear === year) return;
+    this.setState({ statsYear: year });
+    const qs = this.condQS(year, 0);
+    try {
+      let rows = [];
+      for (let from = 0; from < 4000; from += 1000) {
+        const r = await fetch(c.url + '/rest/v1/movies?select=movie_director,movie_country' + qs, {
+          headers: this.headers({ Range: from + '-' + (from + 999), 'Range-Unit': 'items' }),
+        });
+        const part = await r.json();
+        if (!Array.isArray(part) || !part.length) break;
+        rows = rows.concat(part);
+        if (part.length < 1000) break;
+      }
+      const dirs = new Map();
+      const countries = new Map();
+      rows.forEach(m => {
+        (Array.isArray(m.movie_director) ? m.movie_director : [m.movie_director]).filter(Boolean)
+          .forEach(d => dirs.set(d, (dirs.get(d) || 0) + 1));
+        (Array.isArray(m.movie_country) ? m.movie_country : [m.movie_country]).filter(Boolean)
+          .forEach(x => countries.set(x, (countries.get(x) || 0) + 1));
+      });
+      const dirCounts = [...dirs.entries()].map(([name, n]) => ({ name, n })).sort((a, b) => b.n - a.n);
+      const cs = [...countries.entries()].map(([code, n]) => ({ code, n, pct: Math.round(n / rows.length * 100) })).sort((a, b) => b.n - a.n);
+      this.setState({ statsDirCounts: dirCounts, statsCountries: cs, statsTotal: rows.length });
+      // Union : ceux qui pèsent au moins 3 films et, quoi qu'il arrive, les 40
+      // plus présents — sur un filtre d'année personne n'atteint 3 films.
+      const names = new Set();
+      const pool = dirCounts.filter(d => d.n >= 3).slice(0, 150)
+        .concat(dirCounts.slice(0, 40))
+        .filter(d => names.has(d.name) ? false : names.add(d.name));
+      this.resolvePeople(pool);
+    } catch (e) { console.warn('Supabase: stats —', e.message); this.setState({ statsYear: null }); }
+  }
+
+  // TMDB : genre, photo et taille de filmographie. Mis en cache (localStorage)
+  // car la réponse ne change pas d'une session à l'autre.
+  async resolvePeople(list) {
+    const k = this.key();
+    if (!k) return;
+    for (const d of list) {
+      if (this.state.people[d.name]) continue;
+      let hit = null;
+      try { hit = JSON.parse(localStorage.getItem('dv-person:' + d.name) || 'null'); } catch (e) { hit = null; }
+      if (!hit) {
+        try {
+          const j = await (await fetch('https://api.themoviedb.org/3/search/person?api_key=' + encodeURIComponent(k) + '&language=fr-FR&query=' + encodeURIComponent(d.name))).json();
+          const p = (j.results || [])[0];
+          if (!p) { hit = { none: true }; }
+          else {
+            const cr = await (await fetch('https://api.themoviedb.org/3/person/' + p.id + '/movie_credits?api_key=' + encodeURIComponent(k) + '&language=fr-FR')).json();
+            const ids = new Set(((cr.crew) || []).filter(x => x.job === 'Director').map(x => x.id));
+            hit = { id: p.id, gender: p.gender, photo: p.profile_path ? 'https://image.tmdb.org/t/p/w185' + p.profile_path : null, total: ids.size };
+          }
+          try { localStorage.setItem('dv-person:' + d.name, JSON.stringify(hit)); } catch (e) { /* quota */ }
+        } catch (e) { hit = { none: true }; }
+      }
+      this.setState(s => ({ people: { ...s.people, [d.name]: hit } }));
+    }
+  }
+
+  async openDirectorByName(name) {
+    let p = this.state.people[name];
+    if (!p) { try { p = JSON.parse(localStorage.getItem('dv-person:' + name) || 'null'); } catch (e) { p = null; } }
+    if (!p || p.none) {
+      this.setState({ screen: 'director', directorFrom: this.state.screen === 'film' ? 'film' : 'stats', director: { name, photo: null, id: null, total: 0, life: '', films: [], seen: 0 } });
+      await this.resolvePeople([{ name }]);
+      p = this.state.people[name];
+      if (!p || p.none) return;
+    }
+    this.openDirector({ name, p });
+  }
+
+  async openDirector(d) {
+    const p = d.p || {};
+    this.setState({
+      screen: 'director',
+      directorFrom: this.state.screen === 'director'
+        ? (this.state.directorFrom || 'stats')
+        : (this.state.screen === 'film' ? 'film' : 'stats'),
+      director: { name: d.name, photo: p.photo, id: p.id, total: p.total || 0, life: '', films: [], seen: 0 },
+    });
+    const k = this.key();
+    const c = this.sb();
+    const norm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    let seenIds = new Set(), seenTitles = new Set();
+    if (c) {
+      try {
+        // PostgREST attend un littéral de tableau {"…"}, pas du JSON.
+        const q = '?select=tmdb_id,movie_name&movie_director=cs.' + encodeURIComponent('{"' + String(d.name).replace(/"/g, '\\"') + '"}');
+        const r0 = await fetch(c.url + '/rest/v1/movies' + q, { headers: this.headers() });
+        const rows = r0.ok || r0.status === 206 ? await r0.json() : [];
+        if (!Array.isArray(rows)) console.warn('Supabase: filmographie vue —', rows);
+        (Array.isArray(rows) ? rows : []).forEach(r => {
+          if (r.tmdb_id) seenIds.add(Number(r.tmdb_id));
+          seenTitles.add(norm(r.movie_name));
+        });
+      } catch (e) { /* bibliothèque indisponible : tout s'affiche comme non vu */ }
+    }
+    if (!k || !p.id) return;
+    try {
+      const [per, cr] = await Promise.all([
+        (await fetch('https://api.themoviedb.org/3/person/' + p.id + '?api_key=' + encodeURIComponent(k) + '&language=fr-FR')).json(),
+        (await fetch('https://api.themoviedb.org/3/person/' + p.id + '/movie_credits?api_key=' + encodeURIComponent(k) + '&language=fr-FR')).json(),
+      ]);
+      const seenSet = new Map();
+      const films = ((cr.crew) || []).filter(x => x.job === 'Director')
+        .filter(x => { if (seenSet.has(x.id)) return false; seenSet.set(x.id, 1); return true; })
+        .sort((a, b) => String(b.release_date || '').localeCompare(String(a.release_date || '')))
+        .map(x => ({
+          id: x.id, title: x.title || x.original_title || '',
+          poster: x.poster_path ? 'https://image.tmdb.org/t/p/w342' + x.poster_path : null,
+          seen: seenIds.has(x.id) || seenTitles.has(norm(x.title)) || seenTitles.has(norm(x.original_title)),
+        }));
+      const birth = (per.birthday || '').slice(0, 4);
+      const death = (per.deathday || '').slice(0, 4);
+      this.setState(s => s.director && s.director.name === d.name ? {
+        director: {
+          ...s.director, films, total: films.length,
+          seen: films.filter(f => f.seen).length,
+          life: birth ? birth + ' — ' + (death || 'today') : '',
+        },
+      } : {});
+    } catch (e) { console.warn('TMDB: filmographie —', e.message); }
+  }
+
+  // Recommandations TMDB : 10 affichées, +10 à chaque fin de slider, pages TMDB chargées à la demande.
+  async loadSugg(tid, more) {
+    const k = this.key();
+    if (!k || !tid) return;
+    const cur = (this.state.sugg || {})[tid];
+    if (this._suggBusy === tid) return;
+    if (cur && !more) return;
+    if (cur && more) {
+      if (cur.shown < cur.items.length) { this.setSugg(tid, { shown: cur.shown + 10 }); if (cur.shown + 10 <= cur.items.length) return; }
+      if (cur.page >= cur.pages) return;
+    }
+    this._suggBusy = tid;
+    const page = cur ? cur.page + 1 : 1;
+    try {
+      const j = await (await fetch('https://api.themoviedb.org/3/movie/' + tid + '/recommendations?api_key=' + encodeURIComponent(k) + '&language=fr-FR&page=' + page)).json();
+      const have = new Set((cur ? cur.items : []).map(x => x.id));
+      const items = (j.results || []).filter(x => !have.has(x.id)).map(x => ({
+        id: x.id, title: x.title || x.original_title || '', y: (x.release_date || '').slice(0, 4),
+        poster: x.poster_path ? 'https://image.tmdb.org/t/p/w342' + x.poster_path : null,
+      }));
+      const prev = (this.state.sugg || {})[tid];
+      this.setSugg(tid, {
+        items: (prev ? prev.items : []).concat(items), page, pages: j.total_pages || 1,
+        shown: prev ? Math.max(prev.shown, Math.min(prev.shown, prev.items.length) + 10) : 10,
+      });
+      this.markKnown(items.map(x => x.id));
+    } catch (e) { console.warn('TMDB: suggestions —', e.message); if (!cur) this.setSugg(tid, { items: [], page: 1, pages: 1, shown: 0 }); }
+    this._suggBusy = null;
+  }
+
+  setSugg(tid, patch) {
+    this.setState(s => ({ sugg: { ...(s.sugg || {}), [tid]: { ...((s.sugg || {})[tid] || {}), ...patch } } }));
+  }
+
+  async markKnown(ids) {
+    const c = this.sb();
+    if (!c || !ids.length) return;
+    try {
+      const cols = 'id,tmdb_id' + (this._noWish ? '' : ',is_wish') + this.revCols();
+      const r = await fetch(c.url + '/rest/v1/movies?select=' + cols + '&tmdb_id=in.(' + ids.join(',') + ')', { headers: this.headers() });
+      if (!r.ok && r.status !== 206) return;
+      const rows = await r.json();
+      const add = {};
+      ids.forEach(id => { add['tmdb' + id] = { rowId: null, wish: false, seen: false }; });
+      rows.forEach(m => { add['tmdb' + m.tmdb_id] = { rowId: m.id, wish: !!m.is_wish, seen: !m.is_wish }; });
+      this.setState(s => ({ known: { ...(s.known || {}), ...add } }));
+    } catch (e) { /* cartes laissées en couleur */ }
+  }
+
+  openSuggestion(f) {
+    const st = this.state;
+    this._filmStack = (this._filmStack || []).concat([{ filmId: st.filmId, filmFrom: st.filmFrom }]);
+    this.openFilmByTmdb({ id: f.id, title: f.title, poster: f.poster, y: f.y }, 'sugg');
+  }
+
+  suggVals(film) {
+    const st = this.state;
+    const tid = film && film.tmdb ? Number(film.tmdb) : null;
+    const s = tid ? (st.sugg || {})[tid] : null;
+    if (tid && !s && st.screen === 'film') setTimeout(() => this.loadSugg(tid), 0);
+    const list = s ? s.items.slice(0, s.shown) : [];
+    return {
+      hasSugg: !!tid && !!this.key() && (!s || s.items.length > 0),
+      suggSkeletons: s ? [] : [0, 1, 2],
+      onSuggScroll: (e) => {
+        const el = e.currentTarget;
+        if (el.scrollLeft + el.clientWidth > el.scrollWidth - 300) this.loadSugg(tid, true);
+      },
+      suggestions: list.map(f => {
+        const key = 'tmdb' + f.id;
+        const kn = (st.known || {})[key] || {};
+        const local = (st.added || {})[key];
+        const wishOn = local !== undefined ? !!local : !!kn.wish;
+        const seen = !!kn.seen;
+        return {
+          title: f.title, canWish: !seen, wishOn,
+          open: () => this.openSuggestion(f),
+          toggleWish: (e) => { if (e) e.stopPropagation(); this.toggleResultWish({ id: key, t: f.title, y: f.y, poster: f.poster }); },
+          style: {
+            width: '100%', aspectRatio: '2 / 3', borderRadius: 10, cursor: 'pointer',
+            background: f.poster ? '#0C0A09 center / cover no-repeat' : this.tint(key).bg,
+            backgroundImage: f.poster ? 'url(' + f.poster + ')' : undefined,
+            filter: seen ? 'grayscale(1)' : 'none', opacity: seen ? 0.4 : 1,
+            transition: 'opacity 140ms ease-out, filter 140ms ease-out',
+          },
+          wishStyle: {
+            position: 'absolute', right: 8, bottom: 8, width: 44, height: 44, border: 'none', borderRadius: 999, padding: 0,
+            background: wishOn ? '#0C0A09' : '#F3F1F1', color: wishOn ? '#FAFAFA' : '#0A0A0A',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            transition: 'background 140ms ease-out, color 140ms ease-out',
+          },
+        };
+      }),
+      filmScrollRef: (el) => {
+        if (!el) return;
+        if (this._filmScrolledFor !== st.filmId) { this._filmScrolledFor = st.filmId; el.scrollTop = 0; }
+      },
+    };
+  }
+
+  // Depuis une filmographie : ouvre la fiche si le film est en base, sinon le
+  // brouillon d'ajout pré-rempli.
+  async openFilmByTmdb(f, from) {
+    const origin = from || 'director';
+    const hit = (this.state.films || []).concat(this.state.wish || []).find(x => x.tmdb === f.id);
+    if (hit) { this.setState({ screen: 'film', filmId: hit.id, filmFrom: origin }); return; }
+    const c = this.sb();
+    if (c) {
+      try {
+        const cols = 'id,movie_name,movie_director,movie_year,movie_print,movie_view,is_cinema,is_liked,movie_genre,movie_country,tmdb_id' + (this._noWish ? '' : ',is_wish') + this.revCols();
+        const r = await fetch(c.url + '/rest/v1/movies?select=' + cols + '&tmdb_id=eq.' + f.id + '&limit=1', { headers: this.headers() });
+        const rows = r.ok || r.status === 206 ? await r.json() : [];
+        if (Array.isArray(rows) && rows.length) {
+          const film = { ...this.rowToFilm(rows[0]), seen: !rows[0].is_wish, wish: !!rows[0].is_wish };
+          this.setState(s => ({
+            films: s.films.some(x => x.id === film.id) ? s.films : [film, ...s.films],
+            posters: film.poster ? { ...s.posters, [film.id]: film.poster } : s.posters,
+            screen: 'film', filmId: film.id, filmFrom: origin,
+          }));
+          return;
+        }
+      } catch (e) { /* on bascule sur le brouillon */ }
+    }
+    if (origin === 'director' || origin === 'sugg' || origin === 'cinemas') this.setState({ screen: 'search', addFlow: true, draftFrom: origin, query: '', results: [] });
+    this.openDraft({ id: 'tmdb' + f.id, t: f.title, y: f.y || '', poster: f.poster, s: '', sub: f.sub || '' }, 'page');
+  }
+
+  directorVals() {
+    const d = this.state.director || {};
+    const total = d.total || 0;
+    const pct = total ? Math.round((d.seen || 0) / total * 100) : 0;
+    return {
+      person: {
+        name: d.name || '', life: d.life || '',
+        ratio: (d.seen || 0) + ' / ' + total,
+        avatarStyle: {
+          width: 172, height: 172, borderRadius: 999, flex: '0 0 auto',
+          background: '#E8E4E3 center / cover no-repeat',
+          backgroundImage: d.photo ? 'url(' + d.photo + ')' : undefined,
+        },
+        barStyle: {
+          height: '100%', width: pct + '%', borderRadius: 999, background: '#0C0A09',
+          transition: 'width 600ms cubic-bezier(0.32,0.72,0,1)',
+        },
+      },
+      filmography: (d.films || []).map(f => ({
+        title: f.title,
+        open: () => this.openFilmByTmdb(f),
+        style: {
+          aspectRatio: '2 / 3', borderRadius: 10, cursor: 'pointer',
+          background: '#E8E4E3 center / cover no-repeat',
+          backgroundImage: f.poster ? 'url(' + f.poster + ')' : undefined,
+          filter: f.seen ? 'none' : 'grayscale(1)',
+          opacity: f.seen ? 1 : 0.4,
+        },
+      })),
+    };
+  }
+
+  // Side sheet façon Niagara : la ligne active suit le doigt, slots mesurés
+  // au pointer down pour que les décalages visuels ne créent pas de jitter.
+  yearSheet(years) {
+    const st = this.state;
+    const label = (y) => (y === 'Tout' ? 'All time' : String(y) === '1970' ? 'Année inconnue' : String(y));
+    const ROW = Math.max(34, Math.min(48, Math.floor(((this._sheetH || 540) - 40) / Math.max(1, years.length))));
+    const idxOf = (y) => Math.max(0, years.indexOf(y));
+    // Slots de repos : hauteur de ligne fixe, insensible aux transforms.
+    const pick = (e) => {
+      const el = this._yearsList;
+      if (!el) return st.yearHover;
+      const box = el.getBoundingClientRect();
+      const i = Math.floor((e.clientY - box.top + el.scrollTop - 20) / ROW);
+      return Math.min(years.length - 1, Math.max(0, i));
+    };
+    const move = (e) => {
+      const i = pick(e);
+      if (i === this.state.yearHover) return;
+      if (navigator.vibrate) navigator.vibrate(8);
+      this.setState({ yearHover: i });
+    };
+    return {
+      yearsOpen: !!st.yearsOpen,
+      openYears: () => { this._yearsScrolled = false; this.setState({ yearsOpen: true, yearsClosing: false, yearHover: idxOf(st.year) }); },
+      cancelYears: () => this.closeYears(),
+      yearsListRef: (el) => {
+        this._yearsList = el;
+        if (!el) return;
+        const h = el.clientHeight;
+        if (h && h !== this._sheetH) { this._sheetH = h; this.forceUpdate(); }
+        // La valeur appliquée doit être visible dès l'ouverture.
+        if (el.scrollHeight > el.clientHeight && !this._yearsScrolled) {
+          this._yearsScrolled = true;
+          const kid = el.children[this.state.yearHover];
+          if (kid) el.scrollTop = Math.max(0, kid.offsetTop - (el.clientHeight - kid.offsetHeight) / 2);
+        }
+      },
+      onYearDown: (e) => {
+        const el = e.currentTarget;
+        this._yearsList = el;
+        this._yearsBox = el.getBoundingClientRect();
+        this._yearDrag = true;
+        try { el.setPointerCapture(e.pointerId); } catch (err) { /* souris sans capture */ }
+        move(e);
+      },
+      onYearMove: (e) => {
+        if (this._yearDrag) { move(e); return; }
+        if (e.pointerType !== 'mouse') return;
+        this._yearsBox = e.currentTarget.getBoundingClientRect();
+        move(e);
+      },
+      onYearUp: (e) => {
+        if (!this._yearDrag) return;
+        this._yearDrag = false;
+        const y = years[pick(e)];
+        this.closeYears(y);
+      },
+      yearRows: years.map((y, i) => {
+        const on = i === st.yearHover;
+        const shift = st.yearHover < 0 ? 0 : (i < st.yearHover ? -ROW * 0.2 : i > st.yearHover ? ROW * 0.2 : 0);
+        return {
+          label: label(y),
+          slotStyle: {
+            height: ROW, flex: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+            scrollMarginBlock: ROW,
+            transform: 'translateY(' + shift + 'px)',
+            transition: 'transform 140ms ease-out',
+          },
+          pillStyle: {
+            display: 'flex', alignItems: 'center', justifyContent: 'flex-end', boxSizing: 'border-box',
+            height: ROW, width: on ? '70%' : 'auto', paddingRight: on ? ROW * 0.4 : 24,
+            borderRadius: ROW / 4, background: on ? '#E8E4E3' : 'transparent',
+            transition: 'background 140ms ease-out, padding 140ms ease-out',
+          },
+          labelStyle: {
+            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, fontSize: Math.round(ROW * 0.5), lineHeight: '100%',
+            color: '#0C0A09', whiteSpace: 'nowrap',
+          },
+        };
+      }),
+      yearsScrimStyle: {
+        position: 'absolute', inset: 0, background: '#0C0A09',
+        animation: (st.yearsClosing ? 'dv-scrim-out 200ms ease-in' : 'dv-scrim-in 240ms ease-out') + ' both',
+      },
+      yearsSheetStyle: {
+        position: 'absolute', top: 0, right: 0, bottom: 0, width: '65%', background: '#FBFAF9',
+        animation: (st.yearsClosing
+          ? 'dv-sheet-out 200ms cubic-bezier(0.32, 0, 0.67, 0)'
+          : 'dv-sheet-in 300ms cubic-bezier(0.32, 0.72, 0, 1)') + ' both',
+      },
+    };
+  }
+
+  openCountry(code) {
+    this.setState({ screen: 'country', country: code, countryFilms: null }, () => this.loadCountry());
+    if (!this.state.allCountries) this.loadAllCountries();
+  }
+
+  countryCols() {
+    return 'id,movie_name,movie_director,movie_year,movie_print,movie_view,is_cinema,is_liked,movie_genre,movie_country,tmdb_id' + (this._noWish ? '' : ',is_wish') + this.revCols();
+  }
+
+  async fetchAll(qs) {
+    const c = this.sb();
+    let rows = [];
+    for (let from = 0; from < 4000; from += 1000) {
+      const r = await fetch(c.url + '/rest/v1/movies?' + qs, { headers: this.headers({ Range: from + '-' + (from + 999), 'Range-Unit': 'items' }) });
+      if (!r.ok && r.status !== 206) throw new Error('HTTP ' + r.status);
+      const part = await r.json();
+      if (!Array.isArray(part) || !part.length) break;
+      rows = rows.concat(part);
+      if (part.length < 1000) break;
+    }
+    return rows;
+  }
+
+  // Films vus pour un pays, sur l'année du dropdown (partagée avec Data).
+  async loadCountry() {
+    const code = this.state.country;
+    if (!this.sb() || !code) return;
+    const tok = (this._ctok || 0) + 1;
+    this._ctok = tok;
+    this.setState({ countryFilms: null });
+    let base = 'select=' + this.countryCols() + '&order=created_at.desc.nullslast,id.desc';
+    base += this.condQS(this.state.year, 0);
+    let rows;
+    try { rows = await this.fetchAll(base + '&movie_country=cs.' + encodeURIComponent('{' + code + '}')); }
+    catch (e) {
+      try { rows = await this.fetchAll(base + '&movie_country=ilike.*' + encodeURIComponent(code) + '*'); }
+      catch (e2) { console.warn('Supabase: pays —', e2.message); rows = []; }
+    }
+    if (tok !== this._ctok) return;
+    const posters = {};
+    const films = rows.map(m => { const f = { ...this.rowToFilm(m), seen: true, wish: false }; if (f.poster) posters[f.id] = f.poster; return f; });
+    this.setState(s => ({ countryFilms: films, posters: { ...s.posters, ...posters } }));
+  }
+
+  async loadAllCountries() {
+    if (!this.sb() || this._allC) return;
+    this._allC = true;
+    try {
+      const rows = await this.fetchAll('select=movie_country&movie_view=not.is.null');
+      const set = new Set();
+      rows.forEach(m => (Array.isArray(m.movie_country) ? m.movie_country : String(m.movie_country || '').split(/\s*,\s*/)).filter(Boolean).forEach(x => set.add(x)));
+      this.setState({ allCountries: [...set] });
+    } catch (e) { this._allC = false; console.warn('Supabase: liste des pays —', e.message); }
+  }
+
+  closeCountries(code) {
+    if (this.state.countriesClosing) return;
+    this.setState({ countriesClosing: true });
+    setTimeout(() => {
+      this.setState({ countriesOpen: false, countriesClosing: false });
+      if (code && code !== this.state.country) this.setState({ country: code }, () => this.loadCountry());
+    }, 200);
+  }
+
+  countryVals() {
+    const st = this.state;
+    const CN = this.CN || {};
+    const list = st.countryFilms || [];
+    const n = list.length;
+    if (!this._dn) { try { this._dn = new Intl.DisplayNames(['fr'], { type: 'region' }); } catch (e) { this._dn = { of: (x) => x }; } }
+    const name = (c) => { if (CN[c]) return CN[c]; try { return this._dn.of(c) || c; } catch (e) { return c; } };
+    const all = (st.allCountries || (st.country ? [st.country] : [])).slice().sort((a, b) => name(a).localeCompare(name(b), 'fr'));
+    return {
+      isCountry: st.screen === 'country',
+      backFromCountry: () => this.setState({ screen: 'stats' }),
+      countryCode: st.country === 'GB' ? 'UK' : (st.country || ''),
+      countryCountLabel: st.countryFilms ? n.toLocaleString('fr-FR') + (n > 1 ? ' films' : ' film') : '',
+      countryTilesGrid: list.map(f => ({ ...this.tile(f), open: () => this.setState(s => ({ films: s.films.some(x => x.id === f.id) ? s.films : s.films.concat([f]), screen: 'film', filmId: f.id, filmFrom: 'country' })) })),
+      countrySkeletons: st.countryFilms ? [] : [0, 1, 2, 3, 4, 5, 6, 7],
+      countryEmpty: !!st.countryFilms && !n,
+      countriesOpen: !!st.countriesOpen,
+      openCountries: () => { this._cScrolled = false; this.setState({ countriesOpen: true, countriesClosing: false }); if (!st.allCountries) this.loadAllCountries(); },
+      cancelCountries: () => this.closeCountries(),
+      countriesListRef: (el) => {
+        if (!el || this._cScrolled) return;
+        const i = all.indexOf(st.country);
+        const kid = el.children[i];
+        if (kid && el.scrollHeight > el.clientHeight) { this._cScrolled = true; el.scrollTop = Math.max(0, kid.offsetTop - (el.clientHeight - kid.offsetHeight) / 2); }
+      },
+      countryRows: all.map(c => {
+        const on = c === st.country;
+        return {
+          name: name(c), pick: () => this.closeCountries(c),
+          style: {
+            flex: '0 0 auto', height: 56, display: 'flex', alignItems: 'center', gap: 12, boxSizing: 'border-box',
+            margin: '0 12px', padding: '0 14px', borderRadius: 14, cursor: 'pointer',
+            background: on ? '#E8E4E3' : 'transparent', transition: 'background 140ms ease-out',
+          },
+          flagStyle: {
+            width: 24, height: 24, borderRadius: 999, flex: '0 0 auto',
+            background: '#E8E4E3 center / cover no-repeat',
+            backgroundImage: 'url(https://flagcdn.com/w40/' + String(c).toLowerCase() + '.png)',
+          },
+        };
+      }),
+      countriesScrimStyle: {
+        position: 'absolute', inset: 0, background: '#0C0A09',
+        animation: (st.countriesClosing ? 'dv-scrim-out 200ms ease-in' : 'dv-scrim-in 240ms ease-out') + ' both',
+      },
+      countriesSheetStyle: {
+        position: 'absolute', top: 0, right: 0, bottom: 0, width: '65%', background: '#FBFAF9',
+        animation: (st.countriesClosing ? 'dv-sheet-out 200ms cubic-bezier(0.32, 0, 0.67, 0)' : 'dv-sheet-in 300ms cubic-bezier(0.32, 0.72, 0, 1)') + ' both',
+      },
+    };
+  }
+
+  closeYears(applied) {
+    if (this.state.yearsClosing) return;
+    this.setState({ yearsClosing: true });
+    if (this._yearsTimer) clearTimeout(this._yearsTimer);
+    if (this._cinTick) clearInterval(this._cinTick);
+    this._yearsTimer = setTimeout(() => {
+      this.setState({ yearsOpen: false, yearsClosing: false });
+      if (applied !== undefined && applied !== this.state.year) {
+        this.setState({ year: applied, visible: 160 }, () => {
+          if (this.sb()) { this.refresh(); if (this.state.screen === 'stats' || this.state.screen === 'country') { this.setState({ statsYear: null }, () => this.loadStats()); } if (this.state.screen === 'country') this.loadCountry(); }
+        });
+      }
+    }, 200);
+  }
+
+  statsVals() {
+    const st = this.state;
+    const PAL = ['#0E7490', '#0F766E', '#4D7C0F', '#C2410C', '#A21CAF', '#1D4ED8', '#B91C1C'];
+    const pool = st.statsDirCounts
+      .map(d => ({ ...d, p: st.people[d.name] }))
+      .filter(d => d.p && !d.p.none && d.p.gender === st.gender)
+      .map(d => ({ ...d, ratio: Math.min(1, d.n / d.p.total) }));
+    const want = st.moreDirectors ? 10 : 5;
+    // Classement au nombre de films vus (le ratio reste l'info affichée) ;
+    // seuil desserré seulement s'il n'y a pas assez de monde.
+    const GATES = [3, 2, 1];
+    let ranked = [];
+    for (const minSeen of GATES) {
+      ranked = pool.filter(d => d.n >= minSeen).sort((a, b) => b.n - a.n || b.ratio - a.ratio);
+      if (ranked.length >= want) break;
+    }
+    ranked = ranked.slice(0, want);
+    const CNAMES = this.CN = { US: 'États-Unis', FR: 'France', GB: 'Royaume-Uni', BE: 'Belgique', IT: 'Italie', DE: 'Allemagne', ES: 'Espagne', JP: 'Japon', KR: 'Corée du Sud', CA: 'Canada', DK: 'Danemark', SE: 'Suède', NO: 'Norvège', NL: 'Pays-Bas', CH: 'Suisse', AT: 'Autriche', IE: 'Irlande', PL: 'Pologne', RU: 'Russie', CN: 'Chine', HK: 'Hong Kong', TW: 'Taïwan', IN: 'Inde', IR: 'Iran', BR: 'Brésil', MX: 'Mexique', AR: 'Argentine', AU: 'Australie', NZ: 'Nouvelle-Zélande', PT: 'Portugal', GR: 'Grèce', TR: 'Turquie', IL: 'Israël', ZA: 'Afrique du Sud', FI: 'Finlande', IS: 'Islande', CZ: 'Tchéquie', HU: 'Hongrie', RO: 'Roumanie', TH: 'Thaïlande' };
+    // Teintes Tailwind proches du drapeau de chaque pays.
+    const CCOL = { US: '#1D4ED8', FR: '#4F46E5', GB: '#B91C1C', BE: '#CA8A04', IT: '#15803D', DE: '#A16207', ES: '#C2410C', JP: '#DC2626', KR: '#0284C7', CA: '#DC2626', DK: '#BE123C', SE: '#0369A1', NO: '#1E40AF', NL: '#EA580C', CH: '#B91C1C', AT: '#DC2626', IE: '#16A34A', PL: '#E11D48', RU: '#1D4ED8', CN: '#B91C1C', HK: '#DC2626', TW: '#1E3A8A', IN: '#EA580C', IR: '#059669', BR: '#15803D', MX: '#166534', AR: '#0EA5E9', AU: '#1E3A8A', NZ: '#1E40AF', PT: '#15803D', GR: '#0284C7', TR: '#DC2626', IL: '#2563EB', ZA: '#047857', FI: '#0369A1', IS: '#1D4ED8', CZ: '#1D4ED8', HU: '#15803D', RO: '#1D4ED8', TH: '#1E40AF' };
+    const cList = st.statsCountries.slice(0, st.moreCountries ? 10 : 5);
+    const top5 = st.statsCountries.slice(0, 5);
+    // Treemap « squarified » : tous les pays, surface ∝ nombre de films.
+    const TW = 362, TH = 300, G = 4;
+    const TPAL = ['#0E7490', '#0F766E', '#B45309', '#A21CAF', '#B91C1C', '#4338CA', '#15803D', '#C2410C', '#BE185D', '#1D4ED8', '#A16207', '#6D28D9'];
+    const all = st.statsCountries.filter(c => c.n > 0).slice(0, 10);
+    const sum = all.reduce((a, c) => a + c.n, 0) || 1;
+    const items = all.map((c, i) => ({ c, i, a: c.n / sum * TW * TH }));
+    const out = [];
+    let rx = 0, ry = 0, rw = TW, rh = TH, k = 0;
+    const worst = (row, side) => { const s = row.reduce((a, r) => a + r.a, 0); const mx = Math.max(...row.map(r => r.a)), mn = Math.min(...row.map(r => r.a)); return Math.max(side * side * mx / (s * s), (s * s) / (side * side * mn)); };
+    while (k < items.length) {
+      const side = Math.min(rw, rh);
+      let row = [items[k++]];
+      while (k < items.length && worst([...row, items[k]], side) <= worst(row, side)) row.push(items[k++]);
+      const s = row.reduce((a, r) => a + r.a, 0);
+      if (rw >= rh) { const w = s / rh; let y = ry; row.forEach(r => { const hh = r.a / w; out.push({ ...r, x: rx, y, w, h: hh }); y += hh; }); rx += w; rw -= w; }
+      else { const hh = s / rw; let x = rx; row.forEach(r => { const w = r.a / hh; out.push({ ...r, x, y: ry, w, h: hh }); x += w; }); ry += hh; rh -= hh; }
+    }
+    const countryTiles = out.map(r => {
+      const w = Math.max(0, r.w - G), hh = Math.max(0, r.h - G);
+      const code = r.c.code === 'GB' ? 'UK' : r.c.code;
+      return {
+        label: code, name: CNAMES[r.c.code] || r.c.code,
+        open: () => this.openCountry(r.c.code),
+        style: {
+          cursor: 'pointer',
+          position: 'absolute', left: (r.x / TW * 100) + '%', top: (r.y / TH * 100) + '%',
+          width: 'calc(' + (r.w / TW * 100) + '% - ' + G + 'px)', height: 'calc(' + (r.h / TH * 100) + '% - ' + G + 'px)',
+          borderRadius: Math.min(8, w / 2, hh / 2), background: TPAL[r.i % TPAL.length],
+          display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+          transition: 'left 400ms ease-out, top 400ms ease-out, width 400ms ease-out, height 400ms ease-out',
+        },
+        labelStyle: { fontFamily: 'Inter,sans-serif', fontWeight: 600, fontSize: w >= 80 && hh >= 50 ? 16 : 12, lineHeight: '100%', color: '#FAFAFA' },
+      };
+    });
+    const W = 16, GAP = 6;
+    const rings = top5.map((_, i) => ({ r: 136 - i * (W + GAP), w: W }));
+    const arcs = top5.map((c, i) => {
+      const r = 136 - i * (W + GAP);
+      const circ = 2 * Math.PI * r;
+      const frac = Math.min(1, c.pct / 100);
+      return {
+        r, w: W, color: CCOL[c.code] || PAL[i % PAL.length],
+        dash: (circ * frac) + ' ' + circ, offset: 0, rotate: 'rotate(-90 160 160)',
+        style: { transition: 'stroke-dasharray 600ms cubic-bezier(0.32,0.72,0,1)' },
+      };
+    });
+    return {
+      statsCountLabel: st.statsTotal.toLocaleString('fr-FR') + (st.statsTotal > 1 ? ' films' : ' film'),
+      statsCountFont: st.statsTotal >= 1000 ? '40px' : '50px',
+      directorsEmpty: ranked.length ? ''
+        : !st.statsDirCounts.length ? 'Aucune donnée pour cette année.'
+        : Object.keys(st.people).length < st.statsDirCounts.length ? 'Chargement des filmographies…'
+        : 'Aucun réalisateur à classer sur cette période.',
+      directors: ranked.map((d, i) => ({
+        name: d.name, pct: Math.round(d.ratio * 100) + '%', counts: d.n + ' / ' + d.p.total,
+        fillStyle: {
+          position: 'absolute', left: 0, right: 0, bottom: 0, borderRadius: 999,
+          height: Math.max(8, Math.round(d.ratio * 100)) + '%',
+          background: PAL[i % PAL.length], transition: 'height 600ms cubic-bezier(0.32,0.72,0,1)',
+        },
+        open: () => this.openDirector(d),
+        avatarStyle: {
+          width: 58, height: 58, marginTop: -42, borderRadius: 999, flex: '0 0 auto',
+          background: (d.p.photo ? '#E8E4E3 center / cover no-repeat' : '#E8E4E3'),
+          backgroundImage: d.p.photo ? 'url(' + d.p.photo + ')' : undefined,
+          boxShadow: '0 0 0 3px #F3F1F1', position: 'relative', zIndex: 2,
+        },
+      })),
+      genders: [
+        { label: '♂', g: 2 }, { label: '♀', g: 1 },
+      ].map(x => ({
+        label: x.label, on: st.gender === x.g,
+        onClick: () => this.setState({ gender: x.g }),
+        style: {
+          flex: 1, border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 16, lineHeight: '100%',
+          background: st.gender === x.g ? '#0C0A09' : 'transparent',
+          color: st.gender === x.g ? '#FAFAFA' : '#0A0A0A',
+          transition: 'background 140ms ease-out',
+        },
+      })),
+      directorsMore: st.moreDirectors ? 'Réduire' : 'View all',
+      toggleDirectors: () => this.setState(s => ({ moreDirectors: !s.moreDirectors })),
+      countriesMore: st.moreCountries ? 'Réduire' : 'View all',
+      toggleCountries: () => this.setState(s => ({ moreCountries: !s.moreCountries })),
+      rings, arcs, countryTiles,
+      countryTotal: st.statsTotal.toLocaleString('fr-FR'),
+      countries: cList.map((c, i) => ({
+        name: CNAMES[c.code] || (() => { try { return new Intl.DisplayNames(['fr'], { type: 'region' }).of(c.code); } catch (e) { return c.code; } })(), pct: c.pct + '%',
+        flagStyle: {
+          width: 42, height: 42, borderRadius: 999, flex: '0 0 auto',
+          background: '#E8E4E3 center / cover no-repeat',
+          backgroundImage: 'url(https://flagcdn.com/w80/' + String(c.code).toLowerCase() + '.png)',
+        },
+      })),
+    };
+  }
+
+  async loadWishes() {
+    const c = this.sb();
+    if (!c || this._noWish === true) return;
+    const cols = 'id,movie_name,movie_director,movie_year,movie_print,movie_view,is_cinema,is_liked,movie_genre,movie_country,tmdb_id,is_wish' + this.revCols();
+    try {
+      const r = await fetch(c.url + '/rest/v1/movies?select=' + cols + '&is_wish=is.true&order=id.desc', { headers: this.headers() });
+      if (r.status === 400) { this._noWish = true; return; }
+      if (!r.ok && r.status !== 206) throw new Error('HTTP ' + r.status);
+      const rows = await r.json();
+      const posters = {};
+      const wish = (Array.isArray(rows) ? rows : []).map(m => {
+        const f = this.rowToFilm(m);
+        if (f.poster) posters[f.id] = f.poster;
+        return { ...f, seen: false, wish: true };
+      });
+      this.setState(s => ({ wish, posters: { ...s.posters, ...posters } }));
+    } catch (e) { console.warn('Supabase: envies —', e.message); }
+  }
+
+  rowToFilm(m) {
+    const id = 'sb' + m.id;
+    const seg = String(m.movie_print || '').match(/\/[A-Za-z0-9]{8,}\.(?:jpg|png|webp)$/);
+    return {
+      id, t: m.movie_name || '', y: m.movie_year || '', c: '',
+      poster: seg ? 'https://image.tmdb.org/t/p/w500' + seg[0] : null,
+      d: Array.isArray(m.movie_director) ? m.movie_director.filter(Boolean).join(', ') : (m.movie_director || ''),
+      g: Array.isArray(m.movie_genre) ? m.movie_genre.filter(Boolean) : (m.movie_genre ? String(m.movie_genre).split(/\s*[,/]\s*/).filter(Boolean) : []),
+      p: Array.isArray(m.movie_country) ? m.movie_country.filter(Boolean).join(', ') : (m.movie_country || ''),
+      l: '', dt: m.movie_view ? String(m.movie_view) : '',
+      v: m.is_cinema ? 0 : 1, ...this.revusOf(m), s: '', tmdb: m.tmdb_id,
+    };
+  }
+
+  async refresh() {
+    this._token = (this._token || 0) + 1;
+    const token = this._token;
+    this.setState({ films: [], done: false, loading: true, visible: 160 });
+    try {
+      const counts = await Promise.all([0, 1, 2, 3].map(i => this.countFor(i)));
+      if (token === this._token) this.setState({ counts });
+    } catch (e) { /* les compteurs restent sur leur dernière valeur */ }
+    this.loadPage(token);
+    this.loadWishes();
+  }
+
+  async loadPage(token) {
+    const c = this.sb();
+    if (!c) return;
+    if (token == null) {
+      if (this._busy || this.state.loading || this.state.done) return;
+      token = this._token;
+      this.setState({ loading: true });
+    }
+    if (this._busy) return;
+    this._busy = true;
+    const PAGE = 60;
+    const from = token === this._token ? this.state.films.length : 0;
+    const cols = 'id,movie_name,movie_director,movie_year,movie_print,movie_view,is_cinema,is_liked,movie_genre,movie_country,tmdb_id' + (this._noWish ? '' : ',is_wish') + this.revCols();
+    try {
+      const r = await fetch(c.url + '/rest/v1/movies?select=' + cols + '&order=created_at.desc.nullslast,id.desc' + this.filterQS(this.state.seg), {
+        headers: this.headers({ Range: from + '-' + (from + PAGE - 1), 'Range-Unit': 'items' }),
+      });
+      if (r.status === 400 && !this._noWish) { // colonne is_wish pas encore créée
+        this._noWish = true; this._busy = false; return this.loadPage(token);
+      }
+      if (!r.ok && r.status !== 206) throw new Error('HTTP ' + r.status);
+      const rows = await r.json();
+      this._busy = false;
+      if (token !== this._token) return;
+      const posters = {};
+      const films = (Array.isArray(rows) ? rows : []).map(m => {
+        const id = 'sb' + m.id;
+        const seg = String(m.movie_print || '').match(/\/[A-Za-z0-9]{8,}\.(?:jpg|png|webp)$/);
+        if (seg) posters[id] = 'https://image.tmdb.org/t/p/w500' + seg[0];
+        return {
+          id, t: m.movie_name || '', y: m.movie_year || '', c: '',
+          d: Array.isArray(m.movie_director) ? m.movie_director.filter(Boolean).join(', ') : (m.movie_director || ''),
+          g: Array.isArray(m.movie_genre) ? m.movie_genre.filter(Boolean) : (m.movie_genre ? String(m.movie_genre).split(/\s*[,/]\s*/).filter(Boolean) : []),
+          p: Array.isArray(m.movie_country) ? m.movie_country.filter(Boolean).join(', ') : (m.movie_country || ''),
+          l: '', dt: m.movie_view ? String(m.movie_view) : '',
+          v: m.is_cinema ? 0 : 1, ...this.revusOf(m), s: '', seen: !m.is_wish, wish: !!m.is_wish, tmdb: m.tmdb_id,
+        };
+      });
+      this.setState(s => ({
+        films: s.films.concat(films), posters: { ...s.posters, ...posters },
+        loading: false, done: films.length < PAGE,
+      }));
+    } catch (e) {
+      this._busy = false;
+      console.warn('Supabase: lecture impossible —', e.message);
+      this.setState({ loading: false, done: true, sbError: e.message });
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.sb() && !Object.keys(this.state.posters).length && this.key()) this.loadPosters();
+    if (this.state.screen === 'film' && this.state.filmId) { this.loadDetails(this.state.filmId); this.ensureSeances(this.state.filmId); }
+    const dr = this.state.draft;
+    if (this.state.screen === 'search' && dr && this.state.draftView === 'page') this.ensureSeances('d' + dr.tmdb);
+  }
+
+  ensureSeances(id) {
+    this.loadAddr();
+    if (this._seFor === id) return;
+    this._seFor = id;
+    this.setState({ seMore: false });
+    this.loadSeData();
+    if (this._geoAsked) return;
+    this._geoAsked = true;
+    if (!navigator.geolocation) { this.setState({ geo: 'denied' }); return; }
+    navigator.geolocation.getCurrentPosition(
+      p => this.setState({ geo: { lat: p.coords.latitude, lng: p.coords.longitude } }),
+      () => this.setState({ geo: 'denied' }),
+      { timeout: 8000, maximumAge: 600000 });
+  }
+
+  // Fichiers générés chaque matin par scripts/fetch_showtimes.py (GitHub Action).
+  async loadSeData() {
+    if (this._seLoad) return;
+    this._seLoad = true;
+    const base = (this.props.showtimesBase || 'https://raw.githubusercontent.com/gggautier/cinema/main/data/').replace(/\/?$/, '/');
+    try {
+      const get = async (f) => { const r = await fetch(base + f, { cache: 'no-cache' }); if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); };
+      const [shows, cins] = await Promise.all([get('showtimes.json'), get('cinemas.json')]);
+      this.setState({ seData: { shows, cinemas: (cins && cins.cinemas) || [] } });
+    } catch (e) {
+      console.warn('Séances —', e.message);
+      this.setState({ seData: { error: true } });
+      this._seLoad = false;
+    }
+  }
+
+  // draft : film ouvert depuis la recherche, absent de Déjà-vu et de la watchlist.
+  seancesVals(film, draft) {
+    const st = this.state;
+    const seKey = film ? film.id : draft ? 'd' + draft.tmdb : null;
+    const mode = this.props.seancesState || 'auto';
+    const det = film ? (st.details || {})[film.id] : null;
+    const relIso = det ? det.release : draft ? draft.releaseIso : '';
+    const rel = relIso ? new Date(relIso) : null;
+    const recent = rel && !isNaN(rel) && (Date.now() - rel.getTime()) < 92 * 864e5;
+    // Point par défaut si la géolocalisation est refusée ou indisponible : rue Guillaume Bertrand (11e).
+    const HOME = { lat: 48.8636, lng: 2.3796 };
+    const geo = mode === 'domicile' ? HOME : mode === 'denied' ? 'denied' : st.geo;
+    const geoOff = geo === 'denied';
+    const pos = geoOff ? (st.addrPos || HOME) : geo;
+    const data = st.seData;
+    const loading = mode === 'loading' || (mode === 'auto' && (!data || geo === undefined)) || (mode !== 'auto' && !data);
+
+    // Heure de Paris, quel que soit le fuseau de l'appareil.
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map(p => [p.type, p.value]));
+    const today = parts.year + '-' + parts.month + '-' + parts.day;
+    const nowMin = mode === 'over' ? 24 * 60 : Number(parts.hour) * 60 + Number(parts.minute);
+
+    const norm = (s) => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    const tmdbId = Number(film ? film.tmdb : draft ? draft.tmdb : 0) || 0;
+    const title = norm(film ? film.t : draft ? draft.t : '');
+    const year = Number(film ? film.y : draft ? draft.y : 0) || 0;
+    const shows = data && data.shows;
+    const fresh = !!shows && shows.date === today;
+    const entry = fresh ? (shows.films || []).find(f => (tmdbId && f.tmdb_id === tmdbId)
+      || (!f.tmdb_id && title && year && (norm(f.title) === title || norm(f.original_title) === title) && Math.abs((f.year || 0) - year) <= 1)) : null;
+
+    const km = (a) => {
+      const r = Math.PI / 180, dLat = (a.lat - pos.lat) * r, dLng = (a.lng - pos.lng) * r;
+      const x = Math.sin(dLat / 2) ** 2 + Math.cos(pos.lat * r) * Math.cos(a.lat * r) * Math.sin(dLng / 2) ** 2;
+      return 12742 * Math.asin(Math.sqrt(x));
+    };
+    const fmt = (d) => d < 1 ? Math.max(10, Math.round(d * 100) * 10) + ' m' : (d < 10 ? d.toFixed(1).replace('.', ',') : Math.round(d).toLocaleString('fr-FR')) + ' km';
+    const ini = (n) => { const w = n.split(/[\s-]+/).filter(x => x && !/^(le|la|les|l'|de|du|des|cinéma|cinema)$/i.test(x)); return w.length > 1 ? (w[0][0] + w[1][0]).toUpperCase() : (w[0] || n).slice(0, 2).replace(/^./, c => c.toUpperCase()); };
+    const byId = Object.fromEntries(((data && data.cinemas) || []).map(c => [c.allocine_id, c]));
+
+    // Un bloc par cinéma et par version : le badge VF / VOST reste vrai pour toute la rangée.
+    let list = [];
+    if (entry && mode !== 'none') for (const sc of entry.cinemas || []) {
+      const c = byId[sc.cinema_id];
+      if (!c) continue;
+      const groups = {};
+      for (const s of sc.showtimes || []) {
+        const [hh, mm] = String(s.time).split(':').map(Number);
+        if (hh * 60 + mm <= nowMin) continue;
+        const v = s.version || '';
+        (groups[v] = groups[v] || []).push({ h: s.time, open: true, past: false, url: String(s.booking_url || '').replace(/ /g, '%20'), aria: c.name + (v ? ' ' + v : '') + ', séance de ' + s.time.replace(':', 'h') + ' — réserver' });
+      }
+      const d = pos && typeof pos === 'object' && c.lat != null ? km(c) : null;
+      for (const v of Object.keys(groups).sort().reverse()) list.push({
+        name: c.name, v, d, dist: d == null ? '' : fmt(d), times: groups[v],
+        hasLogo: !!c.logo, noLogo: !c.logo, logo: c.logo || '', ini: ini(c.name),
+        brandLabel: c.brand === 'ugc' ? 'UGC' : c.brand === 'mk2' ? 'MK2' : c.name,
+      });
+    }
+    list.sort((x, y) => (x.d ?? 1e9) - (y.d ?? 1e9) || x.name.localeCompare(y.name, 'fr'));
+    list = list.slice(0, 10);
+
+    const hadToday = !!entry && mode !== 'none';
+    const show = !!seKey && (mode !== 'auto' || this.props.seancesAllFilms !== false || recent || hadToday);
+    const message = loading ? ''
+      : data && data.error ? 'Séances indisponibles'
+      : shows && !fresh && mode === 'auto' ? 'Séances du jour pas encore publiées'
+      : list.length ? ''
+      : hadToday ? "Plus de séance aujourd'hui à Paris"
+      : "Ce film n'est plus à l'affiche à Paris";
+    const more = !!st.seMore;
+    return { se: {
+      show, loading, ready: !loading && list.length > 0, message,
+      geoNote: !loading && list.length > 0 && geoOff,
+      skel: [0, 1, 2], skelPills: [0, 1, 2, 3, 4],
+      top: list.slice(0, 3), more: list.slice(3),
+      hasMore: !loading && list.length > 3,
+      moreRows: more ? '1fr' : '0fr', moreTab: more ? 0 : -1,
+      headLabel: more ? 'Voir moins' : 'Voir plus',
+      footLabel: more ? 'Voir moins' : 'Voir plus de cinémas',
+      toggle: () => this.setState(s => ({ seMore: !s.seMore })),
+      ...this.addrVals(),
+      locate: () => this.requestGeo(),
+      geoLabel: st.geoBusy ? 'Localisation…' : 'Activer la localisation',
+      geoHelp: st.geoHelp || '',
+    } };
+  }
+
+  // Autocomplétion via la Base Adresse Nationale (api-adresse.data.gouv.fr), biaisée vers Paris.
+  onAddrInput(q) {
+    this.setState({ addrQuery: q, addrNote: '' });
+    clearTimeout(this._addrT);
+    if (q.trim().length < 3) { this.setState({ addrSugg: [] }); return; }
+    this._addrT = setTimeout(async () => {
+      const seq = (this._addrSeq = (this._addrSeq || 0) + 1);
+      try {
+        // Deux requêtes : une forcée sur Paris, une ouverte ; Paris d'abord, sans doublons.
+        const api = (s) => fetch('https://api-adresse.data.gouv.fr/search/?autocomplete=1&limit=5&lat=48.8566&lon=2.3522&q=' + encodeURIComponent(s)).then(r => r.json()).catch(() => ({}));
+        const [jp, ja] = await Promise.all([/paris|75\d{3}/i.test(q) ? {} : api(q + ' Paris'), api(q)]);
+        if (seq !== this._addrSeq) return;
+        const feats = [...(jp.features || []).filter(f => String(f.properties.postcode || '').startsWith('75')), ...(ja.features || [])];
+        const seen = new Set();
+        const sugg = feats.filter(f => !seen.has(f.properties.label) && seen.add(f.properties.label)).slice(0, 5).map(f => ({
+          label: f.properties.name, ctx: [f.properties.postcode, f.properties.city].filter(Boolean).join(' '),
+          full: f.properties.label, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0],
+        }));
+        this.setState({ addrSugg: sugg, addrNote: sugg.length ? '' : 'Aucune adresse trouvée' });
+      } catch (e) { this.setState({ addrSugg: [], addrNote: 'Recherche d\u2019adresse indisponible' }); }
+    }, 220);
+  }
+
+  pickAddr(s) {
+    clearTimeout(this._addrT);
+    this._addrSeq = (this._addrSeq || 0) + 1;
+    const addrPos = s ? { lat: s.lat, lng: s.lng, label: s.full } : null;
+    try { s ? localStorage.setItem('dv-seances-addr', JSON.stringify(addrPos)) : localStorage.removeItem('dv-seances-addr'); } catch (e) {}
+    this.setState({ addrPos, addrQuery: s ? s.full : '', addrSugg: [], addrNote: '', seMore: false });
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  }
+
+  // Le navigateur ne redemande plus si l'accès a déjà été refusé : on explique alors où le réactiver.
+  async requestGeo() {
+    if (this.state.geoBusy) return;
+    const blocked = "Localisation bloquée par le navigateur. Autorisez-la dans les réglages du site (icône à gauche de l'adresse), puis rechargez la page.";
+    if (!window.isSecureContext) { this.setState({ geoHelp: "Localisation impossible : la page doit être ouverte en https." }); return; }
+    let framed = false;
+    try { framed = window.self !== window.top; } catch (e) { framed = true; }
+    if (!navigator.geolocation) { this.setState({ geoHelp: "Localisation indisponible sur cet appareil." }); return; }
+    // Appel direct au tap : c'est ce geste qui autorise le navigateur à afficher sa pop-in.
+    this.setState({ geoBusy: true, geoHelp: '' });
+    navigator.geolocation.getCurrentPosition(
+      pos => this.setState({ geoBusy: false, geoHelp: '', geo: { lat: pos.coords.latitude, lng: pos.coords.longitude } }),
+      err => this.setState({ geoBusy: false, geoHelp:
+        err && err.code === 1 && framed ? "Localisation bloquée dans cet aperçu intégré. Ouvrez l'app dans un onglet à part."
+        : err && err.code === 1 ? blocked
+        : err && err.code === 2 ? "Localisation désactivée pour ce navigateur dans les réglages de l'appareil (Confidentialité → Service de localisation)."
+        : "Position introuvable. Réessayez dans un instant." }),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 });
+  }
+
+  async loadDetails(id) {
+    const k = this.key();
+    const f = (this.state.films || []).concat(this.state.wish || []).find(x => x.id === id);
+    const tid = f && f.tmdb;
+    const det = this.state.details || {};
+    if (!k || !tid || det[id] || this._det === id) return;
+    this._det = id;
+    try {
+      const j = await (await fetch('https://api.themoviedb.org/3/movie/' + tid + '?api_key=' + encodeURIComponent(k) + '&language=fr-FR')).json();
+      this._det = null;
+      this.setState(s => ({ details: { ...(s.details || {}), [id]: {
+        runtime: j.runtime || 0, release: j.release_date || '', overview: j.overview || '',
+        genres: (j.genres || []).map(g => g.name),
+        countries: (j.production_countries || []).map(c => c.iso_3166_1),
+        lang: (j.original_language || '').toUpperCase(),
+      } } }));
+    } catch (e) { this._det = null; }
+  }
+
+  async openPosterPicker(forDraft) {
+    const f = forDraft ? this.state.draft
+      : (this.state.films || []).concat(this.state.wish || []).find(x => x.id === this.state.filmId);
+    const k = this.key();
+    if (this._closeTimer) { clearTimeout(this._closeTimer); this._closeTimer = null; }
+    this.setState({ picker: true, pickerClosing: false, posterList: [], postersNote: '', draftPicker: !!forDraft });
+    if (!f || !f.tmdb || !k) { this.setState({ postersNote: 'Aucune affiche TMDB disponible pour ce film.' }); return; }
+    try {
+      const j = await (await fetch('https://api.themoviedb.org/3/movie/' + f.tmdb + '/images?api_key=' + encodeURIComponent(k) + '&include_image_language=fr,en,null')).json();
+      const list = (j.posters || []).map(p => p.file_path);
+      this.setState({ posterList: list, postersNote: list.length ? '' : 'Aucune affiche TMDB pour ce film.' });
+    } catch (e) { this.setState({ postersNote: 'TMDB inaccessible.' }); }
+  }
+
+  async fetchDetails(tid) {
+    const k = this.key();
+    if (!k || !tid) return null;
+    try {
+      const j = await (await fetch('https://api.themoviedb.org/3/movie/' + tid + '?api_key=' + encodeURIComponent(k) + '&language=fr-FR&append_to_response=credits')).json();
+      const dirs = ((j.credits || {}).crew || []).filter(c => c.job === 'Director').map(c => c.name);
+      return {
+        directors: dirs, credit: dirs.length ? 'De ' + dirs.join(', ') : '',
+        release: this.frDate(j.release_date), releaseIso: j.release_date || '', runtime: j.runtime || 0,
+        genres: (j.genres || []).map(g => g.name),
+        countries: (j.production_countries || []).map(c => c.iso_3166_1),
+        lang: (j.original_language || '').toUpperCase(), overview: j.overview || '',
+      };
+    } catch (e) { return null; }
+  }
+
+  // La modale s'ouvre tout de suite ; les détails TMDB la complètent ensuite.
+  async openDraft(r, mode) {
+    const tmdb = String(r.id).replace(/^tmdb/, '');
+    const view = mode || 'sheet';
+    if (this._draftTimer) { clearTimeout(this._draftTimer); this._draftTimer = null; }
+    this.setState({ draftClosing: false, sheetOpen: false, draftView: view, draft: { tmdb, t: r.t, y: r.y, poster: r.poster || null, credit: '', release: r.sub || '', runtime: 0, genres: [], countries: [], lang: '', overview: r.s || '', cinema: false, liked: false, wish: false } });
+    const det = await this.fetchDetails(tmdb);
+    if (det) this.setState(s => s.draft && s.draft.tmdb === tmdb ? { draft: { ...s.draft, ...det, overview: det.overview || s.draft.overview } } : {});
+  }
+
+  closeDraft() {
+    if (this.state.draftClosing) return;
+    this.setState({ draftClosing: true });
+    this._draftTimer = setTimeout(() => this.setState(st => st.sheetOpen
+      ? { sheetOpen: false, draftClosing: false }
+      : { draft: null, draftClosing: false, ...(st.draftFrom === 'film' || st.draftFrom === 'revu' ? { draftFrom: null, draftFilmId: null } : {}) }), 240);
+  }
+
+  // « Envie » sur la fiche d'ajout : écrit tout de suite, re-clic supprime.
+  async draftWish() {
+    const dr = this.state.draft;
+    if (!dr || this.state.wishSaving) return;
+    const c = this.sb();
+    if (dr.wishRow) {
+      const rowId = dr.wishRow;
+      this.setState(s => ({ draft: { ...s.draft, wishRow: null } }));
+      if (c && typeof rowId === 'number') {
+        await this.deleteRow(rowId);
+        this.refresh(); this.loadWishes();
+      }
+      return;
+    }
+    this.setState({ wishSaving: true, writeError: '' });
+    const saved = await this.insertRow({ ...dr, wish: true, cinema: false, liked: false });
+    this.setState({ wishSaving: false });
+    if (!saved) return;
+    this.setState(s => ({ draft: { ...s.draft, wishRow: saved.id || true } }));
+    this.loadWishes();
+  }
+
+  async insertRow(dr) {
+    const c = this.sb();
+    if (!c) { this.setState({ writeError: 'Ajout impossible : Supabase non configuré.' }); return null; }
+    let d = dr;
+    if (dr.tmdb && !dr.directors) { const det = await this.fetchDetails(dr.tmdb); if (det) d = { ...dr, ...det }; }
+    const row = {
+      movie_name: d.t, movie_year: d.y ? Number(String(d.y).slice(0, 4)) : null,
+      movie_director: d.directors && d.directors.length ? d.directors : null,
+      movie_genre: d.genres && d.genres.length ? d.genres : null,
+      movie_country: d.countries && d.countries.length ? d.countries : null,
+      movie_print: d.poster || null, movie_view: d.wish ? null : new Date().getFullYear(),
+      is_cinema: !!d.cinema, is_liked: !!d.liked, tmdb_id: d.tmdb ? Number(d.tmdb) : null,
+    };
+    if (this._noWish !== true) row.is_wish = !!d.wish;
+    // Un film = une ligne : si le tmdb_id existe déjà, on met à jour.
+    if (row.is_wish) { row.is_liked = false; row.is_cinema = false; } // un coup de cœur est forcément vu
+    try {
+      let existing = null;
+      if (row.tmdb_id) {
+        const q = await fetch(c.url + '/rest/v1/movies?select=id,movie_view,is_wish,is_cinema,is_liked' + this.revCols() + '&tmdb_id=eq.' + row.tmdb_id + '&limit=1', { headers: this.headers() });
+        const found = q.ok || q.status === 206 ? await q.json() : [];
+        existing = Array.isArray(found) && found[0] ? found[0] : null;
+      }
+      if (existing) {
+        const wasSeen = !existing.is_wish;
+        // Déjà vu + « envie » : on ne rétrograde pas un film vu.
+        if (d.wish && wasSeen) return existing;
+        const patch = !d.wish && wasSeen && this._revus ? this.rewatchPatch(existing, d) : d.wish
+          ? { is_wish: true, movie_view: null, is_liked: false, is_cinema: false }
+          : { is_wish: false, movie_view: new Date().getFullYear(), ...(existing.is_wish ? { created_at: new Date().toISOString() } : {}), is_cinema: !!d.cinema || !!existing.is_cinema, is_liked: !!d.liked || !!existing.is_liked };
+        if (this._noWish === true) delete patch.is_wish;
+        if (d.poster && !d.wish) patch.movie_print = d.poster;
+        const r = await fetch(c.url + '/rest/v1/movies?id=eq.' + existing.id, {
+          method: 'PATCH', headers: this.headers({ 'Content-Type': 'application/json', Prefer: 'return=representation' }),
+          body: JSON.stringify(patch),
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const [saved] = await r.json();
+        return saved || { ...existing, ...patch };
+      }
+      const r = await fetch(c.url + '/rest/v1/movies', {
+        method: 'POST', headers: this.headers({ 'Content-Type': 'application/json', Prefer: 'return=representation' }),
+        body: JSON.stringify(row),
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const [saved] = await r.json();
+      return saved || {};
+    } catch (e) {
+      console.warn('Supabase: insertion refusée —', e.message);
+      this.setState({ writeError: e.message === 'HTTP 401' || e.message === 'HTTP 403'
+        ? 'Film non ajouté : il manque une policy INSERT pour anon sur movies.'
+        : 'Film non ajouté : Supabase a refusé l’insertion (' + e.message + ').' });
+      return null;
+    }
+  }
+
+  // Le visionnage courant passe dans l'historique ; le nouveau devient la ligne.
+  // Un coup de cœur reste attaché à son année.
+  rewatchPatch(old, d) {
+    const year = new Date().getFullYear();
+    const add = (a, y) => [...new Set([...(a || []), y])].sort((x, z) => x - z);
+    const p = {
+      movie_view: year, is_cinema: !!d.cinema, is_liked: !!d.liked, created_at: new Date().toISOString(),
+      revus_cinema: old.revus_cinema || [], revus_ordi: old.revus_ordi || [], revus_coeur: old.revus_coeur || [],
+    };
+    if (old.movie_view) {
+      const oy = Number(old.movie_view);
+      if (old.is_cinema) p.revus_cinema = add(p.revus_cinema, oy); else p.revus_ordi = add(p.revus_ordi, oy);
+      if (old.is_liked) { if (oy === year) p.is_liked = true; else p.revus_coeur = add(p.revus_coeur, oy); }
+    }
+    if (d.poster) p.movie_print = d.poster;
+    return p;
+  }
+
+  openRewatch(film) {
+    if (!film.tmdb) return;
+    if (!this._revus) { this.setState({ writeError: 'Revisionnage impossible : colonnes revus_* absentes de movies.' }); return; }
+    this.setState({ draftFrom: 'revu', draftFilmId: film.id });
+    this.openDraft({ id: 'tmdb' + film.tmdb, t: film.t, y: film.y, poster: this.state.posters[film.id] || film.poster || null, s: film.s || '' }, 'sheet');
+  }
+
+  // Bouton watchlist d'une ligne de résultat : allumé = ligne créée dans movies.
+  async toggleResultWish(r) {
+    const map = { ...(this.state.added || {}) };
+    const c = this.sb();
+    const kn = (this.state.known || {})[r.id];
+    if (map[r.id] || (map[r.id] === undefined && kn && kn.wish)) {
+      const rowId = typeof map[r.id] === 'number' ? map[r.id] : (kn ? kn.rowId : null);
+      map[r.id] = false;
+      this.setState({ added: map });
+      if (c && typeof rowId === 'number') {
+        await this.deleteRow(rowId);
+        this.refresh(); this.loadWishes();
+      }
+      return;
+    }
+    this.setState({ added: { ...map, [r.id]: true }, writeError: '' });
+    const saved = await this.insertRow({ tmdb: String(r.id).replace(/^tmdb/, ''), t: r.t, y: r.y, poster: r.poster || null, wish: true });
+    if (!saved) {
+      this.setState(s => ({ added: { ...(s.added || {}), [r.id]: false } }));
+      return;
+    }
+    this.setState(s => ({ added: { ...(s.added || {}), [r.id]: saved.id || true } }));
+    this.loadWishes();
+  }
+
+  frDate(iso) {
+    if (!iso) return '';
+    const M = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    const [y, m, d] = iso.split('-');
+    return Number(d) + ' ' + M[Number(m) - 1] + ' ' + y;
+  }
+
+  // Film de la watchlist vu : même modale que l'ajout, la ligne passe en « vu ».
+  openWishSeen(film) {
+    if (!film.tmdb) return;
+    this.setState({ draftFrom: 'film', draftFilmId: film.id });
+    this.openDraft({ id: 'tmdb' + film.tmdb, t: film.t, y: film.y, poster: this.state.posters[film.id] || film.poster || null, s: film.s || '' }, 'sheet');
+  }
+
+  async commitDraft() {
+    if (!this.state.draft || this.state.saving) return;
+    this.setState({ saving: true, writeError: '' });
+    const dr = this.state.draft;
+    // La ligne « envie » éventuelle est convertie en « vu » (même ligne).
+    const saved = await this.insertRow({ ...dr, wish: false });
+    this.setState({ saving: false });
+    if (!saved) return;
+    if (this._draftTimer) { clearTimeout(this._draftTimer); this._draftTimer = null; }
+    const from = this.state.draftFrom;
+    if (from === 'film' || from === 'revu') {
+      const fid = this.state.draftFilmId;
+      const cur = [...this.state.films, ...this.state.wish].find(f => f.id === fid);
+      const rv = saved.movie_view !== undefined ? this.revusOf(saved) : { liked: !!dr.liked };
+      const done = cur ? { ...cur, seen: true, wish: false, v: dr.cinema ? 0 : 1, ...rv, dt: String(new Date().getFullYear()) } : null;
+      this.setState(s => ({
+        draft: null, draftClosing: false, draftView: 'sheet', sheetOpen: false, draftFrom: null, draftFilmId: null,
+        wish: s.wish.filter(f => f.id !== fid),
+        films: done ? [done, ...s.films.filter(f => f.id !== fid)] : s.films,
+      }));
+      this.refresh(); this.loadYears(); this.loadWishes();
+      return;
+    }
+    this.setState({
+      draft: null, draftClosing: false, draftView: 'sheet', sheetOpen: false, known: {}, added: {}, query: '', results: [],
+      draftFrom: null, addFlow: false,
+      screen: from === 'director' ? 'director' : 'home',
+      tab: from === 'director' ? this.state.tab : 0,
+    });
+    if (from === 'director' && this.state.director) this.openDirectorByName(this.state.director.name);
+    this.refresh();
+    this.loadYears();
+    this.loadWishes();
+  }
+
+  // Le volet reste monté le temps de son animation de sortie.
+  closePicker() {
+    if (this.state.pickerClosing) return;
+    this.setState({ pickerClosing: true });
+    this._closeTimer = setTimeout(() => this.setState({ picker: false, pickerClosing: false, draftPicker: false }), 260);
+  }
+
+  onKey = (e) => { if (e.key === 'Escape' && this.state.yearsOpen) this.closeYears(); };
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+    if (this._yearsTimer) clearTimeout(this._yearsTimer);
+    if (this._closeTimer) clearTimeout(this._closeTimer);
+    if (this._draftTimer) clearTimeout(this._draftTimer);
+  }
+
+  async pickPoster(path) {
+    const url = 'https://image.tmdb.org/t/p/w500' + path;
+    if (this.state.draftPicker) {
+      this.setState(s => ({ draft: { ...s.draft, poster: url } }));
+      this.closePicker();
+      return;
+    }
+    const id = this.state.filmId;
+    this.setState(s => ({ posters: { ...s.posters, [id]: url } }));
+    this.closePicker();
+    // On stocke l'URL complète, comme les lignes déjà présentes dans la table.
+    this.persist(id, { movie_print: url });
+  }
+
+  // Une teinte par genre, prise dans les accents du DS (aucune couleur inventée).
+  genreStyle(name) {
+    const PAL = [
+      { bg: '#ECA37E', ink: '#0C0A09' }, { bg: '#A3C1C1', ink: '#0C0A09' },
+      { bg: '#E5DED6', ink: '#0C0A09' }, { bg: '#C8BFB6', ink: '#0C0A09' },
+      { bg: '#0C0A09', ink: '#FAFAFA' },
+    ];
+    let h = 0;
+    for (const ch of String(name)) h = (h * 33 + ch.charCodeAt(0)) % 9973;
+    const t = PAL[h % PAL.length];
+    return { background: t.bg, color: t.ink };
+  }
+
+  tagStyle(extra) {
+    return {
+      display: 'inline-flex', alignItems: 'center', height: 33, padding: '0 12px', borderRadius: 6,
+      fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 12, lineHeight: '140%',
+      whiteSpace: 'nowrap', boxSizing: 'border-box', ...extra,
+    };
+  }
+
+  filmVals(film) {
+    const d = (this.state.details || {})[film.id] || {};
+    const FLAGS = { FR: '🇫🇷', US: '🇺🇸', GB: '🇬🇧', KR: '🇰🇷', JP: '🇯🇵', IT: '🇮🇹', DE: '🇩🇪', ES: '🇪🇸', BE: '🇧🇪', DK: '🇩🇰', SE: '🇸🇪', CA: '🇨🇦', MX: '🇲🇽', BR: '🇧🇷', CN: '🇨🇳', HK: '🇭🇰', TW: '🇹🇼', IN: '🇮🇳', IR: '🇮🇷', RU: '🇷🇺', PL: '🇵🇱', AT: '🇦🇹', CH: '🇨🇭', NL: '🇳🇱', AU: '🇦🇺', NO: '🇳🇴', PT: '🇵🇹', GR: '🇬🇷', TR: '🇹🇷', AR: '🇦🇷', CL: '🇨🇱', TH: '🇹🇭', NZ: '🇳🇿', IE: '🇮🇪', FI: '🇫🇮', CZ: '🇨🇿', RO: '🇷🇴', HU: '🇭🇺', IL: '🇮🇱', SN: '🇸🇳', MA: '🇲🇦', BF: '🇧🇫' };
+    const codes = d.countries && d.countries.length ? d.countries : [];
+    const genres = (d.genres && d.genres.length ? d.genres : (film.g || [])).slice(0, 3);
+    const tags = codes.map(c => ({ label: (FLAGS[c] ? FLAGS[c] + ' ' : '') + c, style: this.tagStyle({ background: '#E5DED6', color: '#0C0A09' }) }))
+      .concat(genres.map(g => ({ label: g, style: this.tagStyle(this.genreStyle(g)) })));
+    if (!codes.length && film.p) tags.unshift({ label: film.p, style: this.tagStyle({ background: '#E5DED6', color: '#0C0A09' }) });
+    // 1970 = année de visionnage inconnue (valeur héritée de l'import).
+    const again = film.revus && film.revus.length;
+    const seenLabel = !film.seen ? 'Vu' : !film.dt || film.dt === '1970' ? (again ? 'Revu' : 'Vu') : (again ? 'Revu en ' : 'Vu en ') + film.dt;
+    return {
+      title: film.t, runtime: this.fmtRuntime(d.runtime),
+      credit: film.d ? 'De ' + film.d : '',
+      hasDirectors: !!film.d,
+      directorLinks: String(film.d || '').split(',').map(x => x.trim()).filter(Boolean)
+        .map((name, i, arr) => ({ label: name + (i < arr.length - 1 ? ',' : ''), open: () => this.openDirectorByName(name) })),
+      release: this.fmtDate(d.release) || (film.y ? String(film.y) : ''),
+      tags, synopsis: d.overview || film.s || '',
+      seen: film.seen, wish: film.wish, liked: film.liked,
+      seenIcon: film.seen ? (film.v === 0 ? 'Popcorn16' : 'Laptop16') : 'Sunglasses24',
+      seenLabel,
+    };
+  }
+
+  fmtRuntime(m) { return m ? (m >= 60 ? Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0') : m + 'min') : ''; }
+
+  fmtDate(iso) {
+    if (!iso) return '';
+    const M = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    const [y, m, d] = String(iso).split('-');
+    return m ? Number(d) + ' ' + M[Number(m) - 1] + ' ' + y : y;
+  }
+
+  key() { return (this.props.tmdbApiKey || '').trim(); }
+
+  async loadPosters() {
+    const k = this.key();
+    if (!k || this._loading) return;
+    this._loading = true;
+    for (const f of this.state.films) {
+      try {
+        const u = 'https://api.themoviedb.org/3/search/movie?api_key=' + encodeURIComponent(k) + '&language=fr-FR&year=' + f.y + '&query=' + encodeURIComponent(f.t);
+        const r = await fetch(u);
+        const j = await r.json();
+        const p = j && j.results && j.results[0] && j.results[0].poster_path;
+        if (p) this.setState(s => ({ posters: { ...s.posters, [f.id]: 'https://image.tmdb.org/t/p/w342' + p } }));
+      } catch (e) { /* offline / clé invalide : on garde les vignettes typographiques */ }
+    }
+  }
+
+  async search(q) {
+    const k = this.key();
+    if (!k || !q) { this.setState({ results: this.localResults(q) }); return; }
+    try {
+      const u = 'https://api.themoviedb.org/3/search/movie?api_key=' + encodeURIComponent(k) + '&language=fr-FR&query=' + encodeURIComponent(q);
+      const j = await (await fetch(u)).json();
+      const res = (j.results || []).slice(0, 12).map((m, i) => ({
+        id: 'tmdb' + m.id, t: m.title, y: (m.release_date || '').slice(0, 4),
+        sub: this.fmtDate(m.release_date) || '',
+        poster: m.poster_path ? 'https://image.tmdb.org/t/p/w185' + m.poster_path : null,
+        g: [], c: '', d: '', p: '', l: '', s: m.overview || '',
+      }));
+      this.setState({ results: res });
+      this.markExisting(res);
+    } catch (e) { this.setState({ results: this.localResults(q) }); }
+  }
+
+  // Une seule requête par recherche : tmdb_id=in.(…) sur les ~10 résultats.
+  async markExisting(res) {
+    const c = this.sb();
+    const ids = res.map(r => String(r.id).replace(/^tmdb/, '')).filter(x => /^\d+$/.test(x));
+    if (!c || !ids.length) return;
+    try {
+      const cols = 'id,tmdb_id,movie_view' + (this._noWish ? '' : ',is_wish');
+      const r = await fetch(c.url + '/rest/v1/movies?select=' + cols + '&tmdb_id=in.(' + ids.join(',') + ')', { headers: this.headers() });
+      if (!r.ok) return;
+      const rows = await r.json();
+      const known = {};
+      rows.forEach(m => { known['tmdb' + m.tmdb_id] = { rowId: m.id, wish: !!m.is_wish, seen: !m.is_wish }; });
+      this.setState({ known });
+    } catch (e) { /* pas de marquage : les boutons restent éteints */ }
+  }
+
+  localResults(q) {
+    const n = (q || '').toLowerCase();
+    if (!n) return [];
+    return this.state.films.filter(f => f.t.toLowerCase().includes(n) || (f.d || '').toLowerCase().includes(n))
+      .slice(0, 10).map(f => ({ id: f.id, t: f.t, y: f.y, sub: f.d, poster: this.state.posters[f.id] || null }));
+  }
+
+  tint(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) % 997; return TINTS[h % TINTS.length]; }
+
+  tile(f) {
+    const raw = this.state.posters[f.id] || null;
+    const src = raw ? raw.replace('/w500/', '/w185/').replace('/w342/', '/w185/') : null;
+    const t = this.tint(f.id);
+    return {
+      id: f.id, title: f.t, year: f.y, src,
+      labelStyle: { position: 'absolute', inset: 0, display: src ? 'none' : 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '3px', padding: '6px', boxSizing: 'border-box', background: t.bg, color: t.ink },
+      // Géométrie de PosterTile reprise telle quelle, mais en 2:3 — le ratio réel
+      // des affiches TMDB (la tuile du DS est en 89/122.25 et rognait l'image).
+      tileStyle: {
+        position: 'relative', width: '100%', aspectRatio: '2 / 3', overflow: 'hidden',
+        borderRadius: 'var(--dv-radius-tile)', cursor: 'pointer',
+        background: src ? '#0C0A09 center / cover no-repeat' : t.bg,
+        backgroundImage: src ? 'url(' + src + ')' : undefined,
+      },
+      cellStyle: {
+        animation: 'dv-fade 260ms ease-out both',
+        gridColumn: f.big ? 'span 2' : undefined,
+        gridRow: f.big ? 'span 2' : undefined,
+      },
+      open: () => this.setState({ screen: 'film', filmId: f.id, filmFrom: null }),
+    };
+  }
+
+  // Supprime la ligne et vérifie qu'elle a bien disparu (RLS renvoie 204 même sans policy DELETE).
+  async deleteRow(rowId) {
+    const c = this.sb();
+    if (!c || typeof rowId !== 'number') return false;
+    try {
+      const r = await fetch(c.url + '/rest/v1/movies?id=eq.' + rowId, { method: 'DELETE', headers: this.headers({ Prefer: 'return=representation' }) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const rows = await r.json().catch(() => []);
+      if (!Array.isArray(rows) || !rows.length) throw new Error('0 ligne');
+      if (this.state.writeError) this.setState({ writeError: '' });
+      return true;
+    } catch (e) {
+      console.warn('Supabase: suppression refusée —', e.message);
+      this.setState({ writeError: 'Envie non retirée de la base : il manque une policy DELETE pour anon sur movies.' });
+      return false;
+    }
+  }
+
+  update(id, patch) {
+    const cur = [...this.state.films, ...this.state.wish].find(f => f.id === id);
+    if (patch.wish === false && cur && cur.wish && !cur.seen && String(id).startsWith('sb')) {
+      // La fiche reste affichée (bouton éteint), mais le film sort des listes.
+      this.setState(s => ({ films: s.films.map(f => f.id === id ? { ...f, wish: false } : f), wish: s.wish.map(f => f.id === id ? { ...f, wish: false } : f) }));
+      this.deleteRow(Number(String(id).slice(2))).then(ok => { if (!ok) this.refresh(); this.loadWishes(); });
+      return;
+    }
+    const m = (arr) => arr.map(f => f.id === id ? { ...f, ...patch } : f);
+    this.setState(s => ({ films: m(s.films), wish: m(s.wish) }));
+    const cols = {};
+    if ('liked' in patch) cols.is_liked = !!patch.liked;
+    if ('v' in patch) cols.is_cinema = patch.v === 0;
+    if ('wish' in patch) { cols.is_wish = !!patch.wish; this._wishDirty = true; }
+    if (Object.keys(cols).length) this.persist(id, cols, patch);
+  }
+
+  async persist(id, cols, revert) {
+    const c = this.sb();
+    if (!c || !String(id).startsWith('sb')) return;
+    try {
+      const r = await fetch(c.url + '/rest/v1/movies?id=eq.' + String(id).slice(2), {
+        method: 'PATCH', headers: this.headers({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+        body: JSON.stringify(cols),
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      if (this.state.writeError) this.setState({ writeError: '' });
+      if (this._wishDirty) { this._wishDirty = false; this.loadWishes(); }
+    } catch (e) {
+      console.warn('Supabase: écriture refusée —', e.message);
+      // On annule l'affichage optimiste : sans écriture, le bouton mentirait.
+      if (revert) {
+        const back = {};
+        Object.keys(revert).forEach(k => { back[k] = typeof revert[k] === 'boolean' ? !revert[k] : revert[k]; });
+        const m = (arr) => arr.map(f => f.id === id ? { ...f, ...back } : f);
+        this.setState(s => ({ films: m(s.films), wish: m(s.wish) }));
+      }
+      const missing = 'wish' in (revert || {}) && this._noWish !== false;
+      this.setState({ writeError: missing
+        ? 'Envie non enregistrée : la colonne is_wish manque dans movies.'
+        : 'Modification non enregistrée (Supabase a refusé l’écriture).' });
+    }
+  }
+
+  tabBar() {
+    const ITEMS = [
+      { icon: 'Clipboard24', label: 'Déjà-vu' },
+      { icon: 'ClockCountdown24', label: 'Envie' },
+      { icon: 'pin', label: 'Séances' },
+      { icon: 'MagnifyingGlass24', label: 'Chercher' },
+    ];
+    // Aucun onglet actif hors des 4 écrans de la barre (ex. Statistiques).
+    const sel = ['home', 'wishlist', 'cinemas', 'search'].includes(this.state.screen) ? this.state.tab : -1;
+    const GROW = 2.45; // largeur de la gélule sélectionnée, en parts de piste
+    const total = GROW + (ITEMS.length - 1);
+    const EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+    const before = Math.max(0, sel); // les items non sélectionnés valent 1 part
+    return {
+      pillStyle: {
+        position: 'absolute', top: 0, height: '100%',
+        left: (before / total * 100) + '%',
+        width: (GROW / total * 100) + '%',
+        background: '#0C0A09', borderRadius: 999, opacity: sel < 0 ? 0 : 1,
+        transition: 'left 460ms ' + EASE + ', width 460ms ' + EASE + ', opacity 160ms ease-out',
+      },
+      tabs: ITEMS.map((it, i) => {
+        const on = i === sel;
+        return {
+          icon: it.icon, label: it.label, pin: it.icon === 'pin', glyph: it.icon !== 'pin',
+          onClick: () => this.goTab(i),
+          style: {
+            flexGrow: on ? GROW : 1, flexBasis: 0, minWidth: 0, height: '100%',
+            display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+            gap: on ? 6 : 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer',
+            transition: 'flex-grow 460ms ' + EASE + ', gap 460ms ' + EASE,
+          },
+          iconStyle: {
+            display: 'inline-flex', flex: '0 0 auto', width: 24, height: 24,
+            color: on ? '#FAFAFA' : '#0A0A0A',
+            transition: 'color 260ms ease-out ' + (on ? '80ms' : '0ms'),
+          },
+          labelStyle: {
+            fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: 12, lineHeight: '100%',
+            whiteSpace: 'nowrap', overflow: 'hidden', color: '#FAFAFA',
+            maxWidth: on ? 90 : 0, opacity: on ? 1 : 0,
+            transition: 'max-width 460ms ' + EASE + ', opacity ' + (on ? '240ms ease-out 140ms' : '140ms ease-out'),
+          },
+        };
+      }),
+    };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const sbMode = !!this.sb();
+    const seenAll = st.films.filter(f => f.seen);
+    let filtered, counts, years, n;
+    if (sbMode) {
+      filtered = seenAll;
+      counts = st.counts || [0, 0, 0, 0];
+      years = ['Tout'].concat(st.years || []);
+      n = counts[st.seg] || 0;
+    } else {
+      years = ['Tout'].concat([...new Set(seenAll.map(f => String(f.dt).slice(-4)).filter(Boolean))].sort().reverse());
+      const byYear = st.year === 'Tout' ? seenAll : seenAll.filter(f => String(f.dt).endsWith(String(st.year)));
+      filtered = st.seg === 0 ? byYear : st.seg === 1 ? byYear.filter(f => f.v === 0) : st.seg === 2 ? byYear.filter(f => f.v === 1) : byYear.filter(f => f.liked);
+      counts = [byYear.length, byYear.filter(f => f.v === 0).length, byYear.filter(f => f.v === 1).length, byYear.filter(f => f.liked).length];
+      n = filtered.length;
+    }
+    const wishFilms = st.wish || [];
+    const film = seenAll.concat(wishFilms).find(f => f.id === st.filmId) || null;
+    const raw = sbMode ? filtered : filtered.slice(0, st.visible);
+    // Les films aimés occupent 2×2 cellules, mais seulement dans « Tout » et « Ciné » :
+    // dans le filtre « Aimé » tout serait grand, et l'effet de relief disparaîtrait.
+    const emphasize = st.seg === 0 || st.seg === 1;
+    const shown = raw.map(f => ({ ...f, big: emphasize && !!f.liked }));
+
+    return {
+      isHome: st.screen === 'home', isFilm: st.screen === 'film', isWishlist: st.screen === 'wishlist',
+      isStats: st.screen === 'stats', isSearch: st.screen === 'search', isCinemas: st.screen === 'cinemas',
+      ...this.cinemasVals(),
+      menuOpen: !!st.menuOpen,
+      openMenu: () => { clearTimeout(this._menuTimer); this.setState({ menuOpen: true, menuClosing: false }); },
+      closeMenu: () => this.closeMenu(),
+      goStats: () => this.goStats(),
+      // Retour depuis Statistiques : écran d'origine, l'année de Déjà-vu est restaurée.
+      statsBack: () => {
+        const b = this._statsBack || { screen: 'home', tab: 0 };
+        this._statsBack = null;
+        const tabScreens = ['home', 'wishlist', 'cinemas', 'search'];
+        if (tabScreens.includes(b.screen)) { this.goTab(tabScreens.indexOf(b.screen)); return; }
+        const patch = { screen: b.screen, tab: b.tab, filmId: b.filmId };
+        if (this._homeYear !== undefined) { patch.year = this._homeYear; this._homeYear = undefined; }
+        const changed = 'year' in patch && patch.year !== this.state.year;
+        this.setState(changed ? { ...patch, visible: 160 } : patch, () => { if (changed && this.sb()) this.refresh(); });
+      },
+      menuScrimStyle: {
+        position: 'absolute', inset: 0, background: '#0C0A09',
+        animation: (st.menuClosing ? 'dv-scrim-out 200ms ease-in' : 'dv-scrim-in 240ms ease-out') + ' both',
+      },
+      menuSheetStyle: {
+        position: 'absolute', top: 0, right: 0, bottom: 0, width: '65%', background: '#FBFAF9',
+        animation: (st.menuClosing ? 'dv-sheet-out 200ms cubic-bezier(0.32, 0, 0.67, 0)' : 'dv-sheet-in 300ms cubic-bezier(0.32, 0.72, 0, 1)') + ' both',
+      },
+      menuStatsStyle: {
+        height: 56, display: 'flex', alignItems: 'center', boxSizing: 'border-box',
+        margin: '0 12px', padding: '0 14px', borderRadius: 14, cursor: 'pointer',
+        background: st.screen === 'stats' || st.screen === 'country' ? '#E8E4E3' : 'transparent', transition: 'background 140ms ease-out',
+      },
+      isDirector: st.screen === 'director',
+      backToStats: () => this.setState({ screen: st.directorFrom || 'stats' }),
+      ...this.directorVals(),
+      showTabBar: st.screen !== 'film' && st.screen !== 'director' && !(st.screen === 'search' && st.addFlow),
+      isAddFlow: st.screen === 'search' && !!st.addFlow,
+      countLabel: n.toLocaleString('fr-FR') + (n > 1 ? ' films' : ' film'),
+      countFont: n >= 1000 ? '40px' : '50px',
+      onGridScroll: (e) => {
+        const el = e.currentTarget;
+        if (el.scrollHeight - el.scrollTop - el.clientHeight > 700) return;
+        if (sbMode) this.loadPage();
+        else if (this.state.visible < n) this.setState(s => ({ visible: s.visible + 160 }));
+      },
+      skeletons: st.loading ? [0, 1, 2, 3, 4, 5, 6, 7] : [],
+      wishLabel: wishFilms.length + (wishFilms.length > 1 ? ' envies' : ' envie'),
+      year: st.year, yearOptions: years,
+      yearLabel: st.year === 'Tout' ? 'All time' : String(st.year) === '1970' ? 'Année inconnue' : st.year,
+      ...this.yearSheet(years),
+      setYear: (y) => this.setState({ year: y, visible: 160 }, () => { if (sbMode) { this.refresh(); if (this.state.screen === 'stats') this.loadStats(); } }),
+      ...this.statsVals(),
+      ...this.countryVals(),
+      seg: st.seg,
+      setSeg: (i) => this.setState({ seg: i, visible: 160 }, () => { if (sbMode) this.refresh(); }),
+      segments: [
+        { icon: 'All16', label: counts[0] },
+        { icon: 'Popcorn16', label: counts[1] },
+        { icon: 'Laptop16', label: counts[2] },
+        { icon: 'Heart16StateOff', label: counts[3] },
+      ],
+      venueItems: [{ icon: 'Popcorn16', label: 'Ciné' }, { icon: 'Laptop16', label: 'Écran' }],
+      tiles: shown.map(f => this.tile(f)),
+      wishTiles: wishFilms.map(f => this.tile(f)),
+      tab: st.tab,
+      ...this.tabBar(),
+      setTab: (i) => this.goTab(i),
+      goHome: () => this.state.filmFrom === 'sugg' ? (() => { const p = (this._filmStack || []).pop(); this.setState(p ? { screen: 'film', ...p } : { screen: 'home', filmFrom: null }); })() : this.state.filmFrom === 'country' ? this.setState({ screen: 'country', filmFrom: null }) : this.state.filmFrom === 'director' || this.state.filmFrom === 'search'
+        ? this.setState({ screen: this.state.filmFrom === 'search' ? 'search' : 'director', addFlow: this.state.filmFrom === 'search', filmFrom: null })
+        : this.setState({ screen: ['home', 'wishlist', 'cinemas', 'search'][this.state.tab] || 'home', addFlow: false }),
+      goSearch: () => { if (st.screen !== 'search') this._searchBack = { screen: st.screen, tab: st.tab }; this._autoFocus = true; this._searchEl = null; this.setState({ screen: 'search', addFlow: true, draftFrom: null }); },
+      ...this.suggVals(film),
+      ...this.seancesVals(st.screen === 'film' ? film : null, st.screen === 'search' && st.draft && st.draftView === 'page' ? st.draft : null),
+      film: film ? this.filmVals(film) : { title: '', runtime: '', credit: '', hasDirectors: false, directorLinks: [], release: '', tags: [], synopsis: '', seen: false, wish: false, liked: false, seenIcon: 'Sunglasses24', seenLabel: 'Vu' },
+      // Géométrie de SwitchCta reprise à l'identique ; popcorn / laptop / crayon
+      // sont dessinés en 24px, contour 1px, style Tabler (cf. « Missing glyphs »).
+      ...(() => {
+        const fv = film ? this.filmVals(film) : { seenLabel: 'Vu' };
+        const btn = (on) => ({
+          flex: 1, height: 80, borderRadius: 'var(--dv-radius-card)', border: 'none', overflow: 'hidden',
+          background: on ? 'var(--dv-fill-selected)' : 'transparent', boxShadow: 'var(--dv-outline)',
+          display: 'inline-flex', flexDirection: 'column', gap: 6, padding: '18px 10px',
+          justifyContent: 'center', alignItems: 'center', boxSizing: 'border-box', cursor: 'pointer',
+          transition: 'background 140ms ease-out',
+        });
+        const box = (on) => ({ display: 'inline-flex', width: 24, height: 24, alignItems: 'center', justifyContent: 'center', color: on ? 'var(--dv-text-inverse)' : 'var(--dv-icon)' });
+        const lab = (on) => ({ fontFamily: 'var(--dv-font-ui)', fontWeight: 500, fontSize: 12, lineHeight: '130%', textAlign: 'center', textWrap: 'pretty', color: on ? 'var(--dv-text-inverse)' : 'var(--dv-icon)' });
+        const wrap = (on) => ({ style: btn(on), iconStyle: box(on), labelStyle: lab(on), on });
+        const seen = !!(film && film.seen);
+        return {
+          actSeen: { ...wrap(seen), style: { ...btn(seen), cursor: film && (film.wish || seen) ? 'pointer' : 'default' }, onClick: () => film && (seen ? this.openRewatch(film) : film.wish && this.openWishSeen(film)), label: fv.seenLabel, cinema: seen && film.v === 0, screen: seen && film.v !== 0, off: !seen },
+          // Envie = pas encore vu ; coup de cœur = vu. Les deux ne se croisent pas.
+          actWish: { ...wrap(!!(film && film.wish)), style: { ...btn(!!(film && film.wish)), cursor: seen ? 'default' : 'pointer' }, onClick: () => film && !seen && this.update(film.id, { wish: !film.wish }) },
+          actLike: { ...wrap(!!(film && film.liked)), style: { ...btn(!!(film && film.liked)), cursor: this.canCoeur(film) ? 'pointer' : 'default' }, onClick: () => this.toggleCoeur(film), label: film && film.liked && (film.coeurYears || []).some(y => y !== 1970) ? 'Coup de cœur ' + film.coeurYears.filter(y => y !== 1970).join(' · ') : 'Coup de cœur' },
+        };
+      })(),
+      writeError: st.writeError || '',
+      isPosters: !!st.picker,
+      overlayStyle: {
+        position: 'absolute', inset: 0, background: '#0C0A09',
+        animation: (st.pickerClosing ? 'dv-scrim-out 240ms ease-in' : 'dv-scrim-in 280ms ease-out') + ' both',
+      },
+      sheetStyle: {
+        position: 'absolute', top: 0, right: 0, bottom: 0, width: 318,
+        background: '#F3F1F1', borderRadius: '20px 0 0 20px',
+        display: 'flex', flexDirection: 'column', overflow: 'hidden',
+        animation: (st.pickerClosing
+          ? 'dv-sheet-out 240ms cubic-bezier(0.32, 0, 0.67, 0)'
+          : 'dv-sheet-in 340ms cubic-bezier(0.32, 0.72, 0, 1)') + ' both',
+      },
+      openPosters: () => this.openPosterPicker(),
+      closePosters: () => this.closePicker(),
+      openDraftPosters: () => this.openPosterPicker(true),
+      postersNote: st.postersNote || '',
+      posterChoices: (st.posterList || []).map(p => ({
+        pick: () => this.pickPoster(p),
+        style: {
+          aspectRatio: '2 / 3', border: 'none', padding: 0, borderRadius: 10, cursor: 'pointer',
+          background: '#E8E4E3 center / cover no-repeat',
+          backgroundImage: 'url(https://image.tmdb.org/t/p/w185' + p + ')',
+          animation: 'dv-fade 260ms ease-out both',
+        },
+      })),
+      heroStyle: (() => {
+        const src = film ? st.posters[film.id] : null;
+        const t = film ? this.tint(film.id) : TINTS[0];
+        return {
+          aspectRatio: '2 / 3', borderRadius: 20, display: 'flex', alignItems: 'flex-end',
+          background: src ? '#0C0A09 center / cover no-repeat' : t.bg,
+          backgroundImage: src ? 'url(' + src + ')' : undefined,
+          color: src ? 'transparent' : t.ink, overflow: 'hidden',
+        };
+      })(),
+      toggleSeen: () => film && this.update(film.id, { seen: !film.seen, wish: false }),
+      toggleWish: () => film && this.update(film.id, { wish: !film.wish, seen: false }),
+      toggleLiked: () => film && !film.wish && this.update(film.id, { liked: !film.liked }),
+      setVenue: (i) => film && this.update(film.id, { v: i }),
+      // Barre pleine largeur en haut de l'écran. Trois états : vide (encre
+      // grise, pas de croix), saisie et rempli (encre noire + croix).
+      draftHeader: st.draftFrom === 'director' || st.draftFrom === 'sugg' || st.draftFrom === 'cinemas',
+      searchField: (() => {
+        const active = !!st.searchFocus || !!st.query;
+        return {
+          style: {
+            display: st.draftFrom === 'director' || st.draftFrom === 'sugg' || st.draftFrom === 'cinemas' ? 'none' : 'flex',
+            flex: '0 0 auto', alignItems: 'center', gap: 16,
+            height: 'calc(64px + env(safe-area-inset-top))', padding: 'env(safe-area-inset-top) 20px 0',
+            background: '#E8E4E3', boxSizing: 'border-box',
+          },
+          iconStyle: { display: 'inline-flex', flex: '0 0 auto', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, marginLeft: -10, marginRight: -10, cursor: 'pointer', color: '#0A0A0A' },
+          inputStyle: {
+            flex: 1, minWidth: 0, height: '100%', border: 'none', background: 'transparent', outline: 'none',
+            fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: 16, lineHeight: '140%',
+            color: '#0C0A09', caretColor: '#0C0A09',
+          },
+          closeStyle: {
+            display: 'inline-flex', flex: '0 0 auto', alignItems: 'center', justifyContent: 'center',
+            width: 44, height: 44, marginRight: -10, cursor: 'pointer',
+            color: '#0A0A0A', visibility: st.query ? 'visible' : 'hidden',
+          },
+        };
+      })(),
+      // Croix : vide la saisie, ou quitte l'ajout si le champ est déjà vide.
+      closeSearch: () => st.draftFrom === 'sugg'
+        ? (() => { const p = (this._filmStack || []).pop(); this.setState({ screen: 'film', addFlow: false, draft: null, draftView: 'sheet', draftFrom: null, ...(p || {}) }); })()
+        : st.draftFrom === 'director'
+        ? this.setState({ screen: 'director', draft: null, draftView: 'sheet', draftFrom: null })
+        : st.draftFrom === 'cinemas'
+        ? this.setState({ screen: 'cinemas', tab: 2, addFlow: false, draft: null, draftView: 'sheet', draftFrom: null })
+        : (st.draft && st.draftView === 'page')
+        ? this.setState({ draft: null, draftView: 'sheet' })
+        : st.query
+        ? this.setState({ query: '', results: [], writeError: '' })
+        : this.setState({ screen: 'home', tab: 0, addFlow: false, results: [], added: {} }),
+      clearQuery: () => { this.setState({ query: '', results: [], writeError: '' }); if (this._searchEl) this._searchEl.focus(); },
+      // Flèche retour : quitte la fiche ouverte, sinon revient à l'écran d'où la recherche a été ouverte.
+      searchBack: () => {
+        if (st.draftFrom === 'cinemas') { this.setState({ screen: 'cinemas', tab: 2, addFlow: false, draft: null, draftView: 'sheet', draftFrom: null }); return; }
+        if (st.draft && st.draftView === 'page') { this.setState({ draft: null, draftView: 'sheet' }); return; }
+        const b = this._searchBack || { screen: 'home', tab: 0 };
+        this._searchBack = null;
+        const reset = { query: '', results: [], added: {}, writeError: '' };
+        const tabScreens = ['home', 'wishlist', 'cinemas'];
+        if (b.screen === 'stats') { this.setState(reset); this.setState({ screen: 'stats', addFlow: false }); }
+        else if (tabScreens.includes(b.screen)) { this.setState(reset); this.goTab(tabScreens.indexOf(b.screen)); }
+        else this.setState({ ...reset, screen: b.screen, tab: b.tab, addFlow: false });
+      },
+      onSearchFocus: () => this.setState({ searchFocus: true }),
+      onSearchBlur: () => this.setState({ searchFocus: false }),
+      searchRef: (el) => {
+        if (!el || el === this._searchEl) return;
+        this._searchEl = el;
+        el.addEventListener('focus', () => this.setState({ searchFocus: true }));
+        el.addEventListener('blur', () => this.setState({ searchFocus: false }));
+        // Le clavier mobile ne s'ouvre que sur un focus lié au geste de l'utilisateur.
+        if (this._autoFocus) { this._autoFocus = false; el.focus({ preventScroll: true }); }
+      },
+      clearQuery: () => this.setState({ query: '', results: [], draft: null, writeError: '' }),
+      query: st.query,
+      onQuery: (e) => { const q = e.target.value; this.setState({ query: q, draft: null }); this.search(q); },
+      commitDraft: () => this.commitDraft(),
+      searchNote: st.draft ? '' : this.key() ? '' : 'Sans clé TMDB : recherche dans la bibliothèque locale. Ajoute ta clé dans les réglages.',
+      results: st.results.map(r => {
+        const kn = (st.known || {})[r.id] || {};
+        const local = (st.added || {})[r.id];
+        const on = local !== undefined ? !!local : !!kn.wish;
+        const seenOn = !!kn.seen;
+        const sq = (lit) => ({
+          width: 56, height: 56, flex: '0 0 auto', border: 'none', borderRadius: 12, padding: 0,
+          background: lit ? '#0C0A09' : 'transparent', boxShadow: 'inset 0 0 0 1px #0A0A0A',
+          color: lit ? '#FAFAFA' : '#0A0A0A', display: 'inline-flex', alignItems: 'center',
+          justifyContent: 'center', cursor: 'pointer', transition: 'background 140ms ease-out, color 140ms ease-out',
+        });
+        return {
+          ...r, title: r.t, year: r.y, sub: r.sub || (r.y ? String(r.y) : ''), wishOn: on,
+          thumbStyle: {
+            width: 48, aspectRatio: '2 / 3', flex: '0 0 auto', borderRadius: 6, overflow: 'hidden',
+            background: r.poster ? '#0C0A09 center / cover no-repeat' : this.tint(r.id).bg,
+            backgroundImage: r.poster ? 'url(' + r.poster + ')' : undefined, cursor: 'pointer',
+          },
+          wishStyle: sq(on), seenStyle: sq(seenOn),
+          toggleWish: () => this.toggleResultWish(r),
+          openPage: () => this.openFilmByTmdb({ id: Number(String(r.id).replace(/^tmdb/, '')), title: r.t, poster: r.poster, y: r.y, sub: r.sub }, 'search'),
+          openSheet: () => seenOn
+            ? this.openFilmByTmdb({ id: Number(String(r.id).replace(/^tmdb/, '')), title: r.t, poster: r.poster, y: r.y, sub: r.sub }, 'search')
+            : this.openDraft(r),
+        };
+      }),
+      isDraftPage: !!st.draft && st.draftView === 'page',
+      resultsStyle: {
+        display: st.draft && st.draftView === 'page' ? 'none' : 'flex',
+        flexDirection: 'column', gap: 20, padding: '20px 20px 120px', boxSizing: 'border-box',
+      },
+      hasDraft: !!st.draft && (st.draftView !== 'page' || !!st.sheetOpen),
+      closeDraft: () => this.closeDraft(),
+      draftOverlayStyle: {
+        position: 'absolute', inset: 0, background: '#0C0A09',
+        animation: (st.draftClosing ? 'dv-scrim-out 220ms ease-in' : 'dv-scrim-in 260ms ease-out') + ' both',
+      },
+      draftSheetStyle: {
+        position: 'absolute', left: 0, right: 0, bottom: 0, background: '#F3F1F1',
+        borderRadius: '20px 20px 0 0', display: 'flex', flexDirection: 'column', overflow: 'hidden',
+        animation: (st.draftClosing
+          ? 'dv-up-out 220ms cubic-bezier(0.32, 0, 0.67, 0)'
+          : 'dv-up-in 340ms cubic-bezier(0.32, 0.72, 0, 1)') + ' both',
+      },
+      draftTags: (() => {
+        const dr = st.draft;
+        if (!dr) return [];
+        const FLAGS = { FR: '🇫🇷', US: '🇺🇸', GB: '🇬🇧', KR: '🇰🇷', JP: '🇯🇵', IT: '🇮🇹', DE: '🇩🇪', ES: '🇪🇸', BE: '🇧🇪', DK: '🇩🇰', SE: '🇸🇪', CA: '🇨🇦', MX: '🇲🇽', BR: '🇧🇷', CN: '🇨🇳', HK: '🇭🇰', TW: '🇹🇼', IN: '🇮🇳', IR: '🇮🇷', RU: '🇷🇺', PL: '🇵🇱', AT: '🇦🇹', CH: '🇨🇭', NL: '🇳🇱', AU: '🇦🇺', NO: '🇳🇴', PT: '🇵🇹', GR: '🇬🇷', TR: '🇹🇷' };
+        const codes = dr.countries || [];
+        return codes.map(c => ({ label: (FLAGS[c] ? FLAGS[c] + ' ' : '') + c, style: this.tagStyle({ background: '#E5DED6', color: '#0C0A09' }) }))
+          .concat((dr.genres || []).slice(0, 3).map(g => ({ label: g, style: this.tagStyle(this.genreStyle(g)) })));
+      })(),
+      draft: (() => {
+        const dr = st.draft || {};
+        return {
+          heroStyle: {
+            aspectRatio: '2 / 3', borderRadius: 20, display: 'flex', alignItems: 'flex-end', overflow: 'hidden',
+            background: dr.poster ? '#0C0A09 center / cover no-repeat' : '#E5DED6',
+            backgroundImage: dr.poster ? 'url(' + dr.poster + ')' : undefined,
+            color: dr.poster ? 'transparent' : '#0C0A09',
+          },
+          synopsis: dr.overview || '',
+          title: dr.t || '', credit: dr.credit || '', release: dr.release || '',
+          runtime: this.fmtRuntime(dr.runtime),
+          ctaLabel: st.draftFrom === 'revu' ? (st.saving ? 'Enregistrement…' : 'Revu en ' + new Date().getFullYear()) : st.saving ? 'Ajout en cours…' : 'Ajouter le film',
+          ctaStyle: {
+            width: '100%', height: 72, marginTop: 10, borderRadius: 999, border: 'none', background: '#E8E4E3',
+            color: '#0A0A0A', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            gap: 12, cursor: st.saving ? 'default' : 'pointer', opacity: st.saving ? 0.6 : 1,
+            transition: 'background 140ms ease-out',
+          },
+        };
+      })(),
+      pageToggles: (() => {
+        const dr = st.draft;
+        if (!dr) return [];
+        // Même géométrie que les actions de la fiche film.
+        const shell = (on) => ({
+          flex: 1, height: 80, borderRadius: 'var(--dv-radius-card)', border: 'none', overflow: 'hidden',
+          background: on ? 'var(--dv-fill-selected)' : 'transparent', boxShadow: 'var(--dv-outline)',
+          display: 'inline-flex', flexDirection: 'column', gap: 6, padding: '18px 10px',
+          justifyContent: 'center', alignItems: 'center', boxSizing: 'border-box', cursor: 'pointer',
+          transition: 'background 140ms ease-out',
+        });
+        const ico = (on) => ({ display: 'inline-flex', width: 24, height: 24, alignItems: 'center', justifyContent: 'center', color: on ? 'var(--dv-text-inverse)' : 'var(--dv-icon)' });
+        const lab = (on) => ({ fontFamily: 'var(--dv-font-ui)', fontWeight: 500, fontSize: 12, lineHeight: '130%', textAlign: 'center', textWrap: 'pretty', color: on ? 'var(--dv-text-inverse)' : 'var(--dv-icon)' });
+        const set = (patch) => this.setState(s => ({ draft: { ...s.draft, ...patch }, writeError: '' }));
+        return [
+          { label: 'Envie', icon: 'ClockCountdown24', glyph: true, on: !!dr.wishRow, onClick: () => this.draftWish() },
+          { label: 'Déjà-vu', icon: 'Sunglasses24', glyph: true, on: false, onClick: () => this.setState({ sheetOpen: true, draftClosing: false }) },
+          // Un coup de cœur est forcément vu : on passe par la modale Déjà-vu.
+          { label: 'Coup de cœur', icon: 'Heart24', glyph: true, on: false, onClick: () => this.setState(s => ({ sheetOpen: true, draftClosing: false, draft: { ...s.draft, liked: true } })) },
+        ].map(t => ({ ...t, glyph: !!t.glyph, popcorn: !!t.popcorn, style: shell(t.on), iconStyle: ico(t.on), labelStyle: lab(t.on) }));
+      })(),
+      draftToggles: (() => {
+        const dr = st.draft;
+        if (!dr) return [];
+        const shell = (on) => ({
+          flex: '1 1 0', minWidth: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          height: 64, padding: '0 12px', borderRadius: 'var(--dv-radius-card)', border: 'none',
+          background: on ? 'var(--dv-fill-selected)' : 'transparent', boxShadow: 'var(--dv-outline)',
+          cursor: 'pointer', boxSizing: 'border-box', transition: 'background 140ms ease-out',
+        });
+        const ico = (on) => ({ display: 'inline-flex', flex: '0 0 auto', width: 24, height: 24, alignItems: 'center', justifyContent: 'center', color: on ? 'var(--dv-text-inverse)' : 'var(--dv-icon)' });
+        const lab = (on) => ({ fontFamily: 'var(--dv-font-ui)', fontWeight: 500, fontSize: 14, lineHeight: '140%', whiteSpace: 'nowrap', color: on ? 'var(--dv-text-inverse)' : '#000' });
+        // Purement local : rien n'est écrit avant « Ajouter le film ».
+        const set = (patch) => this.setState(s => ({ draft: { ...s.draft, ...patch }, writeError: '' }));
+        return [
+          { key: 'cinema', label: 'Vu au cinéma', popcorn: true, on: !!dr.cinema, onClick: () => set({ cinema: !dr.cinema }) },
+          { key: 'liked', label: 'Coup de cœur', icon: 'Heart24', glyph: true, on: !!dr.liked, onClick: () => set({ liked: !dr.liked }) },
+        ].map(t => ({ ...t, glyph: !!t.glyph, popcorn: !!t.popcorn, style: shell(t.on), iconStyle: ico(t.on), labelStyle: lab(t.on) }));
+      })(),
+    };
+  }
+}
+</script>
+</body>
+</html>
