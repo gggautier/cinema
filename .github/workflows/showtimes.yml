@@ -2,8 +2,15 @@ name: Séances du jour
 
 on:
   schedule:
-    - cron: "0 5 * * *"
-    - cron: "0 6 * * *"
+    # 7h à Paris : 05:xx UTC l'été, 06:xx UTC l'hiver. Plusieurs créneaux de
+    # rattrapage, hors des heures pile (GitHub y retarde ou saute des runs) ;
+    # l'étape « gate » ne laisse passer que la première exécution utile du jour.
+    - cron: "7 5 * * *"
+    - cron: "7 6 * * *"
+    - cron: "37 6 * * *"
+    - cron: "7 7 * * *"
+    - cron: "7 8 * * *"
+    - cron: "7 10 * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +22,7 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Déjà à jour ?
         id: gate
@@ -27,7 +34,7 @@ jobs:
             echo "run=1" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         if: steps.gate.outputs.run == '1'
         with:
           python-version: "3.12"
