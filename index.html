@@ -7,12 +7,229 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Déjà-vu">
 <meta name="theme-color" content="#F3F1F1">
+<script>
+// Déjà-vu — repli hors ligne.
+// Quand Supabase ou TMDB sont injoignables (canvas claude.ai, hors connexion),
+// la page lit une copie locale : demo/movies.json (lignes de la table movies)
+// et demo/posters-<n>.jpg (affiches mises bout à bout ; index dans movies.json).
+// En ligne (GitHub Pages), les vraies requêtes passent et ce fichier ne fait rien.
+(() => {
+  const DATA = 'demo/movies.json';
+  const PACK = (n) => 'demo/posters-' + n + '.jpg';
+  const realFetch = window.fetch.bind(window);
+  let rowsP = null;
+  let posterIdx = null;
+
+  const load = () => rowsP || (rowsP = realFetch(DATA, { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error('demo ' + r.status); return r.json(); })
+    .then(j => { posterIdx = j.posters || {}; return j.rows || []; }));
+
+  // ---------- Filtres PostgREST (le sous-ensemble utilisé par l'appli) ----------
+  const splitTop = (s) => {
+    const out = []; let depth = 0, cur = '', q = false;
+    for (const ch of s) {
+      if (ch === '"') q = !q;
+      if (!q && (ch === '(' || ch === '{')) depth++;
+      if (!q && (ch === ')' || ch === '}')) depth--;
+      if (ch === ',' && depth === 0 && !q) { out.push(cur); cur = ''; } else cur += ch;
+    }
+    if (cur) out.push(cur);
+    return out;
+  };
+  const arrLit = (v) => v.replace(/^\{|\}$/g, '').trim() === '' ? [] :
+    splitTop(v.replace(/^\{|\}$/g, '')).map(x => x.trim().replace(/^"|"$/g, '').replace(/\\"/g, '"'));
+  const same = (a, b) => String(a) === String(b);
+
+  const test = (row, col, op, val) => {
+    const x = row[col];
+    let neg = false;
+    if (op === 'not') { const i = val.indexOf('.'); op = val.slice(0, i); val = val.slice(i + 1); neg = true; }
+    let r;
+    switch (op) {
+      case 'eq': r = x != null && same(x, val); break;
+      case 'neq':
+        if (val.startsWith('{')) r = Array.isArray(x) && JSON.stringify(x) !== JSON.stringify(arrLit(val));
+        else r = x != null && !same(x, val);
+        break;
+      case 'is': r = val === 'null' ? x == null : val === 'true' ? x === true : val === 'false' ? x === false : false; break;
+      case 'in': r = val.replace(/^\(|\)$/g, '').split(',').some(v => same(x, v.replace(/^"|"$/g, ''))); break;
+      case 'cs': r = Array.isArray(x) && arrLit(val).every(v => x.some(e => same(e, v))); break;
+      case 'ilike': {
+        const re = new RegExp('^' + val.split('*').map(s => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$', 'i');
+        r = Array.isArray(x) ? x.some(e => re.test(String(e))) : x != null && re.test(String(x));
+        break;
+      }
+      default: r = true;
+    }
+    return neg ? !r : r;
+  };
+
+  // Expression logique : "col.op.val", "and(...)", "or(...)"
+  const evalExpr = (row, e) => {
+    const m = e.match(/^(and|or)\((.*)\)$/s);
+    if (m) {
+      const parts = splitTop(m[2]);
+      return m[1] === 'and' ? parts.every(p => evalExpr(row, p)) : parts.some(p => evalExpr(row, p));
+    }
+    const i = e.indexOf('.'), j = e.indexOf('.', i + 1);
+    return test(row, e.slice(0, i), e.slice(i + 1, j), e.slice(j + 1));
+  };
+
+  const query = (rows, url, init) => {
+    const u = new URL(url);
+    const p = u.searchParams;
+    let out = rows.slice();
+    let limit = null, order = null, select = null;
+    for (const [k, v] of p) {
+      if (k === 'select') select = v;
+      else if (k === 'limit') limit = Number(v);
+      else if (k === 'order') order = v;
+      else if (k === 'and' || k === 'or') out = out.filter(r => evalExpr(r, k + v));
+      else {
+        const i = v.indexOf('.');
+        out = out.filter(r => test(r, k, v.slice(0, i), v.slice(i + 1)));
+      }
+    }
+    if (order) {
+      const keys = order.split(',').map(s => { const [c, ...f] = s.split('.'); return { c, desc: f.includes('desc'), nl: f.includes('nullslast') ? 1 : f.includes('nullsfirst') ? -1 : 0 }; });
+      out.sort((a, b) => {
+        for (const k of keys) {
+          const x = a[k.c], y = b[k.c];
+          if (x == null && y == null) continue;
+          if (x == null || y == null) { const nullsLast = k.nl ? k.nl === 1 : !k.desc; return (x == null ? 1 : -1) * (nullsLast ? 1 : -1); }
+          if (x < y) return k.desc ? 1 : -1;
+          if (x > y) return k.desc ? -1 : 1;
+        }
+        return 0;
+      });
+    }
+    const total = out.length;
+    const h = new Headers(init && init.headers || {});
+    const range = h.get('Range');
+    let from = 0, to = total - 1;
+    if (range) { const [a, b] = range.split('-').map(Number); from = a; to = Math.min(b, total - 1); }
+    out = out.slice(from, to + 1);
+    if (limit != null) out = out.slice(0, limit);
+    if (select && select !== '*') {
+      const cols = select.split(',');
+      out = out.map(r => Object.fromEntries(cols.map(c => [c, r[c] ?? null])));
+    }
+    return { out, total, from };
+  };
+
+  const json = (body, status, extra) => new Response(body == null ? null : JSON.stringify(body), {
+    status: status || 200, headers: { 'Content-Type': 'application/json', ...(extra || {}) },
+  });
+
+  const handleSupabase = async (url, init) => {
+    const rows = await load();
+    const method = (init && init.method || 'GET').toUpperCase();
+    const u = new URL(url);
+    if (method === 'GET' || method === 'HEAD') {
+      const { out, total, from } = query(rows, url, init);
+      const cr = (out.length ? from + '-' + (from + out.length - 1) : '*') + '/' + total;
+      return json(method === 'HEAD' ? null : out, 200, { 'Content-Range': cr });
+    }
+    // Écritures : appliquées à la copie en mémoire, le temps de la session.
+    const body = init && init.body ? JSON.parse(init.body) : {};
+    if (method === 'POST') {
+      const row = { id: Math.max(0, ...rows.map(r => r.id)) + 1, created_at: new Date().toISOString(), ...body };
+      rows.unshift(row);
+      return json([row], 201);
+    }
+    const { out } = query(rows, url.replace(/select=[^&]*&?/, ''));
+    const ids = new Set(out.map(r => r.id));
+    if (method === 'PATCH') {
+      const changed = rows.filter(r => ids.has(r.id)).map(r => Object.assign(r, body));
+      return json(changed, 200);
+    }
+    if (method === 'DELETE') {
+      const gone = rows.filter(r => ids.has(r.id));
+      for (let i = rows.length - 1; i >= 0; i--) if (ids.has(rows[i].id)) rows.splice(i, 1);
+      return json(gone, 200);
+    }
+    return json([], 200);
+  };
+
+  const isSupabase = (url) => /\.supabase\.co\/rest\/v1\/movies/.test(url);
+  const isTmdbApi = (url) => /api\.themoviedb\.org\/3\//.test(url);
+
+  window.fetch = async (input, init) => {
+    const url = typeof input === 'string' ? input : (input && input.url) || String(input);
+    try {
+      return await realFetch(input, init);
+    } catch (err) {
+      if ((isSupabase(url) || isTmdbApi(url)) && window.__dvStartPosters) window.__dvStartPosters();
+      if (/\.supabase\.co\/rest\/v1\/rpc\/dv_check/.test(url)) return json(true, 200);
+      if (isSupabase(url)) {
+        try { return await handleSupabase(url, init); } catch (e) { throw err; }
+      }
+      if (isTmdbApi(url)) return json({ results: [], status_message: 'hors ligne' }, 200);
+      throw err;
+    }
+  };
+
+  // ---------- Affiches : image.tmdb.org → blobs tirés des paquets demo/posters-<n>.jpg ----------
+  // Actif seulement une fois le repli déclenché (voir window.fetch ci-dessus).
+  const RE = /https:\/\/image\.tmdb\.org\/t\/p\/\w+\/([A-Za-z0-9]+\.(?:jpg|png|webp))/g;
+  const packs = {};
+  const blobs = {};
+  const pack = (n) => packs[n] || (packs[n] = realFetch(PACK(n)).then(r => r.arrayBuffer()));
+  const blobUrl = (f) => {
+    if (blobs[f]) return Promise.resolve(blobs[f]);
+    const e = posterIdx && posterIdx[f];
+    if (!e) return Promise.resolve(null);
+    return pack(e[0]).then(buf => (blobs[f] = URL.createObjectURL(new Blob([buf.slice(e[1], e[1] + e[2])], { type: 'image/jpeg' }))));
+  };
+  const local = async (text) => {
+    const names = [...new Set([...text.matchAll(RE)].map(m => m[1]))];
+    const urls = await Promise.all(names.map(blobUrl));
+    const map = Object.fromEntries(names.map((n, i) => [n, urls[i]]));
+    return text.replace(RE, (all, f) => map[f] || all);
+  };
+  const fix = (el) => {
+    if (el.nodeType !== 1) return;
+    if (el.tagName === 'IMG') {
+      const s = el.getAttribute('src') || '';
+      if (s.includes('image.tmdb.org')) local(s).then(n => { if (n !== s && el.getAttribute('src') === s) el.setAttribute('src', n); });
+    }
+    const st = el.getAttribute('style');
+    if (st && st.includes('image.tmdb.org')) local(st).then(n => { if (n !== st && el.getAttribute('style') === st) el.setAttribute('style', n); });
+  };
+  const sweep = (root) => { fix(root); root.querySelectorAll && root.querySelectorAll('img[src*="image.tmdb.org"], [style*="image.tmdb.org"]').forEach(fix); };
+  const startPosters = () => {
+    if (window.__dvDemo) return;
+    window.__dvDemo = true;
+    load().then(() => {
+      sweep(document.documentElement);
+      new MutationObserver(list => list.forEach(m => {
+        if (m.type === 'attributes') fix(m.target);
+        else m.addedNodes.forEach(n => n.nodeType === 1 && sweep(n));
+      })).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ['src', 'style'] });
+    }).catch(() => {});
+  };
+  window.__dvStartPosters = startPosters;
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet><script src="./ds-base.js"></script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>@keyframes dv-pulse{0%{opacity:1}100%{opacity:.45}}@keyframes dv-fade{from{opacity:0}to{opacity:1}}@keyframes dv-scrim-in{from{opacity:0}to{opacity:.45}}@keyframes dv-scrim-out{from{opacity:.45}to{opacity:0}}@keyframes dv-sheet-in{from{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes dv-sheet-out{from{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes dv-up-in{from{transform:translateY(100%)}to{transform:translateY(0)}}@keyframes dv-up-out{from{transform:translateY(0)}to{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms !important;transition-duration:0.01ms !important}}html,body{height:100%;overflow:hidden}*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{width:0;height:0;display:none}html{background:#F3F1F1}body{margin:0;background:#F3F1F1;display:flex;justify-content:center;padding:0}a{color:#0C0A09}a:hover{color:#C8BFB6}input{font-family:Inter,sans-serif}</style></helmet>
 <div style="position:relative;width:min(100vw, 402px);height:100dvh;max-height:980px;overflow:hidden;font-family:Inter,-apple-system,sans-serif;color:#000">
+<sc-if value="{{ isChecking }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:200;background:#F3F1F1"></div>
+</sc-if>
+<sc-if value="{{ isLocked }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:200;background:#F3F1F1;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:20px;box-sizing:border-box;animation:dv-fade .2s ease-out">
+<span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:50px;line-height:100%;color:#000">Déjà-vu</span>
+<div style="display:flex;gap:8px;align-items:center">
+<input type="password" value="{{ lockCode }}" onChange="{{ onLockCode }}" onKeyDown="{{ onLockKey }}" placeholder="Code" autocomplete="current-password" enterkeyhint="go" aria-label="Code d'accès" style="flex:1;min-width:0;height:42px;padding:0 18px;border:none;border-radius:999px;background:#E8E4E3;outline:none;font-family:Inter,sans-serif;font-size:16px;color:#0A0A0A;box-sizing:border-box">
+<button type="button" onClick="{{ submitCode }}" style="flex:0 0 auto;height:42px;padding:0 18px;border:none;border-radius:999px;background:#0C0A09;color:#FAFAFA;font-family:Inter,sans-serif;font-weight:500;font-size:14px;cursor:pointer">{{ lockLabel }}</button>
+</div>
+<span style="min-height:20px;font-size:14px;line-height:140%;color:#57534E">{{ lockError }}</span>
+</div>
+</sc-if>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div onScroll="{{ onGridScroll }}" style="position:absolute;inset:0;overflow-y:auto;background:#F3F1F1">
@@ -846,12 +1063,46 @@ class Component extends DCLogic {
       yearsOpen: false, yearsClosing: false, yearHover: 0, director: null, statsYear: null, statsDirCounts: [], statsCountries: [], statsTotal: 0, people: {}, gender: 2,
       moreDirectors: false, moreCountries: false,
       counts: sb ? [0, 0, 0, 0] : null, years: [], loading: sb, done: !sb, sbError: null,
+      locked: sb ? 'checking' : false, lockCode: '', lockError: '', lockBusy: false,
     };
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKey);
-    if (this.sb()) this.probeRevus().then(() => { this.loadYears(); this.refresh(); });    else if (this.key()) this.loadPosters();
+    if (this.sb()) this.checkKey(this.dvKey()).then(ok => { if (ok) this.start(); else this.setState({ locked: true }); });
+    else if (this.key()) this.loadPosters();
+  }
+
+  start() {
+    this.setState({ locked: false });
+    this.probeRevus().then(() => { this.loadYears(); this.refresh(); });
+  }
+
+  // Code d'accès : gardé dans ce navigateur, vérifié par Supabase (private.dv_ok).
+  dvKey() { try { return localStorage.getItem('dv-key') || ''; } catch (e) { return ''; } }
+
+  async checkKey(k) {
+    const c = this.sb();
+    try {
+      const r = await fetch(c.url + '/rest/v1/rpc/dv_check', {
+        method: 'POST',
+        headers: { apikey: c.key, Authorization: 'Bearer ' + c.key, 'Content-Type': 'application/json', 'x-dv-key': k },
+        body: '{}',
+      });
+      if (!r.ok) return false;
+      return (await r.json()) === true;
+    } catch (e) { return false; }
+  }
+
+  async submitCode() {
+    const k = (this.state.lockCode || '').trim();
+    if (!k || this.state.lockBusy) return;
+    this.setState({ lockBusy: true, lockError: '' });
+    const ok = await this.checkKey(k);
+    if (!ok) { this.setState({ lockBusy: false, lockError: 'Code incorrect' }); return; }
+    try { localStorage.setItem('dv-key', k); } catch (e) {}
+    this.setState({ lockBusy: false, lockCode: '' });
+    this.start();
   }
 
   sb() {
@@ -862,7 +1113,7 @@ class Component extends DCLogic {
 
   headers(extra) {
     const c = this.sb();
-    return { apikey: c.key, Authorization: 'Bearer ' + c.key, ...extra };
+    return { apikey: c.key, Authorization: 'Bearer ' + c.key, 'x-dv-key': this.dvKey(), ...extra };
   }
 
   // Revisionnages : la ligne porte le dernier visionnage (movie_view, is_cinema,
@@ -2567,6 +2818,12 @@ class Component extends DCLogic {
     const shown = raw.map(f => ({ ...f, big: emphasize && !!f.liked }));
 
     return {
+      isLocked: st.locked === true, isChecking: st.locked === 'checking',
+      lockCode: st.lockCode, lockError: st.lockError,
+      lockLabel: st.lockBusy ? '…' : 'Entrer',
+      onLockCode: (e) => this.setState({ lockCode: e.target.value, lockError: '' }),
+      onLockKey: (e) => { if (e.key === 'Enter') this.submitCode(); },
+      submitCode: () => this.submitCode(),
       isHome: st.screen === 'home', isFilm: st.screen === 'film', isWishlist: st.screen === 'wishlist',
       isStats: st.screen === 'stats', isSearch: st.screen === 'search', isCinemas: st.screen === 'cinemas',
       ...this.cinemasVals(),
