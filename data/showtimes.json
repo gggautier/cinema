@@ -1,6 +1,6 @@
 {
   "date": "2026-11-14",
-  "generated_at": "2026-11-14T13:03:26+01:00",
+  "generated_at": "2026-11-14T17:22:55+01:00",
   "source": "allocine.fr",
   "cinemas_ok": [
     "C0159",
@@ -221,11 +221,6 @@
           "cinema_id": "C0003",
           "showtimes": [
             {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.1000040172&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
-            {
               "time": "12:20",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.1000040172&tags=Showtime.Accessibility.HearingImpaired,Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=12:20&code=2D; SME; STFR; VF"
@@ -325,11 +320,6 @@
         {
           "cinema_id": "C0097",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0097&gid_entity=movie.movie._.1000040172&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
             {
               "time": "13:00",
               "version": "VF",
@@ -1089,6 +1079,11 @@
           "cinema_id": "P7517",
           "showtimes": [
             {
+              "time": "10:50",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S58968/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            },
+            {
               "time": "13:30",
               "version": "VF",
               "booking_url": "https://s.pathe.fr/en/V3017S58973/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
@@ -1374,11 +1369,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000036932&tags=Auditorium.Experience.DolbyAtmos,Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; Atmos; Paradiso B; STFR; VO"
-            },
-            {
               "time": "12:05",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000036932&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=12:05&code=2D; STFR; VO"
@@ -1558,11 +1548,6 @@
         {
           "cinema_id": "C0097",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0097&gid_entity=movie.movie._.1000036932&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; STFR; VO"
-            },
             {
               "time": "13:20",
               "version": "VOST",
@@ -1762,11 +1747,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000020289&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; STFR; VO"
-            },
-            {
               "time": "12:05",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000020289&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=12:05&code=2D; STFR; VO"
@@ -1799,27 +1779,27 @@
             {
               "time": "10:15",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=10:15"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=10:15"
             },
             {
               "time": "13:00",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=13:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser&perfd=20261114&perft=13:00"
             },
             {
               "time": "15:45",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:45"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:45"
             },
             {
               "time": "18:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=18:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=18:30"
             },
             {
               "time": "21:15",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Version.Original&perfd=20261114&perft=21:15"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000020289&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Version.Original&perfd=20261114&perft=21:15"
             }
           ]
         },
@@ -2366,7 +2346,7 @@
             {
               "time": "13:00",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.133392&tags=Localization.Language.French,Auditorium.Experience.Ice&perfd=20261114&perft=13:00&code=ICE; VF;"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.133392&tags=Auditorium.Experience.Ice,Localization.Language.French&perfd=20261114&perft=13:00&code=ICE; VF;"
             }
           ]
         },
@@ -2435,7 +2415,7 @@
             {
               "time": "16:15",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.278742&tags=Localization.Language.French,Auditorium.Experience.Ice&perfd=20261114&perft=16:15&code=ICE; VF;"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.278742&tags=Auditorium.Experience.Ice,Localization.Language.French&perfd=20261114&perft=16:15&code=ICE; VF;"
             }
           ]
         },
@@ -2895,12 +2875,12 @@
             {
               "time": "18:00",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000014492&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Version.Original&perfd=20261114&perft=18:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000014492&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Version.Original,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible&perfd=20261114&perft=18:00"
             },
             {
               "time": "21:00",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000014492&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Version.Original&perfd=20261114&perft=21:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000014492&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Version.Original,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible&perfd=20261114&perft=21:00"
             }
           ]
         },
@@ -2933,6 +2913,11 @@
           "cinema_id": "W7519",
           "showtimes": [
             {
+              "time": "10:15",
+              "version": "VOST",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000014492&tags=Auditorium.Experience.Ice,Localization.Version.Original,Showtime.Accessibility.Subtitled&perfd=20261114&perft=10:15&code=ICE; VOST;"
+            },
+            {
               "time": "15:15",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000014492&tags=Localization.Language.French&perfd=20261114&perft=15:15&code=VF;"
@@ -2962,6 +2947,11 @@
         {
           "cinema_id": "P7517",
           "showtimes": [
+            {
+              "time": "10:55",
+              "version": "VOST",
+              "booking_url": "https://s.pathe.fr/en/V3017S58969/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            },
             {
               "time": "16:00",
               "version": "VOST",
@@ -3090,11 +3080,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "10:30",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.314882&tags=Auditorium.Experience.DolbyAtmos,Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=10:30&code=2D; Atmos; Paradiso A; STFR; VO"
-            },
-            {
               "time": "13:45",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.314882&tags=Auditorium.Experience.DolbyAtmos,Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=13:45&code=2D; Atmos; Paradiso A; STFR; VO"
@@ -3114,11 +3099,6 @@
         {
           "cinema_id": "C0003",
           "showtimes": [
-            {
-              "time": "10:15",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.314882&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=10:15&code=2D; STFR; VO"
-            },
             {
               "time": "13:30",
               "version": "VOST",
@@ -3367,11 +3347,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "10:15",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000039483&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:15&code=2D; VF"
-            },
-            {
               "time": "12:55",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000039483&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=12:55&code=2D; VF"
@@ -3406,11 +3381,6 @@
         {
           "cinema_id": "C1621",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C1621&gid_entity=movie.movie._.1000039483&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
             {
               "time": "12:00",
               "version": "VF",
@@ -3882,6 +3852,11 @@
           "cinema_id": "P7517",
           "showtimes": [
             {
+              "time": "10:55",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S58970/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            },
+            {
               "time": "13:45",
               "version": "VF",
               "booking_url": "https://s.pathe.fr/en/V3017S58976/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
@@ -3983,32 +3958,32 @@
             {
               "time": "11:00",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=11:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=11:00"
             },
             {
               "time": "13:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=13:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=13:30"
             },
             {
               "time": "15:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=15:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:30"
             },
             {
               "time": "17:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=17:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=17:30"
             },
             {
               "time": "19:30",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Version.Original,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=19:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Version.Original&perfd=20261114&perft=19:30"
             },
             {
               "time": "21:30",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Localization.Version.Original,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=21:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000048020&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Localization.Version.Original&perfd=20261114&perft=21:30"
             }
           ]
         }
@@ -4590,11 +4565,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "10:15",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.323550&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:15&code=2D; VF"
-            },
-            {
               "time": "13:10",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.323550&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=13:10&code=2D; VF"
@@ -4624,11 +4594,6 @@
         {
           "cinema_id": "C0003",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.323550&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
             {
               "time": "12:20",
               "version": "VF",
@@ -5283,11 +5248,6 @@
           "cinema_id": "C0144",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.310503&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; VF"
-            },
-            {
               "time": "12:00",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.310503&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=12:00&code=2D; VF"
@@ -5504,16 +5464,6 @@
           ]
         },
         {
-          "cinema_id": "C2954",
-          "showtimes": [
-            {
-              "time": "09:40",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.296642&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; VF"
-            }
-          ]
-        },
-        {
           "cinema_id": "C1621",
           "showtimes": [
             {
@@ -5559,17 +5509,17 @@
             {
               "time": "10:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=10:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=10:30"
             },
             {
               "time": "13:00",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=13:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=13:00"
             },
             {
               "time": "15:15",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital,Format.Projection.Laser,Localization.Language.French,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:15"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.296642&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:15"
             }
           ]
         },
@@ -5802,11 +5752,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:45",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.318225&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=09:45&code=2D; VF"
-            },
-            {
               "time": "12:40",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.318225&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=12:40&code=2D; VF"
@@ -5831,11 +5776,6 @@
         {
           "cinema_id": "C0003",
           "showtimes": [
-            {
-              "time": "10:20",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.318225&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:20&code=2D; VF"
-            },
             {
               "time": "13:30",
               "version": "VF",
@@ -6277,11 +6217,6 @@
           "cinema_id": "C0003",
           "showtimes": [
             {
-              "time": "10:30",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.321790&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:30&code=2D; VF"
-            },
-            {
               "time": "12:45",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.321790&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=12:45&code=2D; VF"
@@ -6646,26 +6581,6 @@
       "year": 2026,
       "cinemas": [
         {
-          "cinema_id": "C2954",
-          "showtimes": [
-            {
-              "time": "09:45",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000032461&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=09:45&code=2D; VF"
-            }
-          ]
-        },
-        {
-          "cinema_id": "C0003",
-          "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0003&gid_entity=movie.movie._.1000032461&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            }
-          ]
-        },
-        {
           "cinema_id": "C0192",
           "showtimes": [
             {
@@ -6864,16 +6779,6 @@
               "time": "11:45",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000012316&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=11:45&code=2D; VF"
-            }
-          ]
-        },
-        {
-          "cinema_id": "C0144",
-          "showtimes": [
-            {
-              "time": "10:10",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.1000012316&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:10&code=2D; VF"
             }
           ]
         },
@@ -7275,6 +7180,11 @@
         {
           "cinema_id": "W7519",
           "showtimes": [
+            {
+              "time": "10:15",
+              "version": "VF",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.326160&tags=Localization.Language.French&perfd=20261114&perft=10:15&code=VF;"
+            },
             {
               "time": "15:15",
               "version": "VF",
@@ -7760,16 +7670,6 @@
           ]
         },
         {
-          "cinema_id": "C0144",
-          "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.1000005161&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            }
-          ]
-        },
-        {
           "cinema_id": "C0004",
           "showtimes": [
             {
@@ -8035,6 +7935,11 @@
           "cinema_id": "W7519",
           "showtimes": [
             {
+              "time": "10:45",
+              "version": "VF",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000013643&tags=Localization.Language.French&perfd=20261114&perft=10:45&code=VF;"
+            },
+            {
               "time": "13:00",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000013643&tags=Localization.Language.French&perfd=20261114&perft=13:00&code=VF;"
@@ -8129,11 +8034,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000020311&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
-            {
               "time": "13:35",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000020311&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=13:35&code=2D; VF"
@@ -8158,11 +8058,6 @@
         {
           "cinema_id": "C1621",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C1621&gid_entity=movie.movie._.1000020311&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
             {
               "time": "12:50",
               "version": "VF",
@@ -8564,6 +8459,11 @@
           "cinema_id": "P7517",
           "showtimes": [
             {
+              "time": "10:40",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S58966/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            },
+            {
               "time": "14:15",
               "version": "VF",
               "booking_url": "https://s.pathe.fr/en/V3017S58974/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
@@ -8606,6 +8506,16 @@
               "time": "15:50",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7515&gid_entity=movie.movie._.1000023992&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=15:50"
+            }
+          ]
+        },
+        {
+          "cinema_id": "P7517",
+          "showtimes": [
+            {
+              "time": "11:35",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S59120/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
             }
           ]
         },
@@ -8819,6 +8729,16 @@
               "time": "20:10",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0100&gid_entity=movie.movie._.1000007388&tags=Format.Projection.Digital,Localization.Version.Original,Format.Sound.Dolby71&perfd=20261114&perft=20:10"
+            }
+          ]
+        },
+        {
+          "cinema_id": "P7517",
+          "showtimes": [
+            {
+              "time": "10:30",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S58965/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
             }
           ]
         },
@@ -9062,9 +8982,24 @@
           "cinema_id": "W7519",
           "showtimes": [
             {
+              "time": "11:00",
+              "version": "VF",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000051859&tags=Localization.Language.French&perfd=20261114&perft=11:00&code=VF;"
+            },
+            {
               "time": "13:45",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000051859&tags=Localization.Language.French&perfd=20261114&perft=13:45&code=VF;"
+            }
+          ]
+        },
+        {
+          "cinema_id": "P7517",
+          "showtimes": [
+            {
+              "time": "10:30",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3017S58964/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
             }
           ]
         }
@@ -9215,25 +9150,6 @@
         }
       ],
       "tmdb_id": null
-    },
-    {
-      "allocine_id": "327814",
-      "title": "Plainclothes",
-      "original_title": "Plainclothes",
-      "year": 2025,
-      "cinemas": [
-        {
-          "cinema_id": "C0050",
-          "showtimes": [
-            {
-              "time": "09:30",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0050&gid_entity=movie.movie._.327814&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital,Internal.Data.AlmostSoldOut&perfd=20261114&perft=09:30&code=2D; STFR; VO"
-            }
-          ]
-        }
-      ],
-      "tmdb_id": 1255718
     },
     {
       "allocine_id": "8205",
@@ -9464,16 +9380,6 @@
               "time": "22:00",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0140&gid_entity=movie.movie._.1000036515&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=22:00&code=2D; VF"
-            }
-          ]
-        },
-        {
-          "cinema_id": "C0050",
-          "showtimes": [
-            {
-              "time": "10:10",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0050&gid_entity=movie.movie._.1000036515&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:10&code=2D; VF"
             }
           ]
         },
@@ -9996,11 +9902,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000034007&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; STFR; VO"
-            },
-            {
               "time": "12:00",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000034007&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=12:00&code=2D; STFR; VO"
@@ -10068,17 +9969,17 @@
             {
               "time": "15:45",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=15:45"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=15:45"
             },
             {
               "time": "18:30",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=18:30"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=18:30"
             },
             {
               "time": "21:15",
               "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Version.Original,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible&perfd=20261114&perft=21:15"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000034007&tags=Localization.Version.Original,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=21:15"
             }
           ]
         },
@@ -10181,6 +10082,11 @@
           "cinema_id": "W7519",
           "showtimes": [
             {
+              "time": "10:45",
+              "version": "VF",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000034007&tags=Localization.Language.French&perfd=20261114&perft=10:45&code=VF;"
+            },
+            {
               "time": "13:30",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.1000034007&tags=Localization.Language.French&perfd=20261114&perft=13:30&code=VF;"
@@ -10204,6 +10110,25 @@
         }
       ],
       "tmdb_id": 1567605
+    },
+    {
+      "allocine_id": "310933",
+      "title": "Serengeti : un voyage au coeur de l'Afrique",
+      "original_title": "Serengeti : Journey to the Heart of Africa",
+      "year": 2022,
+      "cinemas": [
+        {
+          "cinema_id": "C0189",
+          "showtimes": [
+            {
+              "time": "10:00",
+              "version": "VF",
+              "booking_url": "https://s.pathe.fr/en/V3167S6578/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            }
+          ]
+        }
+      ],
+      "tmdb_id": null
     },
     {
       "allocine_id": "13892",
@@ -10298,11 +10223,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:50",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000024131&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=09:50&code=2D; VF"
-            },
-            {
               "time": "11:30",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.1000024131&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=11:30&code=2D; VF"
@@ -10340,23 +10260,18 @@
             {
               "time": "11:00",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000024131&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=11:00"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000024131&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=11:00"
             },
             {
               "time": "13:45",
               "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000024131&tags=Auditorium.Comfort.AirConditioning,Format.Projection.Digital,Localization.Language.French,Screen.Accessibility.Accessible,Showtime.Accessibility.Accessible,Showtime.Accessibility.Dubbed&perfd=20261114&perft=13:45"
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0065&gid_entity=movie.movie._.1000024131&tags=Localization.Language.French,Showtime.Accessibility.Dubbed,BoostPos.Accessibilite.Nopmr,Format.Projection.Digital&perfd=20261114&perft=13:45"
             }
           ]
         },
         {
           "cinema_id": "C0144",
           "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.1000024131&tags=Localization.Language.French,Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; VF"
-            },
             {
               "time": "12:00",
               "version": "VF",
@@ -10588,6 +10503,25 @@
       "tmdb_id": 12761
     },
     {
+      "allocine_id": "276608",
+      "title": "Spider-Man: Brand New Day",
+      "original_title": "Spider-Man: Brand New Day",
+      "year": 2026,
+      "cinemas": [
+        {
+          "cinema_id": "W7519",
+          "showtimes": [
+            {
+              "time": "10:15",
+              "version": "VF",
+              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=W7519&gid_entity=movie.movie._.276608&tags=Localization.Language.French&perfd=20261114&perft=10:15&code=VF;"
+            }
+          ]
+        }
+      ],
+      "tmdb_id": 969681
+    },
+    {
       "allocine_id": "314939",
       "title": "Street Fighter",
       "original_title": "Street Fighter",
@@ -10624,25 +10558,6 @@
         }
       ],
       "tmdb_id": null
-    },
-    {
-      "allocine_id": "1000021582",
-      "title": "Summer’s Camera",
-      "original_title": "Summer’s Camera",
-      "year": 2025,
-      "cinemas": [
-        {
-          "cinema_id": "C0050",
-          "showtimes": [
-            {
-              "time": "09:35",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0050&gid_entity=movie.movie._.1000021582&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:35&code=2D; STFR; VO"
-            }
-          ]
-        }
-      ],
-      "tmdb_id": 1361562
     },
     {
       "allocine_id": "308",
@@ -11612,11 +11527,6 @@
           "cinema_id": "C2954",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; STFR; VO"
-            },
-            {
               "time": "12:00",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C2954&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=12:00&code=2D; STFR; VO"
@@ -11797,11 +11707,6 @@
           "cinema_id": "C0144",
           "showtimes": [
             {
-              "time": "09:40",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=09:40&code=2D; STFR; VO"
-            },
-            {
               "time": "12:05",
               "version": "VOST",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=12:05&code=2D; STFR; VO"
@@ -11831,11 +11736,6 @@
         {
           "cinema_id": "C0050",
           "showtimes": [
-            {
-              "time": "10:10",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0050&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=10:10&code=2D; STFR; VO"
-            },
             {
               "time": "13:50",
               "version": "VOST",
@@ -11896,11 +11796,6 @@
         {
           "cinema_id": "C0097",
           "showtimes": [
-            {
-              "time": "10:10",
-              "version": "VOST",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0097&gid_entity=movie.movie._.298024&tags=Localization.Subtitle.French,Showtime.Accessibility.Subtitled,Localization.Version.Original,Format.Projection.Digital&perfd=20261114&perft=10:10&code=2D; STFR; VO"
-            },
             {
               "time": "13:45",
               "version": "VOST",
@@ -12127,6 +12022,11 @@
           "cinema_id": "P7517",
           "showtimes": [
             {
+              "time": "10:45",
+              "version": "VOST",
+              "booking_url": "https://s.pathe.fr/en/V3017S58967/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
+            },
+            {
               "time": "13:50",
               "version": "VOST",
               "booking_url": "https://s.pathe.fr/en/V3017S58977/booking?utm_source=allocine&utm_medium=allocine&utm_campaign=partenaire-allocine&partenaire=allocine"
@@ -12194,16 +12094,6 @@
               "time": "10:15",
               "version": "VF",
               "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0140&gid_entity=movie.movie._.252822&tags=Format.Projection.Digital&perfd=20261114&perft=10:15&code=2D; Muet"
-            }
-          ]
-        },
-        {
-          "cinema_id": "C0144",
-          "showtimes": [
-            {
-              "time": "10:00",
-              "version": "VF",
-              "booking_url": "https://relay.mvtx.us/ticketing/dbz?code_theater=C0144&gid_entity=movie.movie._.252822&tags=Format.Projection.Digital&perfd=20261114&perft=10:00&code=2D; Muet"
             }
           ]
         }
@@ -12328,6 +12218,12 @@
       "title": "Sauvez le cinéma !",
       "original_title": "Sauvez le cinéma !",
       "year": 2021
+    },
+    {
+      "allocine_id": "310933",
+      "title": "Serengeti : un voyage au coeur de l'Afrique",
+      "original_title": "Serengeti : Journey to the Heart of Africa",
+      "year": 2022
     },
     {
       "allocine_id": "1000054220",
